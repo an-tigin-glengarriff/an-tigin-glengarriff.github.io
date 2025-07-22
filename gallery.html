@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Tigín Gallery</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light background for the whole page */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .carousel-container {
+            position: relative;
+            max-width: 800px; /* Max width for the carousel */
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 1rem; /* Rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            aspect-ratio: 16 / 9; /* Maintain a common aspect ratio for images */
+            display: flex; /* Use flex to center image vertically if needed */
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-image {
+            width: 100%;
+            height: 100%; /* Fill the container */
+            display: block;
+            object-fit: contain; /* Ensures image fits within the area without cropping, maintaining aspect ratio */
+            background-color: #e0e0e0; /* Background for images that don't fill the space */
+            transition: opacity 0.5s ease-in-out; /* Smooth transition for images */
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            border-radius: 9999px; /* Fully rounded buttons */
+            opacity: 0.7;
+            transition: opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;
+            z-index: 10; /* Ensure buttons are above the image */
+        }
+        .carousel-button:hover {
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .carousel-button-left {
+            left: 1rem;
+        }
+        .carousel-button-right {
+            right: 1rem;
+        }
+        main {
+            flex-grow: 1; /* Allows main content to take up available space */
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-800 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-white text-2xl font-bold">An Tigín</a>
+            <div>
+                <a href="index.html" class="text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">Home</a>
+                <a href="gallery.html" class="text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">Gallery</a>
+                <a href="contact.html" class="text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">Contact Us</a>
+                <a href="calendar.html" class="text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">Calendar</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-center text-blue-800 mb-8">An Tigín Photo Gallery</h1>
+
+        <div class="carousel-container">
+            <img id="carousel-image" class="carousel-image" src="" alt="An Tigín Gallery Image">
+
+            <button id="prev-button" class="carousel-button carousel-button-left">&#10094;</button>
+            <button id="next-button" class="carousel-button carousel-button-right">&#10095;</button>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="index.html" class="text-blue-700 hover:underline text-lg font-semibold">Back to Home</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-6 mt-12">
+        <p>&copy; 2025 An Tigín Glengarriff. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Array of image URLs for the carousel
+        // Ensure these paths are correct relative to your gallery.html file
+        const images = [
+            "files/gallery/20240920_094450.jpg",
+            "files/gallery/Sep-Sky.jpg",
+            "files/gallery/autumnal-dawn.jpg",
+            "files/gallery/fire-at-night.jpg",
+            "files/gallery/geri-garnish-island.jpg",
+            "files/gallery/kayaking-2024b.jpg",
+            "files/gallery/sea-eagle.jpg",
+            "files/gallery/Caha2.jpg",
+            "files/gallery/autumnal-dawn-beach2.jpg",
+            "files/gallery/bed.jpg",
+            "files/gallery/geri-bedroom2.jpg",
+            "files/gallery/glengarriff-woods1.jpg",
+            "files/gallery/morning-sun-view-from-sea-Oct-24.jpg",
+            "files/gallery/sea-eagle2.jpg",
+            "files/gallery/Dolpins2.jpg",
+            "files/gallery/autumnal-dawn-tig.jpg",
+            "files/gallery/bench.jpg",
+            "files/gallery/geri-garnish-glengarriff-from-the-air.jpg",
+            "files/gallery/heron.jpg",
+            "files/gallery/nov-fog2.jpg",
+            "files/gallery/view-from-tigin.jpg"
+        ];
+
+        let currentIndex = 0;
+        const carouselImage = document.getElementById('carousel-image');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+
+        // Function to update the carousel image
+        function updateCarouselImage() {
+            carouselImage.src = images[currentIndex];
+            // Set a generic alt text, or you could create a more descriptive array for alt texts
+            carouselImage.alt = `An Tigín Gallery Image ${currentIndex + 1}`;
+        }
+
+        // Add error handling for images
+        carouselImage.onerror = () => {
+            console.error(`Failed to load image: ${carouselImage.src}. Displaying placeholder.`);
+            carouselImage.src = `https://placehold.co/800x500/FF0000/FFFFFF?text=Image+Not+Found`; // Red placeholder for errors
+            carouselImage.alt = "Image failed to load";
+        };
+
+        // Event listener for the "Previous" button
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+            updateCarouselImage();
+        });
+
+        // Event listener for the "Next" button
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+            updateCarouselImage();
+        });
+
+        // Initialize carousel with the first image when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            if (images.length > 0) {
+                updateCarouselImage();
+            } else {
+                carouselImage.src = "https://placehold.co/800x500/CCCCCC/000000?text=No+Images+Found";
+                carouselImage.alt = "No images available for display";
+            }
+        });
+    </script>
+
+</body>
+</html>
+
