@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Tigín Calendar</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light background for the whole page */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex-grow: 1; /* Allows main content to take up available space */
+        }
+        /* Responsive iframe container */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 75%; /* 4:3 Aspect Ratio (600 / 800 * 100) */
+            height: 0;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-800 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-white text-2xl font-bold">An Tigín</a>
+            <div>
+                <a href="index.html" class="text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">Home</a>
+                <a href="gallery.html" class="text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">Gallery</a>
+                <a href="contact.html" class="text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">Contact Us</a>
+                <a href="calendar.html" class="text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">Calendar</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-12 max-w-4xl">
+        <section class="bg-white p-8 md:p-12 rounded-xl shadow-lg text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-blue-800 mb-6">Availability Calendar</h1>
+            <p class="text-lg leading-relaxed text-gray-700 mb-8">
+                Check our live availability below to plan your perfect escape to An Tigín.
+            </p>
+
+            <!-- Google Calendar Embed -->
+            <div class="iframe-container">
+                <iframe src="https://calendar.google.com/calendar/embed?src=r85jhsj960cvhg2m1jojf0p3u7md51qv%40import.calendar.google.com&ctz=Europe%2FDublin" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="index.html" class="text-blue-700 hover:underline text-lg font-semibold">Back to Home</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-6 mt-12">
+        <p>&copy; 2025 An Tigín Glengarriff. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
+
