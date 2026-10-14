@@ -16,85 +16,135 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        .carousel-container {
-            position: relative;
-            max-width: 800px; /* Max width for the carousel */
-            margin: 0 auto;
-            overflow: hidden;
-            border-radius: 1rem; /* Rounded corners */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            aspect-ratio: 16 / 9; /* Maintain a common aspect ratio for images */
-            display: flex; /* Use flex to center image vertically if needed */
-            align-items: center;
-            justify-content: center;
-        }
-        .carousel-image {
-            width: 100%;
-            height: 100%; /* Fill the container */
-            display: block;
-            object-fit: contain; /* Ensures image fits within the area without cropping, maintaining aspect ratio */
-            background-color: #e0e0e0; /* Background for images that don't fill the space */
-            transition: opacity 0.5s ease-in-out; /* Smooth transition for images */
-        }
-        .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 1rem;
-            cursor: pointer;
-            font-size: 1.5rem;
-            border-radius: 9999px; /* Fully rounded buttons */
-            opacity: 0.7;
-            transition: opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;
-            z-index: 10; /* Ensure buttons are above the image */
-        }
-        .carousel-button:hover {
-            opacity: 1;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-        .carousel-button-left {
-            left: 1rem;
-        }
-        .carousel-button-right {
-            right: 1rem;
-        }
+        #lightbox { position: fixed; inset: 0; background: rgba(17,24,39,.95); display: none; align-items: center; justify-content: center; z-index: 50; touch-action: pan-y; }
+        #lightbox.open { display: flex; }
+        #lb-img { max-width: 92vw; max-height: 82vh; object-fit: contain; border-radius: .5rem; }
+        .lb-btn { position: absolute; background: rgba(0,0,0,.5); color: #fff; border: none; width: 3rem; height: 3rem; border-radius: 9999px; font-size: 1.5rem; cursor: pointer; }
+        .lb-btn:hover { background: rgba(0,0,0,.8); }
         main {
             flex-grow: 1; /* Allows main content to take up available space */
         }
+        nav a[aria-current="page"] { background-color: #374151; }
     </style>
 </head>
 <body class="text-gray-800">
 
     <!-- Navigation Bar -->
     <nav class="bg-gray-800 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-white text-2xl font-bold">An Tigín</a>
-            <div>
+        <div class="container mx-auto flex flex-wrap justify-between items-center">
+            <a href="index.html" class="text-white text-2xl font-bold whitespace-nowrap">An Tigín</a>
+            <button id="nav-toggle" class="md:hidden text-white p-2 rounded-md hover:bg-gray-700" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <div id="nav-links" class="hidden w-full md:w-auto md:flex flex-col md:flex-row mt-3 md:mt-0">
                 <a href="index.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Home</a>
-                <a href="gallery.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Gallery</a>
+                <a href="gallery.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300" aria-current="page">Gallery</a>
                 <a href="calendar.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Calendar</a>
                 <a href="contact.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Contact Us</a>
             </div>
         </div>
+        <script>document.getElementById('nav-toggle').addEventListener('click',function(){var l=document.getElementById('nav-links'),o=l.classList.toggle('hidden');this.setAttribute('aria-expanded',String(!o));});</script>
     </nav>
 
-    <main class="container mx-auto px-4 py-12">
+    <main class="container mx-auto px-4 py-12 max-w-6xl">
         <h1 class="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-8">An Tigín Photo Gallery</h1>
 
-        <div class="carousel-container">
-            <img id="carousel-image" class="carousel-image" src="" alt="An Tigín Gallery Image">
-
-            <button id="prev-button" class="carousel-button carousel-button-left">&#10094;</button>
-            <button id="next-button" class="carousel-button carousel-button-right">&#10095;</button>
+        <div id="grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="0" aria-label="Open photo 1">
+                <img src="files/gallery/thumbs/barrel-sauna-by-the-water.jpg" alt="An Tigín Gallery Image 1" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="1" aria-label="Open photo 2">
+                <img src="files/gallery/thumbs/sauna-interior-stove-lake-view.jpg" alt="An Tigín Gallery Image 2" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="2" aria-label="Open photo 3">
+                <img src="files/gallery/thumbs/sauna-interior-wide-lake-view.jpg" alt="An Tigín Gallery Image 3" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="3" aria-label="Open photo 4">
+                <img src="files/gallery/thumbs/cabin-path-picnic-table.jpg" alt="An Tigín Gallery Image 4" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="4" aria-label="Open photo 5">
+                <img src="files/gallery/thumbs/cabin-from-sauna-window.jpg" alt="An Tigín Gallery Image 5" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="5" aria-label="Open photo 6">
+                <img src="files/gallery/thumbs/barrel-sauna-woodland-picnic-table.jpg" alt="An Tigín Gallery Image 6" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="6" aria-label="Open photo 7">
+                <img src="files/gallery/thumbs/view-from-tigin.jpg" alt="An Tigín Gallery Image 7" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="7" aria-label="Open photo 8">
+                <img src="files/gallery/thumbs/20240920_094450.jpg" alt="An Tigín Gallery Image 8" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="8" aria-label="Open photo 9">
+                <img src="files/gallery/thumbs/Sep-Sky.jpg" alt="An Tigín Gallery Image 9" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="9" aria-label="Open photo 10">
+                <img src="files/gallery/thumbs/autumnal-dawn.jpg" alt="An Tigín Gallery Image 10" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="10" aria-label="Open photo 11">
+                <img src="files/gallery/thumbs/fire-at-night.jpg" alt="An Tigín Gallery Image 11" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="11" aria-label="Open photo 12">
+                <img src="files/gallery/thumbs/geri-garnish-island.jpg" alt="An Tigín Gallery Image 12" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="12" aria-label="Open photo 13">
+                <img src="files/gallery/thumbs/kayaking-2024b.jpg" alt="An Tigín Gallery Image 13" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="13" aria-label="Open photo 14">
+                <img src="files/gallery/thumbs/sea-eagle.jpg" alt="An Tigín Gallery Image 14" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="14" aria-label="Open photo 15">
+                <img src="files/gallery/thumbs/Caha2.jpg" alt="An Tigín Gallery Image 15" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="15" aria-label="Open photo 16">
+                <img src="files/gallery/thumbs/autumnal-dawn-beach2.jpg" alt="An Tigín Gallery Image 16" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="16" aria-label="Open photo 17">
+                <img src="files/gallery/thumbs/bed.jpg" alt="An Tigín Gallery Image 17" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="17" aria-label="Open photo 18">
+                <img src="files/gallery/thumbs/geri-bedroom2.jpg" alt="An Tigín Gallery Image 18" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="18" aria-label="Open photo 19">
+                <img src="files/gallery/thumbs/glengarriff-woods1.jpg" alt="An Tigín Gallery Image 19" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="19" aria-label="Open photo 20">
+                <img src="files/gallery/thumbs/morning-sun-view-from-sea-Oct-24.jpg" alt="An Tigín Gallery Image 20" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="20" aria-label="Open photo 21">
+                <img src="files/gallery/thumbs/sea-eagle2.jpg" alt="An Tigín Gallery Image 21" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="21" aria-label="Open photo 22">
+                <img src="files/gallery/thumbs/Dolpins2.jpg" alt="An Tigín Gallery Image 22" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="22" aria-label="Open photo 23">
+                <img src="files/gallery/thumbs/autumnal-dawn-tig.jpg" alt="An Tigín Gallery Image 23" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="23" aria-label="Open photo 24">
+                <img src="files/gallery/thumbs/bench.jpg" alt="An Tigín Gallery Image 24" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="24" aria-label="Open photo 25">
+                <img src="files/gallery/thumbs/geri-garnish-glengarriff-from-the-air.jpg" alt="An Tigín Gallery Image 25" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="25" aria-label="Open photo 26">
+                <img src="files/gallery/thumbs/heron.jpg" alt="An Tigín Gallery Image 26" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
+            <button type="button" class="group block overflow-hidden rounded-xl shadow-md bg-gray-200 aspect-[4/3] focus:outline-none focus:ring-4 focus:ring-gray-400" data-i="26" aria-label="Open photo 27">
+                <img src="files/gallery/thumbs/nov-fog2.jpg" alt="An Tigín Gallery Image 27" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </button>
         </div>
 
-        <div class="text-center mt-8">
+        <div class="text-center mt-10">
             <a href="index.html" class="text-gray-700 hover:underline text-lg font-semibold">Back to Home</a>
         </div>
     </main>
+
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+        <img id="lb-img" src="" alt="">
+        <button id="lb-close" class="lb-btn" style="top:1rem;right:1rem" aria-label="Close">&times;</button>
+        <button id="lb-prev" class="lb-btn" style="left:1rem;top:50%;transform:translateY(-50%)" aria-label="Previous photo">&#10094;</button>
+        <button id="lb-next" class="lb-btn" style="right:1rem;top:50%;transform:translateY(-50%)" aria-label="Next photo">&#10095;</button>
+        <p id="lb-count" class="absolute bottom-4 left-0 right-0 text-center text-gray-300 text-sm"></p>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center py-6 mt-12">
@@ -102,78 +152,34 @@
     </footer>
 
     <script>
-        // Array of image URLs for the carousel
-        // Ensure these paths are correct relative to your gallery.html file
-        const images = [
-            "files/gallery/barrel-sauna-by-the-water.jpg",
-            "files/gallery/sauna-interior-stove-lake-view.jpg",
-            "files/gallery/sauna-interior-wide-lake-view.jpg",
-            "files/gallery/cabin-path-picnic-table.jpg",
-            "files/gallery/cabin-from-sauna-window.jpg",
-            "files/gallery/barrel-sauna-woodland-picnic-table.jpg",
-            "files/gallery/view-from-tigin.jpg",
-            "files/gallery/20240920_094450.jpg",
-            "files/gallery/Sep-Sky.jpg",
-            "files/gallery/autumnal-dawn.jpg",
-            "files/gallery/fire-at-night.jpg",
-            "files/gallery/geri-garnish-island.jpg",
-            "files/gallery/kayaking-2024b.jpg",
-            "files/gallery/sea-eagle.jpg",
-            "files/gallery/Caha2.jpg",
-            "files/gallery/autumnal-dawn-beach2.jpg",
-            "files/gallery/bed.jpg",
-            "files/gallery/geri-bedroom2.jpg",
-            "files/gallery/glengarriff-woods1.jpg",
-            "files/gallery/morning-sun-view-from-sea-Oct-24.jpg",
-            "files/gallery/sea-eagle2.jpg",
-            "files/gallery/Dolpins2.jpg",
-            "files/gallery/autumnal-dawn-tig.jpg",
-            "files/gallery/bench.jpg",
-            "files/gallery/geri-garnish-glengarriff-from-the-air.jpg",
-            "files/gallery/heron.jpg",
-            "files/gallery/nov-fog2.jpg"
-        ];
-
-        let currentIndex = 0;
-        const carouselImage = document.getElementById('carousel-image');
-        const prevButton = document.getElementById('prev-button');
-        const nextButton = document.getElementById('next-button');
-
-        // Function to update the carousel image
-        function updateCarouselImage() {
-            carouselImage.src = images[currentIndex];
-            // Set a generic alt text, or you could create a more descriptive array for alt texts
-            carouselImage.alt = `An Tigín Gallery Image ${currentIndex + 1}`;
+    (function () {
+        var tiles = Array.prototype.slice.call(document.querySelectorAll('#grid [data-i]'));
+        var full = tiles.map(function (t) { return t.querySelector('img').getAttribute('src').replace('/thumbs/', '/'); });
+        var lb = document.getElementById('lightbox'), img = document.getElementById('lb-img'), cnt = document.getElementById('lb-count');
+        var i = 0, last = null, sx = null;
+        function show(n) {
+            i = (n + full.length) % full.length;
+            img.src = full[i]; img.alt = 'An Tigín Gallery Image ' + (i + 1);
+            cnt.textContent = (i + 1) + ' / ' + full.length;
+            [i + 1, i - 1].forEach(function (k) { new Image().src = full[(k + full.length) % full.length]; });
         }
-
-        // Add error handling for images
-        carouselImage.onerror = () => {
-            console.error(`Failed to load image: ${carouselImage.src}. Displaying placeholder.`);
-            carouselImage.src = `https://placehold.co/800x500/FF0000/FFFFFF?text=Image+Not+Found`; // Red placeholder for errors
-            carouselImage.alt = "Image failed to load";
-        };
-
-        // Event listener for the "Previous" button
-        prevButton.addEventListener('click', () => {
-            currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
-            updateCarouselImage();
+        function open(n) { last = document.activeElement; show(n); lb.classList.add('open'); document.body.style.overflow = 'hidden'; document.getElementById('lb-close').focus(); }
+        function close() { lb.classList.remove('open'); document.body.style.overflow = ''; img.src = ''; if (last) last.focus(); }
+        tiles.forEach(function (t) { t.addEventListener('click', function () { open(+t.dataset.i); }); });
+        document.getElementById('lb-close').onclick = close;
+        document.getElementById('lb-prev').onclick = function (e) { e.stopPropagation(); show(i - 1); };
+        document.getElementById('lb-next').onclick = function (e) { e.stopPropagation(); show(i + 1); };
+        lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+        document.addEventListener('keydown', function (e) {
+            if (!lb.classList.contains('open')) return;
+            if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') show(i - 1); else if (e.key === 'ArrowRight') show(i + 1);
         });
-
-        // Event listener for the "Next" button
-        nextButton.addEventListener('click', () => {
-            currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
-            updateCarouselImage();
+        lb.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+        lb.addEventListener('touchend', function (e) {
+            if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; sx = null;
+            if (Math.abs(dx) > 40) show(dx < 0 ? i + 1 : i - 1);
         });
-
-        // Initialize carousel with the first image when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            if (images.length > 0) {
-                updateCarouselImage();
-            } else {
-                carouselImage.src = "https://placehold.co/800x500/CCCCCC/000000?text=No+Images+Found";
-                carouselImage.alt = "No images available for display";
-            }
-        });
+    })();
     </script>
 
 </body>

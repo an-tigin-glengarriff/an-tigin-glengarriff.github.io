@@ -19,8 +19,8 @@
             background-image: url('files/gallery/kayaking-2024d.jpg');
             background-size: cover;
             background-position: center;
-            height: 50vh; /* Responsive height for the banner */
-            min-height: 300px; /* Minimum height for smaller screens */
+            height: 70vh; /* Responsive height for the banner */
+            min-height: 420px; /* Minimum height for smaller screens */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -28,7 +28,7 @@
             overflow: hidden; /* Ensures content doesn't overflow if image is too large */
         }
         .banner-overlay {
-            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay for text readability */
+            background-color: rgba(0, 0, 0, 0.35); /* Semi-transparent overlay for text readability */
             position: absolute;
             top: 0;
             left: 0;
@@ -48,21 +48,26 @@
                 text-align: left;
             }
         }
+        nav a[aria-current="page"] { background-color: #374151; }
     </style>
 </head>
 <body class="text-gray-800">
 
     <!-- Navigation Bar -->
     <nav class="bg-gray-800 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-white text-2xl font-bold">An Tigín</a>
-            <div>
-                <a href="index.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Home</a>
+        <div class="container mx-auto flex flex-wrap justify-between items-center">
+            <a href="index.html" class="text-white text-2xl font-bold whitespace-nowrap">An Tigín</a>
+            <button id="nav-toggle" class="md:hidden text-white p-2 rounded-md hover:bg-gray-700" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <div id="nav-links" class="hidden w-full md:w-auto md:flex flex-col md:flex-row mt-3 md:mt-0">
+                <a href="index.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300" aria-current="page">Home</a>
                 <a href="gallery.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Gallery</a>
                 <a href="calendar.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Calendar</a>
                 <a href="contact.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Contact Us</a>
             </div>
         </div>
+        <script>document.getElementById('nav-toggle').addEventListener('click',function(){var l=document.getElementById('nav-links'),o=l.classList.toggle('hidden');this.setAttribute('aria-expanded',String(!o));});</script>
     </nav>
 
     <!-- Banner Section -->
@@ -72,9 +77,13 @@
                 <h1 class="text-5xl md:text-6xl font-bold text-white drop-shadow-lg mb-4 rounded-lg px-4 py-2">
                     An Tigín Glengarriff
                 </h1>
-                <p class="text-xl md:text-2xl text-white drop-shadow-md italic">
+                <p class="text-xl md:text-2xl text-white drop-shadow-md italic mb-8">
                     Unplug & Unwind...
                 </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="calendar.html" class="bg-white text-gray-800 font-bold py-3 px-8 rounded-full shadow-md hover:bg-gray-100 transition duration-300 text-center">Check Availability</a>
+                    <a href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener" class="border-2 border-white text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-gray-800 transition duration-300 text-center">Book on Airbnb &rarr;</a>
+                </div>
             </div>
         </div>
     </header>
@@ -83,23 +92,38 @@
     <main class="container mx-auto px-4 py-12 max-w-4xl">
         <section class="bg-white p-8 md:p-12 rounded-xl shadow-lg mb-12">
             <h2 class="text-4xl font-semibold text-center text-gray-800 mb-6">Welcome to An Tigín</h2>
-            <p class="text-lg leading-relaxed text-gray-700 mb-4 text-justify">
+            <p class="text-lg leading-relaxed text-gray-700 mb-4 text-left md:text-justify">
                 A warm and cosy off-grid cabin nestled between the mountains and the sea. Here, you can experience an idyllic escape from the hustle and bustle of everyday life. Located on the "Wild Atlantic Way" and just 3km from the picturesque village of Glengarriff, An Tigín offers a perfect blend of relaxation and nature.
             </p>
-            <p class="text-lg leading-relaxed text-gray-700 text-justify">
+            <p class="text-lg leading-relaxed text-gray-700 text-left md:text-justify">
                 Whether you choose to swim in the calm waters, explore the stunning landscapes, or simply prefer to curl up with a good book by the fire, An Tigín provides the perfect setting to unplug and recharge your mind and body.
             </p>
         </section>
 
+        <!-- Photo strip -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <a href="gallery.html"><img src="files/gallery/thumbs/barrel-sauna-by-the-water.jpg" alt="Barrel sauna by the water" loading="lazy" class="w-full h-36 md:h-40 object-cover rounded-xl shadow-md hover:opacity-90 transition"></a>
+            <a href="gallery.html"><img src="files/gallery/thumbs/view-from-tigin.jpg" alt="View from An Tigín" loading="lazy" class="w-full h-36 md:h-40 object-cover rounded-xl shadow-md hover:opacity-90 transition"></a>
+            <a href="gallery.html"><img src="files/gallery/thumbs/fire-at-night.jpg" alt="Fire at night" loading="lazy" class="w-full h-36 md:h-40 object-cover rounded-xl shadow-md hover:opacity-90 transition"></a>
+            <a href="gallery.html"><img src="files/gallery/thumbs/bed.jpg" alt="Bedroom" loading="lazy" class="w-full h-36 md:h-40 object-cover rounded-xl shadow-md hover:opacity-90 transition"></a>
+        </section>
+        <div class="text-center mb-12">
+            <a href="gallery.html" class="text-gray-700 hover:underline text-lg font-semibold">See the full gallery &rarr;</a>
+        </div>
+
         <!-- Contact Section -->
         <section class="bg-gray-700 text-white p-8 md:p-10 rounded-xl shadow-lg text-center">
             <h2 class="text-3xl font-semibold mb-4">Ready to Unplug?</h2>
-            <p class="text-xl mb-4">Contact us to book your serene escape:</p>
+            <p class="text-xl mb-6">Contact us to book your serene escape:</p>
             <div class="flex flex-col md:flex-row justify-center items-center gap-4">
                 <p class="text-2xl font-bold">Shane / Geri</p>
                 <a href="tel:+353838128308" class="bg-white text-gray-700 font-bold py-3 px-6 rounded-full shadow-md hover:bg-gray-100 transition duration-300 ease-in-out">
                     Call: 00353 8381 28308
                 </a>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+                <a href="calendar.html" class="border-2 border-white text-white font-bold py-3 px-6 rounded-full hover:bg-white hover:text-gray-700 transition duration-300">Check Availability</a>
+                <a href="contact.html" class="border-2 border-white text-white font-bold py-3 px-6 rounded-full hover:bg-white hover:text-gray-700 transition duration-300">All contact details</a>
             </div>
         </section>
     </main>

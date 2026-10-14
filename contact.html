@@ -20,21 +20,26 @@
             flex-grow: 1; /* Allows main content to take up available space */
         }
         .hero { background-image: linear-gradient(rgba(31,41,55,.55),rgba(31,41,55,.55)), url('files/gallery/Sep-Sky.jpg'); background-size: cover; background-position: center; }
+        nav a[aria-current="page"] { background-color: #374151; }
     </style>
 </head>
 <body class="text-gray-800">
 
     <!-- Navigation Bar -->
     <nav class="bg-gray-800 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-white text-2xl font-bold">An Tigín</a>
-            <div>
+        <div class="container mx-auto flex flex-wrap justify-between items-center">
+            <a href="index.html" class="text-white text-2xl font-bold whitespace-nowrap">An Tigín</a>
+            <button id="nav-toggle" class="md:hidden text-white p-2 rounded-md hover:bg-gray-700" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <div id="nav-links" class="hidden w-full md:w-auto md:flex flex-col md:flex-row mt-3 md:mt-0">
                 <a href="index.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Home</a>
                 <a href="gallery.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Gallery</a>
                 <a href="calendar.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Calendar</a>
-                <a href="contact.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Contact Us</a>
+                <a href="contact.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300" aria-current="page">Contact Us</a>
             </div>
         </div>
+        <script>document.getElementById('nav-toggle').addEventListener('click',function(){var l=document.getElementById('nav-links'),o=l.classList.toggle('hidden');this.setAttribute('aria-expanded',String(!o));});</script>
     </nav>
 
     <main class="container mx-auto px-4 py-12 max-w-4xl">
