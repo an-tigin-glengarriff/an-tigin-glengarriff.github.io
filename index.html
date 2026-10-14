@@ -38,6 +38,16 @@
             align-items: center;
             justify-content: center;
         }
+        /* On medium+ screens, place hero heading and subtitle over the darker left side */
+        @media (min-width: 768px) {
+            .banner-overlay {
+                justify-content: flex-start;
+                padding-left: 6%;
+            }
+            .banner-overlay > div {
+                text-align: left;
+            }
+        }
     </style>
 </head>
 <body class="text-gray-800">
