@@ -37,6 +37,14 @@
             height: 100%;
             border: 0;
         }
+        .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+        .cal-dow { font-size:.75rem; font-weight:600; color:#6b7280; padding:4px 0; }
+        .cal-day { aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; border-radius:.5rem; font-size:.9rem; }
+        .cal-avail { background:#dcfce7; color:#166534; }
+        .cal-booked { background:#fee2e2; color:#991b1b; text-decoration:line-through; }
+        .cal-past { background:#f3f4f6; color:#9ca3af; }
+        .cal-today { outline:2px solid #1f2937; }
+        .legend-swatch { display:inline-block; width:1rem; height:1rem; border-radius:.25rem; vertical-align:middle; margin-right:.35rem; }
     </style>
 </head>
 <body class="text-gray-800">
@@ -61,6 +69,62 @@
                 Check our live availability below to plan your perfect escape to An Tigín.
             </p>
 
+            <div id="availability" class="max-w-md mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <button id="cal-prev" class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300 disabled:opacity-40" aria-label="Previous month">&lsaquo;</button>
+                    <h2 id="cal-title" class="text-2xl font-semibold text-gray-800"></h2>
+                    <button id="cal-next" class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300 disabled:opacity-40" aria-label="Next month">&rsaquo;</button>
+                </div>
+                <div class="cal-grid mb-2" id="cal-dow"></div>
+                <div class="cal-grid" id="cal-days"></div>
+                <div class="flex justify-center gap-6 mt-6 text-sm text-gray-700">
+                    <span><span class="legend-swatch cal-avail"></span>Available</span>
+                    <span><span class="legend-swatch cal-booked"></span>Booked</span>
+                </div>
+                <p id="cal-updated" class="text-xs text-gray-500 mt-4"></p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+    (function () {
+        var booked = [], offset = 0, MAX = 11;
+        var today = new Date(); today.setHours(0,0,0,0);
+        var names = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        var dow = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+        var d = document.getElementById('cal-dow');
+        dow.forEach(function (n) { var e = document.createElement('div'); e.className = 'cal-dow'; e.textContent = n; d.appendChild(e); });
+        function key(y, m, day) { return y + '-' + String(m + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0'); }
+        function isBooked(k) { return booked.some(function (r) { return k >= r.start && k < r.end; }); }
+        function render() {
+            var y = today.getFullYear(), m = today.getMonth() + offset;
+            y += Math.floor(m / 12); m = ((m % 12) + 12) % 12;
+            document.getElementById('cal-title').textContent = names[m] + ' ' + y;
+            document.getElementById('cal-prev').disabled = offset <= 0;
+            document.getElementById('cal-next').disabled = offset >= MAX;
+            var g = document.getElementById('cal-days'); g.innerHTML = '';
+            var lead = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
+            for (var i = 0; i < lead; i++) g.appendChild(document.createElement('div'));
+            for (var day = 1; day <= days; day++) {
+                var c = document.createElement('div'), dt = new Date(y, m, day), k = key(y, m, day);
+                c.textContent = day;
+                c.className = 'cal-day ' + (dt < today ? 'cal-past' : isBooked(k) ? 'cal-booked' : 'cal-avail');
+                if (dt.getTime() === today.getTime()) c.className += ' cal-today';
+                c.title = dt < today ? '' : (isBooked(k) ? 'Booked' : 'Available');
+                g.appendChild(c);
+            }
+        }
+        document.getElementById('cal-prev').onclick = function () { if (offset > 0) { offset--; render(); } };
+        document.getElementById('cal-next').onclick = function () { if (offset < MAX) { offset++; render(); } };
+        render();
+        fetch('/availability.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
+            booked = j.booked || []; render();
+            if (j.updated) document.getElementById('cal-updated').textContent = 'Last updated: ' + new Date(j.updated).toLocaleString();
+        }).catch(function () {
+            document.getElementById('cal-updated').textContent = 'Availability could not be loaded right now. Please contact us to check dates.';
+        });
+    })();
+    </script>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center py-6 mt-12">
