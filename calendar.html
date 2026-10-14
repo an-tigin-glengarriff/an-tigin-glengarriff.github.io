@@ -46,6 +46,7 @@
         .cal-today { outline:2px solid #1f2937; }
         .legend-swatch { display:inline-block; width:1rem; height:1rem; border-radius:.25rem; vertical-align:middle; margin-right:.35rem; }
         nav a[aria-current="page"] { background-color: #374151; }
+        .hero { background-image: linear-gradient(rgba(31,41,55,.55),rgba(31,41,55,.55)), url('files/gallery/morning-sun-view-from-sea-Oct-24.jpg'); background-size: cover; background-position: center; }
     </style>
 </head>
 <body class="text-gray-800">
@@ -68,11 +69,14 @@
     </nav>
 
     <main class="container mx-auto px-4 py-12 max-w-4xl">
-        <section class="bg-white p-8 md:p-12 rounded-xl shadow-lg text-center">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Availability Calendar</h1>
-            <p class="text-lg leading-relaxed text-gray-700 mb-8">
+        <section class="hero text-white rounded-xl shadow-lg text-center px-6 py-16 md:py-20 mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Availability Calendar</h1>
+            <p class="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
                 Check our live availability below to plan your perfect escape to An Tigín.
             </p>
+        </section>
+
+        <section class="bg-white p-8 md:p-12 rounded-xl shadow-lg text-center">
 
             <div id="availability" class="max-w-md mx-auto">
                 <div class="flex items-center justify-between mb-4">
