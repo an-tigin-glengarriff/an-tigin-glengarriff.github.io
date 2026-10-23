@@ -226,3 +226,18 @@ h2{font-size:clamp(1.75rem,1.1rem + 3vw,4rem);letter-spacing:-.04em}
 }
 .hero .wrap{padding-top:clamp(110px,14vh,160px)}
 .hero h1{font-size:clamp(2.2rem,1.1rem + 4.4vw,5rem);max-width:15ch}
+
+/* ---- v3: Gaelic brand mark + hero spacing ---- */
+.brand{font-family:"Uncial Antiqua","Rethink Sans",serif;font-weight:400;letter-spacing:0;font-size:1.75rem;line-height:1.1;display:block;white-space:nowrap}
+.logo{letter-spacing:0}
+.logo small{margin-top:6px}
+.footer__logo{display:inline-block;margin-bottom:var(--xl)}
+.footer__logo .brand{font-size:clamp(2rem,1.6rem + 1.5vw,2.75rem)}
+.hero h1{margin-bottom:8rem}
+.hero{min-height:min(100svh,940px);height:auto}
+@media (max-width:640px){
+  .brand{font-size:1.5rem}
+  .hero h1{margin-bottom:7.75rem}
+}
+@media (max-width:360px){.brand{font-size:1.35rem}}
+@media (min-width:901px){.preview-flag{left:auto;right:12px}}
