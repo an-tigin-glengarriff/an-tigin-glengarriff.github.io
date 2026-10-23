@@ -224,3 +224,5 @@ h2{font-size:clamp(1.75rem,1.1rem + 3vw,4rem);letter-spacing:-.04em}
 @media (max-width:900px){
   .preview-flag{position:static;display:block;border-radius:0;text-align:center;padding:10px}
 }
+.hero .wrap{padding-top:clamp(110px,14vh,160px)}
+.hero h1{font-size:clamp(2.2rem,1.1rem + 4.4vw,5rem);max-width:15ch}
