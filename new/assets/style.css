@@ -241,3 +241,7 @@ h2{font-size:clamp(1.75rem,1.1rem + 3vw,4rem);letter-spacing:-.04em}
 }
 @media (max-width:360px){.brand{font-size:1.35rem}}
 @media (min-width:901px){.preview-flag{left:auto;right:12px}}
+/* v4: keep "mountains and the sea." on one line */
+.hero h1 .nowrap{white-space:nowrap}
+.hero h1{max-width:none}
+@media (max-width:640px){.hero h1{font-size:clamp(1.6rem,0.35rem + 7.1vw,2.6rem)}}
