@@ -287,3 +287,6 @@ h1,h2,h3,.footer__big{text-shadow:0 1px 1px rgba(39,34,32,.12),0 2px 8px rgba(39
 .ev-dir b{color:var(--autumn);font-weight:600}
 @media (max-width:900px){.ev-groups{grid-template-columns:1fr}}
 @media (max-width:520px){.ev-list li{grid-template-columns:1fr;gap:2px}.cal-ev{width:5px;height:5px;margin-left:-2.5px;bottom:10%}}
+/* nav: keep 9 tabs on one line on small laptops */
+.nav a{white-space:nowrap}.logo small{white-space:nowrap}
+@media (min-width:901px) and (max-width:1240px){.nav{gap:14px;font-size:.9rem}.nav .btn{padding-left:16px;padding-right:16px}}
