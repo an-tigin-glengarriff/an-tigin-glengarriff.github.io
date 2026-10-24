@@ -2,88 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Availability · An Tigín Glengarriff</title>
-<meta name="description" content="Live availability for An Tigín, Glengarriff.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Uncial+Antiqua&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<title>An Tigín Glengarriff</title>
+<link rel="canonical" href="https://an-tigin.ie/calendar.html">
+<meta http-equiv="refresh" content="0; url=/calendar.html">
+<meta name="robots" content="noindex">
 </head>
 <body>
-<header class="header">
-  <div class="wrap">
-    <a class="logo" href="index.html" aria-label="An Tigín home"><span class="brand" lang="ga">An Tigín</span><small>Glengarriff · Co. Cork</small></a>
-    <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><b>Menu</b><span></span></button>
-    <nav class="nav"><a href="index.html">Home</a><a href="about.html">The Cabin</a><a href="gallery.html">Gallery</a><a href="calendar.html" aria-current="page">Availability</a><a href="contact.html">Contact</a><a class="btn btn--dark" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Book your stay</a></nav>
-  </div>
-</header>
-
-<main>
-<section class="hero page-hero">
-  <img class="hero__img" src="../files/gallery/morning-sun-view-from-sea-Oct-24.jpg" alt="Morning sun over the sea near An Tigín">
-  <div class="wrap"><span class="eyebrow" style="color:rgba(245,244,239,.8)">Availability</span><h1>Plan your escape.</h1><p>Check our live availability, then book direct or through Airbnb.</p></div>
-</section>
-<section class="section">
-  <div class="wrap split split--top">
-    <div class="cal reveal">
-      <div class="cal__head"><button id="cal-prev" aria-label="Previous month">&larr;</button><h3 id="cal-title"></h3><button id="cal-next" aria-label="Next month">&rarr;</button></div>
-      <div class="cal-grid" id="cal-dow" style="margin-bottom:6px"></div>
-      <div class="cal-grid" id="cal-days"></div>
-      <div class="legend"><span><i class="cal-avail"></i>Available</span><span><i class="cal-booked"></i>Booked</span></div>
-      <p id="cal-updated" class="muted" style="font-size:.8rem;margin:16px 0 0"></p>
-    </div>
-    <div class="reveal">
-      <span class="eyebrow">Book direct</span>
-      <h2>Found your dates?</h2>
-      <p class="lead">Call or email Geri &amp; Shane to book direct.</p>
-      <div style="margin:28px 0;display:grid;gap:12px">
-        <a class="btn btn--dark" href="tel:+353838128308" style="justify-content:space-between">Call 00353 8381 28308 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
-        <a class="btn btn--white" href="mailto:an.tigin.glengarriff@gmail.com" style="justify-content:space-between;border-color:rgba(39,34,32,.2);white-space:normal;word-break:break-all">an.tigin.glengarriff@gmail.com <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
-      </div>
-      <p class="muted">Or book online via Airbnb.</p>
-      <a class="btn btn--line" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Book on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
-      <div class="notice" style="margin-top:32px;background:var(--sand)"><div>Adults only: we're unable to accommodate children or pets.</div></div>
-    </div>
-  </div>
-</section>
-</main>
-<script>
-(function(){var booked=[],offset=0,MAX=11,today=new Date();today.setHours(0,0,0,0);
-var names=['January','February','March','April','May','June','July','August','September','October','November','December'];
-var d=document.getElementById('cal-dow');['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(n){var e=document.createElement('div');e.className='cal-dow';e.textContent=n;d.appendChild(e);});
-function key(y,m,day){return y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');}
-function isBooked(k){return booked.some(function(r){return k>=r.start&&k<r.end;});}
-function render(){var y=today.getFullYear(),m=today.getMonth()+offset;y+=Math.floor(m/12);m=((m%12)+12)%12;
-document.getElementById('cal-title').textContent=names[m]+' '+y;document.getElementById('cal-prev').disabled=offset<=0;document.getElementById('cal-next').disabled=offset>=MAX;
-var g=document.getElementById('cal-days');g.innerHTML='';var lead=(new Date(y,m,1).getDay()+6)%7,days=new Date(y,m+1,0).getDate();
-for(var i=0;i<lead;i++)g.appendChild(document.createElement('div'));
-for(var day=1;day<=days;day++){var c=document.createElement('div'),dt=new Date(y,m,day),k=key(y,m,day);c.textContent=day;
-c.className='cal-day '+(dt<today?'cal-past':isBooked(k)?'cal-booked':'cal-avail');if(dt.getTime()===today.getTime())c.className+=' cal-today';
-c.title=dt<today?'':(isBooked(k)?'Booked':'Available');g.appendChild(c);}}
-document.getElementById('cal-prev').onclick=function(){if(offset>0){offset--;render();}};document.getElementById('cal-next').onclick=function(){if(offset<MAX){offset++;render();}};
-render();
-fetch('../availability.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){booked=j.booked||[];render();
-if(j.updated)document.getElementById('cal-updated').textContent='Last updated: '+new Date(j.updated).toLocaleString();}).catch(function(){
-document.getElementById('cal-updated').textContent='Availability could not be loaded right now. Please contact us to check dates.';});})();
-</script>
-<footer class="footer">
-  <div class="wrap">
-    <a class="logo footer__logo" href="index.html"><span class="brand" lang="ga">An Tigín</span><small>Glengarriff · Co. Cork</small></a>
-    <p class="footer__big">Unplug &amp;<br>unwind.</p>
-    <div class="footer__grid">
-      <div>
-        <h4>Book direct</h4>
-        <p style="max-width:34ch;color:#b9b2aa">Call or email Geri &amp; Shane to book your stay at An Tigín, or book online through Airbnb.</p>
-        <div class="btn-row" style="margin-top:16px"><a class="btn btn--white" href="tel:+353838128308">Call 00353 8381 28308</a><a class="btn btn--ghost" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a></div>
-      </div>
-      <div><h4>Explore</h4><a href="about.html">The Cabin</a><a href="gallery.html">Gallery</a><a href="calendar.html">Availability</a><a href="about.html#walks">Local walks</a></div>
-      <div><h4>Contact</h4><a href="tel:+353838128308">00353 8381 28308</a><a href="mailto:an.tigin.glengarriff@gmail.com">an.tigin.glengarriff@gmail.com</a><a href="https://www.openstreetmap.org/search?query=Glengarriff%2C%20Co.%20Cork%2C%20Ireland" target="_blank" rel="noopener">Glengarriff, Co. Cork, Ireland</a></div>
-    </div>
-    <div class="footer__base"><span>&copy; 2026 An Tigín Glengarriff. All rights reserved.</span><span>Adults-only off-grid retreat on the Wild Atlantic Way</span></div>
-  </div>
-</footer>
-<div class="preview-flag">Preview design · <a href="/">current site</a></div>
-<script src="assets/site.js"></script>
+<p>This page has moved to <a href="/calendar.html">an-tigin.ie</a>.</p>
+<script>location.replace('/calendar.html'+location.hash);</script>
 </body>
 </html>

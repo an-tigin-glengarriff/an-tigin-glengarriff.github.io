@@ -1,159 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>An Tigín Calendar</title>
-    <!-- Load Tailwind CSS from CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Font: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f8f8; /* Light background for the whole page */
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        main {
-            flex-grow: 1; /* Allows main content to take up available space */
-        }
-        /* Responsive iframe container */
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 75%; /* 4:3 Aspect Ratio (600 / 800 * 100) */
-            height: 0;
-            overflow: hidden;
-            border-radius: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
-        .cal-dow { font-size:.75rem; font-weight:600; color:#6b7280; padding:4px 0; }
-        .cal-day { aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; border-radius:.5rem; font-size:.9rem; }
-        .cal-avail { background:#dcfce7; color:#166534; }
-        .cal-booked { background:#fee2e2; color:#991b1b; text-decoration:line-through; }
-        .cal-past { background:#f3f4f6; color:#9ca3af; }
-        .cal-today { outline:2px solid #1f2937; }
-        .legend-swatch { display:inline-block; width:1rem; height:1rem; border-radius:.25rem; vertical-align:middle; margin-right:.35rem; }
-        nav a[aria-current="page"] { background-color: #374151; }
-        .hero { background-image: linear-gradient(rgba(31,41,55,.55),rgba(31,41,55,.55)), url('files/gallery/morning-sun-view-from-sea-Oct-24.jpg'); background-size: cover; background-position: center; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://an-tigin.ie/calendar.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="An Tigín Glengarriff">
+<meta property="og:title" content="Availability · An Tigín Glengarriff">
+<meta property="og:description" content="Live availability for An Tigín, Glengarriff.">
+<meta property="og:url" content="https://an-tigin.ie/calendar.html">
+<meta property="og:image" content="https://an-tigin.ie/files/gallery/kayaking-2024d.jpg">
+<meta property="og:locale" content="en_IE">
+<meta name="twitter:card" content="summary_large_image">
+<title>Availability · An Tigín Glengarriff</title>
+<meta name="description" content="Live availability for An Tigín, Glengarriff.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Uncial+Antiqua&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
 </head>
-<body class="text-gray-800">
+<body>
+<header class="header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="An Tigín home"><span class="brand" lang="ga">An Tigín</span><small>Glengarriff · Co. Cork</small></a>
+    <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><b>Menu</b><span></span></button>
+    <nav class="nav"><a href="index.html">Home</a><a href="about.html">The Cabin</a><a href="gallery.html">Gallery</a><a href="calendar.html" aria-current="page">Availability</a><a href="contact.html">Contact</a><a class="btn btn--dark" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Book your stay</a></nav>
+  </div>
+</header>
 
-    <!-- Navigation Bar -->
-    <nav class="bg-gray-800 p-4 shadow-md">
-        <div class="container mx-auto flex flex-wrap justify-between items-center">
-            <a href="index.html" class="text-white text-2xl font-bold whitespace-nowrap">An Tigín</a>
-            <button id="nav-toggle" class="md:hidden text-white p-2 rounded-md hover:bg-gray-700" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
-            <div id="nav-links" class="hidden w-full md:w-auto md:flex flex-col md:flex-row mt-3 md:mt-0">
-                <a href="index.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Home</a>
-                <a href="about.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">About Us</a>
-                <a href="gallery.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Gallery</a>
-                <a href="calendar.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300" aria-current="page">Calendar</a>
-                <a href="contact.html" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Contact Us</a>
-            </div>
-        </div>
-        <script>document.getElementById('nav-toggle').addEventListener('click',function(){var l=document.getElementById('nav-links'),o=l.classList.toggle('hidden');this.setAttribute('aria-expanded',String(!o));});</script>
-    </nav>
-
-    <main class="container mx-auto px-4 py-12 max-w-4xl">
-        <section class="hero text-white rounded-xl shadow-lg text-center px-6 py-16 md:py-20 mb-10">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Availability Calendar</h1>
-            <p class="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-                Check our live availability below to plan your perfect escape to An Tigín.
-            </p>
-        </section>
-
-        <section class="bg-white p-8 md:p-12 rounded-xl shadow-lg text-center">
-
-            <div id="availability" class="max-w-md mx-auto">
-                <div class="flex items-center justify-between mb-4">
-                    <button id="cal-prev" class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300 disabled:opacity-40" aria-label="Previous month">&lsaquo;</button>
-                    <h2 id="cal-title" class="text-2xl font-semibold text-gray-800"></h2>
-                    <button id="cal-next" class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300 disabled:opacity-40" aria-label="Next month">&rsaquo;</button>
-                </div>
-                <div class="cal-grid mb-2" id="cal-dow"></div>
-                <div class="cal-grid" id="cal-days"></div>
-                <div class="flex justify-center gap-6 mt-6 text-sm text-gray-700">
-                    <span><span class="legend-swatch cal-avail"></span>Available</span>
-                    <span><span class="legend-swatch cal-booked"></span>Booked</span>
-                </div>
-                <p id="cal-updated" class="text-xs text-gray-500 mt-4"></p>
-                <details class="mt-8 text-left bg-gray-50 rounded-xl shadow-md">
-                    <summary class="list-none cursor-pointer bg-gray-800 text-white text-xl font-semibold text-center px-6 py-3 rounded-xl hover:bg-gray-700 transition duration-300">Book Now</summary>
-                    <div class="p-6 text-center">
-                        <p class="text-gray-700 mb-4">Book direct with us:</p>
-                        <p class="text-2xl font-bold text-gray-800 mb-2">Geri / Shane</p>
-                        <a href="tel:+353838128308" class="block text-gray-700 hover:underline text-xl font-semibold mb-2">&#128222; 00353 8381 28308</a>
-                        <a href="mailto:an.tigin.glengarriff@gmail.com" class="block text-gray-700 hover:underline text-lg font-semibold break-all">&#9993;&#65039; an.tigin.glengarriff@gmail.com</a>
-                        <div class="border-t border-gray-200 mt-6 pt-6">
-                            <p class="text-gray-700 mb-3">Or book online via Airbnb</p>
-                            <a href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener" class="inline-block bg-gray-800 text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-gray-700 transition duration-300 ease-in-out">Book on Airbnb &rarr;</a>
-                        </div>
-                    </div>
-                </details>
-            </div>
-        </section>
-    </main>
-
-    <script>
-    (function () {
-        var booked = [], offset = 0, MAX = 11;
-        var today = new Date(); today.setHours(0,0,0,0);
-        var names = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-        var dow = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-        var d = document.getElementById('cal-dow');
-        dow.forEach(function (n) { var e = document.createElement('div'); e.className = 'cal-dow'; e.textContent = n; d.appendChild(e); });
-        function key(y, m, day) { return y + '-' + String(m + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0'); }
-        function isBooked(k) { return booked.some(function (r) { return k >= r.start && k < r.end; }); }
-        function render() {
-            var y = today.getFullYear(), m = today.getMonth() + offset;
-            y += Math.floor(m / 12); m = ((m % 12) + 12) % 12;
-            document.getElementById('cal-title').textContent = names[m] + ' ' + y;
-            document.getElementById('cal-prev').disabled = offset <= 0;
-            document.getElementById('cal-next').disabled = offset >= MAX;
-            var g = document.getElementById('cal-days'); g.innerHTML = '';
-            var lead = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
-            for (var i = 0; i < lead; i++) g.appendChild(document.createElement('div'));
-            for (var day = 1; day <= days; day++) {
-                var c = document.createElement('div'), dt = new Date(y, m, day), k = key(y, m, day);
-                c.textContent = day;
-                c.className = 'cal-day ' + (dt < today ? 'cal-past' : isBooked(k) ? 'cal-booked' : 'cal-avail');
-                if (dt.getTime() === today.getTime()) c.className += ' cal-today';
-                c.title = dt < today ? '' : (isBooked(k) ? 'Booked' : 'Available');
-                g.appendChild(c);
-            }
-        }
-        document.getElementById('cal-prev').onclick = function () { if (offset > 0) { offset--; render(); } };
-        document.getElementById('cal-next').onclick = function () { if (offset < MAX) { offset++; render(); } };
-        render();
-        fetch('/availability.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
-            booked = j.booked || []; render();
-            if (j.updated) document.getElementById('cal-updated').textContent = 'Last updated: ' + new Date(j.updated).toLocaleString();
-        }).catch(function () {
-            document.getElementById('cal-updated').textContent = 'Availability could not be loaded right now. Please contact us to check dates.';
-        });
-    })();
-    </script>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white text-center py-6 mt-12">
-        <p>&copy; 2025 An Tigín Glengarriff. All rights reserved.</p>
-    </footer>
-
+<main>
+<section class="hero page-hero">
+  <img class="hero__img" src="files/gallery/morning-sun-view-from-sea-Oct-24.jpg" alt="Morning sun over the sea near An Tigín">
+  <div class="wrap"><span class="eyebrow" style="color:rgba(245,244,239,.8)">Availability</span><h1>Plan your escape.</h1><p>Check our live availability, then book direct or through Airbnb.</p></div>
+</section>
+<section class="section">
+  <div class="wrap split split--top">
+    <div class="cal reveal">
+      <div class="cal__head"><button id="cal-prev" aria-label="Previous month">&larr;</button><h3 id="cal-title"></h3><button id="cal-next" aria-label="Next month">&rarr;</button></div>
+      <div class="cal-grid" id="cal-dow" style="margin-bottom:6px"></div>
+      <div class="cal-grid" id="cal-days"></div>
+      <div class="legend"><span><i class="cal-avail"></i>Available</span><span><i class="cal-booked"></i>Booked</span></div>
+      <p id="cal-updated" class="muted" style="font-size:.8rem;margin:16px 0 0"></p>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">Book direct</span>
+      <h2>Found your dates?</h2>
+      <p class="lead">Call or email Geri &amp; Shane to book direct.</p>
+      <div style="margin:28px 0;display:grid;gap:12px">
+        <a class="btn btn--dark" href="tel:+353838128308" style="justify-content:space-between">Call 00353 8381 28308 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+        <a class="btn btn--white" href="mailto:an.tigin.glengarriff@gmail.com" style="justify-content:space-between;border-color:rgba(39,34,32,.2);white-space:normal;word-break:break-all">an.tigin.glengarriff@gmail.com <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      </div>
+      <p class="muted">Or book online via Airbnb.</p>
+      <a class="btn btn--line" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Book on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      <div class="notice" style="margin-top:32px;background:var(--sand)"><div>Adults only: we're unable to accommodate children or pets.</div></div>
+    </div>
+  </div>
+</section>
+</main>
+<script>
+(function(){var booked=[],offset=0,MAX=11,today=new Date();today.setHours(0,0,0,0);
+var names=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var d=document.getElementById('cal-dow');['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(n){var e=document.createElement('div');e.className='cal-dow';e.textContent=n;d.appendChild(e);});
+function key(y,m,day){return y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');}
+function isBooked(k){return booked.some(function(r){return k>=r.start&&k<r.end;});}
+function render(){var y=today.getFullYear(),m=today.getMonth()+offset;y+=Math.floor(m/12);m=((m%12)+12)%12;
+document.getElementById('cal-title').textContent=names[m]+' '+y;document.getElementById('cal-prev').disabled=offset<=0;document.getElementById('cal-next').disabled=offset>=MAX;
+var g=document.getElementById('cal-days');g.innerHTML='';var lead=(new Date(y,m,1).getDay()+6)%7,days=new Date(y,m+1,0).getDate();
+for(var i=0;i<lead;i++)g.appendChild(document.createElement('div'));
+for(var day=1;day<=days;day++){var c=document.createElement('div'),dt=new Date(y,m,day),k=key(y,m,day);c.textContent=day;
+c.className='cal-day '+(dt<today?'cal-past':isBooked(k)?'cal-booked':'cal-avail');if(dt.getTime()===today.getTime())c.className+=' cal-today';
+c.title=dt<today?'':(isBooked(k)?'Booked':'Available');g.appendChild(c);}}
+document.getElementById('cal-prev').onclick=function(){if(offset>0){offset--;render();}};document.getElementById('cal-next').onclick=function(){if(offset<MAX){offset++;render();}};
+render();
+fetch('availability.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){booked=j.booked||[];render();
+if(j.updated)document.getElementById('cal-updated').textContent='Last updated: '+new Date(j.updated).toLocaleString();}).catch(function(){
+document.getElementById('cal-updated').textContent='Availability could not be loaded right now. Please contact us to check dates.';});})();
+</script>
+<footer class="footer">
+  <div class="wrap">
+    <a class="logo footer__logo" href="index.html"><span class="brand" lang="ga">An Tigín</span><small>Glengarriff · Co. Cork</small></a>
+    <p class="footer__big">Unplug &amp;<br>unwind.</p>
+    <div class="footer__grid">
+      <div>
+        <h4>Book direct</h4>
+        <p style="max-width:34ch;color:#b9b2aa">Call or email Geri &amp; Shane to book your stay at An Tigín, or book online through Airbnb.</p>
+        <div class="btn-row" style="margin-top:16px"><a class="btn btn--white" href="tel:+353838128308">Call 00353 8381 28308</a><a class="btn btn--ghost" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a></div>
+      </div>
+      <div><h4>Explore</h4><a href="about.html">The Cabin</a><a href="gallery.html">Gallery</a><a href="calendar.html">Availability</a><a href="about.html#walks">Local walks</a></div>
+      <div><h4>Contact</h4><a href="tel:+353838128308">00353 8381 28308</a><a href="mailto:an.tigin.glengarriff@gmail.com">an.tigin.glengarriff@gmail.com</a><a href="https://www.openstreetmap.org/search?query=Glengarriff%2C%20Co.%20Cork%2C%20Ireland" target="_blank" rel="noopener">Glengarriff, Co. Cork, Ireland</a></div>
+    </div>
+    <div class="footer__base"><span>&copy; 2026 An Tigín Glengarriff. All rights reserved.</span><span>Adults-only off-grid retreat on the Wild Atlantic Way</span></div>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
 </body>
 </html>
-
