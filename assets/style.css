@@ -257,3 +257,6 @@ h1,h2,h3,.footer__big{text-shadow:0 1px 1px rgba(39,34,32,.12),0 2px 8px rgba(39
 .key--walk{background:#094730}.key--home{background:#bf7737;margin-left:12px}
 .leaflet-popup-content{font-family:"Rethink Sans",sans-serif;font-size:.9rem;line-height:1.45}
 .leaflet-popup-content a{text-decoration:underline}
+/* contact hero: keep the sunburst and horizon in frame */
+.hero__img--contact{object-position:62% 58%}
+@media (max-width:640px){.hero__img--contact{object-position:86% 30%}}
