@@ -33,24 +33,13 @@
   <div class="wrap"><span class="eyebrow" style="color:rgba(245,244,239,.8)">Events</span><h1>What's on nearby.</h1><p>Festivals, markets and music across West Cork, Beara and Kenmare.</p></div>
 </section>
 <section class="section">
-  <div class="wrap split split--top">
-    <div class="reveal">
+  <div class="wrap">
+    <div class="reveal" style="max-width:860px">
       <span class="eyebrow">Upcoming</span>
       <h2>Upcoming West Cork events</h2>
       <ul class="ev-list" id="ev-upcoming"><li class="muted">Loading events…</li></ul>
       <p id="ev-updated" class="muted" style="font-size:.8rem;margin:16px 0 0"></p>
-    </div>
-    <div class="reveal">
-      <div class="ev-subscribe">
-        <span class="eyebrow">Never miss one</span>
-        <h3>Add West Cork Events to your Google Calendar</h3>
-        <p class="muted">Subscribe to our public calendar and new events will appear in your own calendar automatically.</p>
-        <div style="display:grid;gap:12px;margin-top:20px">
-          <a class="btn btn--dark ev-gcal" href="https://calendar.google.com/" target="_blank" rel="noopener" style="justify-content:space-between;white-space:normal">Add to Google Calendar <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
-          <a class="btn btn--white ev-ics" href="#" style="justify-content:space-between;border-color:rgba(39,34,32,.2);white-space:normal">Subscribe in Apple / Outlook (iCal) <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
-        </div>
-        <p class="muted" style="font-size:.85rem;margin-top:16px">Planning a stay around an event? <a href="calendar.html">Check our availability</a>.</p>
-      </div>
+      <p class="muted" style="margin-top:24px">Planning a stay around an event? <a href="calendar.html">Check our availability</a>.</p>
     </div>
   </div>
 </section>
@@ -147,8 +136,6 @@ function range(s,e){var a=p(s),b=p(e);b.setDate(b.getDate()-1);if(b<=a)return fm
 function town(l){var parts=(l||'').split(',').map(function(x){return x.trim();}).filter(function(x){return x&&!/^Co\./.test(x);});return parts.length?parts[parts.length-1]:'';}
 var ul=document.getElementById('ev-upcoming');
 fetch('events.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
- if(j.calendar_id){var g=document.querySelector('.ev-gcal');g.href='https://calendar.google.com/calendar/render?cid='+encodeURIComponent(j.calendar_id);
-  var i=document.querySelector('.ev-ics');i.href=(j.ics_url||'').replace(/^https:/,'webcal:');}
  var today=new Date();today.setHours(0,0,0,0);
  var ev=(j.events||[]).filter(function(e){return p(e.end)>today;});ul.innerHTML='';
  if(!ev.length){ul.innerHTML='<li class="muted">No upcoming events listed right now.</li>';return;}
