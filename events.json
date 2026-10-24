@@ -1,0 +1,232 @@
+{
+  "updated": "2026-10-24T11:22:49Z",
+  "calendar_id": "ef7e5a5c01cfaa5f8e8c2f6f57811a3834cc40c5766702ea9dfee975ca5ea82c@group.calendar.google.com",
+  "ics_url": "https://calendar.google.com/calendar/ical/ef7e5a5c01cfaa5f8e8c2f6f57811a3834cc40c5766702ea9dfee975ca5ea82c%40group.calendar.google.com/public/basic.ics",
+  "note": "all-day events; end dates are exclusive",
+  "events": [
+    {
+      "name": "Kenmare Samhain / Halloween Festival",
+      "start": "2026-10-26",
+      "end": "2026-11-02",
+      "location": "Kenmare, Co. Kerry",
+      "description": "Week of Halloween fun in Kenmare with a parade on 31 Oct.",
+      "url": "https://www.kenmare.ie/whats-on-1/halloween-samhain-festival"
+    },
+    {
+      "name": "Bantry Halloween Festival",
+      "start": "2026-10-31",
+      "end": "2026-11-01",
+      "location": "Wolfe Tone Square & Bantry House, Bantry",
+      "description": "Free family Halloween parade, spooky walk at Bantry House and a disco in the square.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Design Kenmare",
+      "start": "2026-11-13",
+      "end": "2026-11-16",
+      "location": "Kenmare, Co. Kerry",
+      "description": "Three-day design festival with talks and more than 40 designers and makers.",
+      "url": "https://www.designkenmare.com/"
+    },
+    {
+      "name": "Black's Christmas Market",
+      "start": "2026-12-13",
+      "end": "2026-12-14",
+      "location": "Black's Brewery & Distillery, Kinsale",
+      "description": "Free festive market with local makers, artisan food and live music (1–7pm).",
+      "url": "https://www.kinsale.ie/event/blacks-christmas-market/"
+    },
+    {
+      "name": "Bantry New Year's Eve Fireworks",
+      "start": "2026-12-31",
+      "end": "2027-01-01",
+      "location": "Wolfe Tone Square, Bantry",
+      "description": "Free annual New Year's Eve party on the square: music from about 9pm, fireworks about 10pm.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Well Well Well Festival with Mary Coughlan",
+      "start": "2027-02-19",
+      "end": "2027-02-22",
+      "location": "The Lansdowne, Kenmare",
+      "description": "Weekend festival of music and wellness at The Lansdowne.",
+      "url": "https://www.kenmare.ie/whats-on"
+    },
+    {
+      "name": "Bantry Goes Green – St Patrick's Festival",
+      "start": "2027-03-13",
+      "end": "2027-03-18",
+      "location": "Bantry",
+      "description": "Five-day St Patrick's festival with live music in pubs, dancing and family events.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Bantry St Patrick's Day Parade",
+      "start": "2027-03-17",
+      "end": "2027-03-18",
+      "location": "Wolfe Tone Square, Bantry",
+      "description": "Parade with floats and marching bands, plus Irish dancing on the square (from 12:15pm, parade at 1pm).",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Bantry Hospice Golf Classic",
+      "start": "2027-05-14",
+      "end": "2027-05-16",
+      "location": "Bantry Bay Golf Club",
+      "description": "Charity golf weekend raising funds for Bantry hospice.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Fastnet Film Festival",
+      "start": "2027-05-26",
+      "end": "2027-05-31",
+      "location": "Schull",
+      "description": "Short film festival that takes over the village's pubs, halls and cafés, plus Cape Clear.",
+      "url": "https://www.fastnetfilmfestival.com/"
+    },
+    {
+      "name": "Ring of Beara Cycle",
+      "start": "2027-05-29",
+      "end": "2027-05-30",
+      "location": "Kenmare, Co. Kerry",
+      "description": "Popular sportive with 85, 110 and 140 km loops around the Beara Peninsula.",
+      "url": "https://ringofbearacyclekenmare.com/"
+    },
+    {
+      "name": "West Cork Chamber Music Festival",
+      "start": "2027-06-25",
+      "end": "2027-07-05",
+      "location": "Bantry House & St Brendan's Church, Bantry",
+      "description": "Ten days of world-class chamber music, masterclasses and fringe events in Bantry.",
+      "url": "https://www.westcorkmusic.ie/whats-on/chamber-music-programme/"
+    },
+    {
+      "name": "West Cork Fit-Up Theatre Festival",
+      "start": "2027-07-06",
+      "end": "2027-08-02",
+      "location": "Venues across West Cork (incl. Glengarriff hall, Whiddy Island)",
+      "description": "Touring pop-up theatre in village halls across West Cork.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "West Cork Literary Festival",
+      "start": "2027-07-09",
+      "end": "2027-07-17",
+      "location": "Bantry",
+      "description": "Eight days of readings, talks and writing workshops in Bantry.",
+      "url": "https://www.westcorkmusic.ie/whats-on/literary-festival-programme/"
+    },
+    {
+      "name": "Wild Atlantic Mizen Cycle",
+      "start": "2027-07-10",
+      "end": "2027-07-11",
+      "location": "Bantry (start/finish)",
+      "description": "Charity cycle around the Mizen and Sheep's Head (65/100/130 km), with a BBQ afterwards.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Eyeries Family Festival",
+      "start": "2027-07-16",
+      "end": "2027-07-19",
+      "location": "Eyeries, Beara",
+      "description": "Village weekend with music, stalls, dog show, road bowling and kids' activities.",
+      "url": "https://eyeries.ie/about-the-festival"
+    },
+    {
+      "name": "Castletownbere Festival of the Sea",
+      "start": "2027-07-30",
+      "end": "2027-08-03",
+      "location": "Castletownbere, Beara",
+      "description": "Harbour festival of music, seafood and maritime fun, starting on the August bank holiday weekend.",
+      "url": "https://www.discoverireland.ie/cork/castletownbere-festival-of-the-sea-2026"
+    },
+    {
+      "name": "All Ireland Coastal Rowing Championships",
+      "start": "2027-08-13",
+      "end": "2027-08-16",
+      "location": "Bantry Bay",
+      "description": "National coastal rowing championships return to Bantry Bay.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Ellen Hutchins Festival",
+      "start": "2027-08-14",
+      "end": "2027-08-23",
+      "location": "Bantry & Ballylickey, around Bantry Bay",
+      "description": "Walks, talks and workshops celebrating Ireland's first female botanist.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Kenmare Fair Day",
+      "start": "2027-08-15",
+      "end": "2027-08-16",
+      "location": "Kenmare town centre, Co. Kerry",
+      "description": "Traditional horse and street fair held since the 1760s; the town centre is closed to traffic.",
+      "url": "https://www.lansdownekenmare.com/post/the-story-of-kenmare-fair-day"
+    },
+    {
+      "name": "Masters of Tradition",
+      "start": "2027-08-18",
+      "end": "2027-08-23",
+      "location": "Bantry House & St Brendan's Church, Bantry",
+      "description": "Five-day festival of Irish traditional music curated by Martin Hayes.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Bere Island Arts Festival",
+      "start": "2027-09-16",
+      "end": "2027-09-20",
+      "location": "Bere Island, Beara",
+      "description": "Island festival of music, art and culture.",
+      "url": "https://www.bereislandartsfestival.ie/"
+    },
+    {
+      "name": "Culture Night",
+      "start": "2027-09-17",
+      "end": "2027-09-18",
+      "location": "Bantry, Bere Island, Glengarriff and nationwide",
+      "description": "Free night of cultural events, talks and performances in towns across Ireland.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Tour de Beara Cycle",
+      "start": "2027-09-18",
+      "end": "2027-09-19",
+      "location": "Eccles Hotel, Glengarriff",
+      "description": "Cycling sportive from Glengarriff over the Caha Pass and around Beara.",
+      "url": "https://www.discoverireland.ie/cork/tour-de-beara-cycle-2027"
+    },
+    {
+      "name": "Skibbereen Walking Festival",
+      "start": "2027-09-24",
+      "end": "2027-09-27",
+      "location": "Skibbereen",
+      "description": "Guided walks for all abilities over the last weekend of September.",
+      "url": "https://skibbereen.ie/skibbereen-walking-festival/"
+    },
+    {
+      "name": "Fastnet Rally",
+      "start": "2027-10-24",
+      "end": "2027-10-25",
+      "location": "Westlodge Hotel, Bantry",
+      "description": "Motorsport rally based in Bantry.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Bantry New Year's Eve Fireworks",
+      "start": "2027-12-31",
+      "end": "2028-01-01",
+      "location": "Wolfe Tone Square, Bantry",
+      "description": "Free annual New Year's Eve party on the square: music from about 9pm, fireworks about 10pm.",
+      "url": "https://www.bantry.ie/whats-on/"
+    },
+    {
+      "name": "Bantry St Patrick's Day Parade",
+      "start": "2028-03-17",
+      "end": "2028-03-18",
+      "location": "Wolfe Tone Square, Bantry",
+      "description": "Parade with floats and marching bands, plus Irish dancing on the square (from 12:15pm, parade at 1pm).",
+      "url": "https://www.bantry.ie/whats-on/"
+    }
+  ]
+}

@@ -23,7 +23,7 @@
   <div class="wrap">
     <a class="logo" href="index.html" aria-label="An Tigín home"><span class="brand" lang="ga">An Tigín</span><small>Glengarriff · Co. Cork</small></a>
     <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><b>Menu</b><span></span></button>
-    <nav class="nav"><a href="index.html">Home</a><a href="about.html">The Cabin</a><a href="walks.html">Walks</a><a href="eat.html">Eat</a><a href="gallery.html">Gallery</a><a href="calendar.html" aria-current="page">Availability</a><a href="contact.html">Contact</a><a class="btn btn--dark" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Book your stay</a></nav>
+    <nav class="nav"><a href="index.html">Home</a><a href="about.html">The Cabin</a><a href="walks.html">Walks</a><a href="events.html">Events</a><a href="eat.html">Eat</a><a href="gallery.html">Gallery</a><a href="calendar.html" aria-current="page">Availability</a><a href="contact.html">Contact</a><a class="btn btn--dark" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Book your stay</a></nav>
   </div>
 </header>
 
@@ -38,7 +38,9 @@
       <div class="cal__head"><button id="cal-prev" aria-label="Previous month">&larr;</button><h3 id="cal-title"></h3><button id="cal-next" aria-label="Next month">&rarr;</button></div>
       <div class="cal-grid" id="cal-dow" style="margin-bottom:6px"></div>
       <div class="cal-grid" id="cal-days"></div>
-      <div class="legend"><span><i class="cal-avail"></i>Available</span><span><i class="cal-booked"></i>Booked</span></div>
+      <div class="legend"><span><i class="cal-avail"></i>Available</span><span><i class="cal-booked"></i>Booked</span><span><i class="cal-ev-key"></i>West Cork event</span></div>
+      <ul class="cal-evlist" id="cal-evlist"></ul>
+      <p class="cal-evlink"><a class="btn btn--line" href="events.html">See all West Cork events &amp; festivals <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a></p>
       <p id="cal-updated" class="muted" style="font-size:.8rem;margin:16px 0 0"></p>
     </div>
     <div class="reveal">
@@ -57,10 +59,11 @@
 </section>
 </main>
 <script>
-(function(){var booked=[],offset=0,MAX=11,today=new Date();today.setHours(0,0,0,0);
+(function(){var booked=[],events=[],offset=0,MAX=11,today=new Date();today.setHours(0,0,0,0);
 var names=['January','February','March','April','May','June','July','August','September','October','November','December'];
 var d=document.getElementById('cal-dow');['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(n){var e=document.createElement('div');e.className='cal-dow';e.textContent=n;d.appendChild(e);});
 function key(y,m,day){return y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');}
+function evOn(k){return events.filter(function(e){return k>=e.start&&k<e.end;});}
 function isBooked(k){return booked.some(function(r){return k>=r.start&&k<r.end;});}
 function render(){var y=today.getFullYear(),m=today.getMonth()+offset;y+=Math.floor(m/12);m=((m%12)+12)%12;
 document.getElementById('cal-title').textContent=names[m]+' '+y;document.getElementById('cal-prev').disabled=offset<=0;document.getElementById('cal-next').disabled=offset>=MAX;
@@ -68,12 +71,18 @@ var g=document.getElementById('cal-days');g.innerHTML='';var lead=(new Date(y,m,
 for(var i=0;i<lead;i++)g.appendChild(document.createElement('div'));
 for(var day=1;day<=days;day++){var c=document.createElement('div'),dt=new Date(y,m,day),k=key(y,m,day);c.textContent=day;
 c.className='cal-day '+(dt<today?'cal-past':isBooked(k)?'cal-booked':'cal-avail');if(dt.getTime()===today.getTime())c.className+=' cal-today';
-c.title=dt<today?'':(isBooked(k)?'Booked':'Available');g.appendChild(c);}}
+c.title=dt<today?'':(isBooked(k)?'Booked':'Available');
+var ev=dt<today?[]:evOn(k);if(ev.length){var dot=document.createElement('span');dot.className='cal-ev';c.appendChild(dot);c.title+=(c.title?' · ':'')+ev.map(function(e){return e.name;}).join(', ');}
+g.appendChild(c);}
+var mk=key(y,m,1),me=key(y,m+1,1),list=document.getElementById('cal-evlist');list.innerHTML='';
+events.filter(function(e){return e.start<me&&e.end>mk&&e.end>key(today.getFullYear(),today.getMonth(),today.getDate());}).forEach(function(e){var li=document.createElement('li'),a=document.createElement(e.url?'a':'span'),st=e.start.split('-');
+a.textContent=e.name;if(e.url){a.href=e.url;a.target='_blank';a.rel='noopener';}li.appendChild(document.createTextNode(+st[2]+' '+names[+st[1]-1].slice(0,3)+' · '));li.appendChild(a);list.appendChild(li);});}
 document.getElementById('cal-prev').onclick=function(){if(offset>0){offset--;render();}};document.getElementById('cal-next').onclick=function(){if(offset<MAX){offset++;render();}};
 render();
 fetch('availability.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){booked=j.booked||[];render();
 if(j.updated)document.getElementById('cal-updated').textContent='Last updated: '+new Date(j.updated).toLocaleString();}).catch(function(){
-document.getElementById('cal-updated').textContent='Availability could not be loaded right now. Please contact us to check dates.';});})();
+document.getElementById('cal-updated').textContent='Availability could not be loaded right now. Please contact us to check dates.';});
+fetch('events.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){events=j.events||[];render();}).catch(function(){});})();
 </script>
 <footer class="footer">
   <div class="wrap">
@@ -85,7 +94,7 @@ document.getElementById('cal-updated').textContent='Availability could not be lo
         <p style="max-width:34ch;color:#b9b2aa">Call or email Geri &amp; Shane to book your stay at An Tigín, or book online through Airbnb.</p>
         <div class="btn-row" style="margin-top:16px"><a class="btn btn--white" href="tel:+353838128308">Call 00353 8381 28308</a><a class="btn btn--ghost" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a></div>
       </div>
-      <div><h4>Explore</h4><a href="about.html">The Cabin</a><a href="gallery.html">Gallery</a><a href="calendar.html">Availability</a><a href="walks.html">Local walks</a></div>
+      <div><h4>Explore</h4><a href="about.html">The Cabin</a><a href="gallery.html">Gallery</a><a href="calendar.html">Availability</a><a href="walks.html">Local walks</a><a href="events.html">Events</a></div>
       <div><h4>Contact</h4><a href="tel:+353838128308">00353 8381 28308</a><a href="mailto:an.tigin.glengarriff@gmail.com">an.tigin.glengarriff@gmail.com</a><a href="https://www.openstreetmap.org/search?query=Glengarriff%2C%20Co.%20Cork%2C%20Ireland" target="_blank" rel="noopener">Glengarriff, Co. Cork, Ireland</a></div>
     </div>
     <div class="footer__base"><span>&copy; 2026 An Tigín Glengarriff. All rights reserved.</span><span>Adults-only off-grid retreat on the Wild Atlantic Way</span></div>
