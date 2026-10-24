@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-24T12:58:37Z",
+  "updated": "2026-10-24T13:11:19Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
-  "note": "all-day events; end dates are exclusive",
+  "note": "all-day events; end dates are exclusive. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
   "events": [
     {
       "name": "Kenmare Samhain / Halloween Festival",
@@ -138,7 +138,7 @@
       "end": "2027-08-03",
       "location": "Castletownbere, Beara",
       "description": "Harbour festival of music, seafood and maritime fun, starting on the August bank holiday weekend.",
-      "url": "https://www.discoverireland.ie/cork/castletownbere-festival-of-the-sea-2026"
+      "url": "https://bearatourism.com/see-more/festivals"
     },
     {
       "name": "All Ireland Coastal Rowing Championships",
@@ -227,6 +227,76 @@
       "location": "Wolfe Tone Square, Bantry",
       "description": "Parade with floats and marching bands, plus Irish dancing on the square (from 12:15pm, parade at 1pm).",
       "url": "https://www.bantry.ie/whats-on/"
+    }
+  ],
+  "holidays": [
+    {
+      "date": "2026-10-26",
+      "name": "October Bank Holiday"
+    },
+    {
+      "date": "2026-12-25",
+      "name": "Christmas Day"
+    },
+    {
+      "date": "2026-12-26",
+      "name": "St Stephen's Day"
+    },
+    {
+      "date": "2027-01-01",
+      "name": "New Year's Day"
+    },
+    {
+      "date": "2027-02-01",
+      "name": "St Brigid's Day"
+    },
+    {
+      "date": "2027-03-17",
+      "name": "St Patrick's Day"
+    },
+    {
+      "date": "2027-03-29",
+      "name": "Easter Monday"
+    },
+    {
+      "date": "2027-05-03",
+      "name": "May Bank Holiday"
+    },
+    {
+      "date": "2027-06-07",
+      "name": "June Bank Holiday"
+    },
+    {
+      "date": "2027-08-02",
+      "name": "August Bank Holiday"
+    },
+    {
+      "date": "2027-10-25",
+      "name": "October Bank Holiday"
+    },
+    {
+      "date": "2027-12-25",
+      "name": "Christmas Day"
+    },
+    {
+      "date": "2027-12-26",
+      "name": "St Stephen's Day"
+    },
+    {
+      "date": "2028-01-01",
+      "name": "New Year's Day"
+    },
+    {
+      "date": "2028-02-07",
+      "name": "St Brigid's Day"
+    },
+    {
+      "date": "2028-03-17",
+      "name": "St Patrick's Day"
+    },
+    {
+      "date": "2028-04-17",
+      "name": "Easter Monday"
     }
   ]
 }

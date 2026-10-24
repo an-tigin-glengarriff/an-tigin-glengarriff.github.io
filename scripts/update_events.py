@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """Fetch the PUBLIC 'West Cork Events' Google Calendar iCal and write events.json
-(all-day events, yearly RRULEs expanded ~18 months ahead). On failure, leaves the old file."""
+(all-day events, yearly RRULEs expanded ~18 months ahead). On failure, leaves the old events.
+Also writes a "holidays" list: Republic of Ireland public (bank) holidays computed from the
+statutory rules for the same window (actual dates; no substitute days)."""
 import json, os, re, sys, urllib.request
 from datetime import date, datetime, timedelta, timezone
 from dateutil.rrule import rrulestr
+from dateutil.easter import easter
 
 import urllib.parse
 # The calendar ID is configured in ONE place: the WEST_CORK_CALENDAR_ID env var
 # in .github/workflows/update-availability.yml. It is copied into events.json so
-# the website builds its subscribe links from it.
+# for reference (the website does not use it).
 CAL_ID = os.environ.get("WEST_CORK_CALENDAR_ID", "").strip()
 ICS_URL = ("https://calendar.google.com/calendar/ical/"
            + urllib.parse.quote(CAL_ID, safe="") + "/public/basic.ics")
@@ -20,17 +23,67 @@ def d8(v):
 def unesc(v):
     return v.replace("\\n", "\n").replace("\\N", "\n").replace("\\,", ",").replace("\\;", ";").replace("\\\\", "\\")
 
+def _first_monday(y, m):
+    d = date(y, m, 1); return d + timedelta(days=(0 - d.weekday()) % 7)
+
+def _last_monday(y, m):
+    d = date(y + (m == 12), m % 12 + 1, 1) - timedelta(days=1)
+    return d - timedelta(days=d.weekday())
+
+def ie_holidays(y):
+    """Republic of Ireland public holidays for year y (Organisation of Working Time Act 1997, as amended)."""
+    feb1 = date(y, 2, 1)
+    brigid = feb1 if feb1.weekday() == 4 else _first_monday(y, 2)
+    h = [(date(y, 1, 1), "New Year's Day"), (brigid, "St Brigid's Day"),
+         (date(y, 3, 17), "St Patrick's Day"), (easter(y) + timedelta(days=1), "Easter Monday"),
+         (_first_monday(y, 5), "May Bank Holiday"), (_first_monday(y, 6), "June Bank Holiday"),
+         (_first_monday(y, 8), "August Bank Holiday"), (_last_monday(y, 10), "October Bank Holiday"),
+         (date(y, 12, 25), "Christmas Day"), (date(y, 12, 26), "St Stephen's Day")]
+    if y < 2023: h = [x for x in h if x[1] != "St Brigid's Day"]
+    return h
+
+def holidays_window(today, horizon):
+    out = []
+    for y in range(today.year, horizon.year + 1):
+        for d, n in ie_holidays(y):
+            if today <= d <= horizon: out.append({"date": d.isoformat(), "name": n})
+    return sorted(out, key=lambda x: x["date"])
+
+def load_old():
+    try:
+        with open(OUT) as f: return json.load(f)
+    except Exception: return {}
+
+def write(old, events, cal_id, ics_url, holidays):
+    if (old.get("events") == events and old.get("calendar_id") == cal_id
+            and old.get("holidays") == holidays):
+        print(f"No change ({len(events)} events, {len(holidays)} holidays)."); return
+    data = {"updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "calendar_id": cal_id, "ics_url": ics_url,
+            "note": "all-day events; end dates are exclusive. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
+            "events": events, "holidays": holidays}
+    with open(OUT, "w") as f: json.dump(data, f, indent=2, ensure_ascii=False); f.write("\n")
+    print(f"Wrote {len(events)} events, {len(holidays)} holidays.")
+
+def keep_old_events(reason):
+    """Event fetch failed: keep the old events but still refresh holidays."""
+    old = load_old(); today = date.today()
+    print(f"{reason}; keeping existing events.")
+    write(old, old.get("events", []), old.get("calendar_id", CAL_ID), old.get("ics_url", ICS_URL),
+          holidays_window(today, today + timedelta(days=548)))
+    return 0
+
 def main():
     if not CAL_ID:
-        print("WEST_CORK_CALENDAR_ID not set; leaving existing file."); return 0
+        return keep_old_events("WEST_CORK_CALENDAR_ID not set")
     try:
         req = urllib.request.Request(ICS_URL, headers={"User-Agent": "an-tigin-events/1.0"})
         with urllib.request.urlopen(req, timeout=30) as r:
             text = r.read().decode("utf-8", "replace")
     except Exception as e:
-        print(f"Fetch failed ({type(e).__name__}); leaving existing file."); return 0
+        return keep_old_events(f"Fetch failed ({type(e).__name__})")
     if "BEGIN:VCALENDAR" not in text:
-        print("Not an iCal; leaving existing file."); return 0
+        return keep_old_events("Not an iCal")
     text = re.sub(r"\r?\n[ \t]", "", text)
     vevents, cur = [], None
     for line in text.splitlines():
@@ -77,17 +130,7 @@ def main():
         else:
             add(ev, ev["s"])
     out.sort(key=lambda x: (x["start"], x["name"]))
-    try:
-        with open(OUT) as f: old = json.load(f)
-        if old.get("events") == out and old.get("calendar_id") == CAL_ID:
-            print(f"No change ({len(out)} events)."); return 0
-    except Exception: pass
-    data = {"updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "calendar_id": CAL_ID,
-            "ics_url": ICS_URL,
-            "note": "all-day events; end dates are exclusive", "events": out}
-    with open(OUT, "w") as f: json.dump(data, f, indent=2, ensure_ascii=False); f.write("\n")
-    print(f"Wrote {len(out)} events.")
+    write(load_old(), out, CAL_ID, ICS_URL, holidays_window(today, horizon))
     return 0
 
 if __name__ == "__main__":
