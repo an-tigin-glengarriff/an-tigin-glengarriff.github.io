@@ -6,7 +6,7 @@ on:
 env:
   # West Cork Events Google Calendar (public). This is the ONLY place the
   # calendar ID is set; change it here to switch calendars.
-  WEST_CORK_CALENDAR_ID: ef7e5a5c01cfaa5f8e8c2f6f57811a3834cc40c5766702ea9dfee975ca5ea82c@group.calendar.google.com
+  WEST_CORK_CALENDAR_ID: 9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com
 permissions:
   contents: write
 concurrency:
