@@ -56,7 +56,7 @@
         <div class="btn-row" style="margin-top:16px"><a class="btn btn--white" href="tel:+353838128308">Call 00353 8381 28308</a><a class="btn btn--ghost" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a></div>
       </div>
       <div><h4>Explore</h4><a href="about.html">The Cabin</a><a href="gallery.html">Gallery</a><a href="calendar.html">Availability</a><a href="walks.html">Local walks</a><a href="events.html">Events</a><a href="activities.html">Activities</a></div>
-      <div><h4>Contact</h4><a href="tel:+353838128308">00353 8381 28308</a><a href="mailto:an.tigin.glengarriff@gmail.com">an.tigin.glengarriff@gmail.com</a></div>
+      <div><h4>Contact</h4><a href="tel:+353838128308">00353 8381 28308</a><a href="mailto:an.tigin.glengarriff@gmail.com">an.tigin.glengarriff@gmail.com</a><a href="https://www.google.com/maps/search/?api=1&amp;query=Glengarriff%2C+Co.+Cork" target="_blank" rel="noopener">Glengarriff, Co. Cork</a></div>
     </div>
     <div class="footer__base"><span>&copy; 2026 An Tigín Glengarriff. All rights reserved.</span><span>Adults-only off-grid retreat on the Wild Atlantic Way</span></div>
   </div>
@@ -74,7 +74,7 @@ pins.forEach(function(p){var ll=[p.lat,p.lng];pts.push(ll);
  L.circleMarker(ll,{radius:9,color:'#fff',weight:2,fillColor:'#094730',fillOpacity:1}).addTo(map)
  .bindPopup('<b>'+p.n+'</b><br><span>'+p.d+'</span><br><a href="'+p.u+'" target="_blank" rel="noopener">Trail page &amp; map ↗</a><br><a href="https://www.google.com/maps/dir/?api=1&destination='+p.lat+','+p.lng+'" target="_blank" rel="noopener">Directions to the start ↗</a>');});
 var home=[51.7283264,-9.5554595];pts.push(home);
-L.circleMarker(home,{radius:11,color:'#fff',weight:3,fillColor:'#bf7737',fillOpacity:1}).addTo(map).bindPopup('<b>An Tigín</b><br>Glengarriff, Co. Cork · Eircode P75 C902');
+L.circleMarker(home,{radius:11,color:'#fff',weight:3,fillColor:'#bf7737',fillOpacity:1}).addTo(map).bindPopup('<b>An Tigín</b><br>Glengarriff, Co. Cork');
 map.fitBounds(pts,{padding:[30,30]});
 })();
 </script>
