@@ -290,3 +290,40 @@ h1,h2,h3,.footer__big{text-shadow:0 1px 1px rgba(39,34,32,.12),0 2px 8px rgba(39
 /* nav: keep 9 tabs on one line on small laptops */
 .nav a{white-space:nowrap}.logo small{white-space:nowrap}
 @media (min-width:901px) and (max-width:1240px){.nav{gap:14px;font-size:.9rem}.nav .btn{padding-left:16px;padding-right:16px}}
+/* nav drop-down: Activities ▾ (Activities, Walks) */
+.nav-group{position:relative;display:flex;align-items:center}
+.nav-parent{display:inline-flex;align-items:center;gap:5px}
+.nav-parent .caret{display:inline-block;width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s ease}
+.nav-group.is-active>.nav-parent::after{right:0}
+.nav-sub a{white-space:nowrap}
+@media (min-width:901px){
+  .nav-group::before{content:"";position:absolute;left:-12px;right:-12px;top:100%;height:16px}
+  .nav-sub{position:absolute;top:calc(100% + 12px);left:-18px;min-width:190px;display:flex;flex-direction:column;padding:8px;background:var(--light);color:var(--black);border-radius:10px;box-shadow:0 12px 32px rgba(26,23,22,.18),0 1px 0 rgba(39,34,32,.06);
+    opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s ease,transform .18s ease,visibility 0s linear .18s;z-index:60;letter-spacing:-.02em}
+  .nav-group:hover .nav-sub,.nav-group:focus-within .nav-sub{opacity:1;visibility:visible;transform:none;transition:opacity .18s ease,transform .18s ease,visibility 0s}
+  .nav-group:hover .caret,.nav-group:focus-within .caret{transform:translateY(1px) rotate(225deg)}
+  .nav-sub a{padding:10px 14px;border-radius:6px;font-size:.95rem}
+  .nav-sub a::after{display:none}
+  .nav-sub a:hover,.nav-sub a:focus-visible{background:var(--sand);outline:none}
+  .nav-sub a[aria-current="page"]{font-weight:700;background:rgba(9,71,48,.08)}
+  .nav-group.no-hover .nav-sub{opacity:0;visibility:hidden}
+}
+@media (max-width:900px){
+  .nav-group{flex-direction:column;gap:12px}
+  .nav-parent .caret{display:none}
+  .nav-sub{display:flex;flex-direction:column;align-items:center;gap:12px}
+  .nav-sub a:first-child{display:none}
+  .nav-sub a{font-size:1.35rem;opacity:.85;padding:4px 0 4px 22px;position:relative}
+  .nav-sub a::before{content:"";position:absolute;left:0;top:50%;width:12px;height:12px;border-left:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-75%)}
+  .nav-sub a::after{display:none}
+  .nav-sub a[aria-current="page"]{opacity:1;text-decoration:underline;text-underline-offset:6px}
+}
+@media (max-width:900px) and (max-height:760px){.nav{gap:18px;font-size:1.7rem}}
+/* Activities page: link card to Walks */
+.walks-cta{display:flex;align-items:center;justify-content:space-between;gap:var(--l);padding:22px 26px;margin:0 0 var(--xl);border-radius:var(--card);background:var(--summer);color:var(--white);text-decoration:none;transition:transform .25s ease,box-shadow .25s ease}
+.walks-cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(9,71,48,.25)}
+.walks-cta .eyebrow{color:rgba(245,244,239,.75);margin-bottom:6px}
+.walks-cta b{display:block;font-size:clamp(1.15rem,1rem + .6vw,1.5rem);letter-spacing:-.03em;line-height:1.15}
+.walks-cta small{display:block;margin-top:6px;opacity:.85;font-size:.9rem}
+.walks-cta__go{flex:none;width:48px;height:48px;border-radius:50%;background:var(--white);color:var(--summer);display:grid;place-items:center}
+.walks-cta__go svg{width:18px;height:18px}
