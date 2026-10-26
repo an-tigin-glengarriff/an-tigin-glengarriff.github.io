@@ -258,7 +258,8 @@ function evHtml(e){return '<b>'+esc(e.name)+'</b><small>'+esc(range(e.start,e.en
 function regHtml(r){return '<b>'+esc(r.name)+'</b><small>'+esc(regWhen(r))+'</small><br><span>'+esc(r.location)+'</span>'+(r.url?'<br><a href="'+esc(r.url)+'" target="_blank" rel="noopener">Website ↗</a>':'');}
 function drawMap(){if(!map)return;layer.clearLayers();groups={};var pts=[HOME];
  inMonthList().concat(regIn()).forEach(function(e){if(e.lat==null)return;var k=gk(e);(groups[k]=groups[k]||{ll:[e.lat,e.lng],ev:[]}).ev.push(e);});
- Object.keys(groups).forEach(function(k){var g=groups[k];pts.push(g.ll);
+ var isReg=function(k){return groups[k].ev.every(function(x){return x.rule;})?0:1;};
+ Object.keys(groups).sort(function(x,y){return isReg(x)-isReg(y);}).forEach(function(k){var g=groups[k];pts.push(g.ll);
   var onlyReg=g.ev.every(function(x){return x.rule;});
   g.marker=L.circleMarker(g.ll,{radius:onlyReg?7:8,color:'#fff',weight:2,fillColor:onlyReg?'#6f9a7f':'#094730',fillOpacity:1}).addTo(layer)
    .bindPopup('<div class="ev-pop">'+g.ev.map(function(x){return x.rule?regHtml(x):evHtml(x);}).join('<hr style="border:0;border-top:1px solid #ddd;margin:8px 0">')+'<br><a href="https://www.google.com/maps/dir/?api=1&destination='+g.ll[0]+','+g.ll[1]+'" target="_blank" rel="noopener">Directions ↗</a></div>',{maxWidth:260});
