@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-24T13:11:19Z",
+  "updated": "2026-10-26T20:01:29Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
-  "note": "all-day events; end dates are exclusive. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
+  "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
   "events": [
     {
       "name": "Kenmare Samhain / Halloween Festival",
@@ -10,7 +10,10 @@
       "end": "2026-11-02",
       "location": "Kenmare, Co. Kerry",
       "description": "Week of Halloween fun in Kenmare with a parade on 31 Oct.",
-      "url": "https://www.kenmare.ie/whats-on-1/halloween-samhain-festival"
+      "url": "https://www.kenmare.ie/whats-on-1/halloween-samhain-festival",
+      "lat": 51.879101,
+      "lng": -9.583952,
+      "geo_precision": "town"
     },
     {
       "name": "Bantry Halloween Festival",
@@ -18,7 +21,10 @@
       "end": "2026-11-01",
       "location": "Wolfe Tone Square & Bantry House, Bantry",
       "description": "Free family Halloween parade, spooky walk at Bantry House and a disco in the square.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.67977,
+      "lng": -9.45236,
+      "geo_precision": "town"
     },
     {
       "name": "Design Kenmare",
@@ -26,7 +32,10 @@
       "end": "2026-11-16",
       "location": "Kenmare, Co. Kerry",
       "description": "Three-day design festival with talks and more than 40 designers and makers.",
-      "url": "https://www.designkenmare.com/"
+      "url": "https://www.designkenmare.com/",
+      "lat": 51.879101,
+      "lng": -9.583952,
+      "geo_precision": "town"
     },
     {
       "name": "Black's Christmas Market",
@@ -34,7 +43,10 @@
       "end": "2026-12-14",
       "location": "Black's Brewery & Distillery, Kinsale",
       "description": "Free festive market with local makers, artisan food and live music (1–7pm).",
-      "url": "https://www.kinsale.ie/event/blacks-christmas-market/"
+      "url": "https://www.kinsale.ie/event/blacks-christmas-market/",
+      "lat": 51.705737,
+      "lng": -8.522982,
+      "geo_precision": "town"
     },
     {
       "name": "Bantry New Year's Eve Fireworks",
@@ -42,7 +54,10 @@
       "end": "2027-01-01",
       "location": "Wolfe Tone Square, Bantry",
       "description": "Free annual New Year's Eve party on the square: music from about 9pm, fireworks about 10pm.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.681033,
+      "lng": -9.45467,
+      "geo_precision": "place"
     },
     {
       "name": "Well Well Well Festival with Mary Coughlan",
@@ -50,7 +65,10 @@
       "end": "2027-02-22",
       "location": "The Lansdowne, Kenmare",
       "description": "Weekend festival of music and wellness at The Lansdowne.",
-      "url": "https://www.kenmare.ie/whats-on"
+      "url": "https://www.kenmare.ie/whats-on",
+      "lat": 51.879053,
+      "lng": -9.581521,
+      "geo_precision": "place"
     },
     {
       "name": "Bantry Goes Green – St Patrick's Festival",
@@ -58,7 +76,10 @@
       "end": "2027-03-18",
       "location": "Bantry",
       "description": "Five-day St Patrick's festival with live music in pubs, dancing and family events.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.67977,
+      "lng": -9.45236,
+      "geo_precision": "town"
     },
     {
       "name": "Bantry St Patrick's Day Parade",
@@ -66,7 +87,10 @@
       "end": "2027-03-18",
       "location": "Wolfe Tone Square, Bantry",
       "description": "Parade with floats and marching bands, plus Irish dancing on the square (from 12:15pm, parade at 1pm).",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.681033,
+      "lng": -9.45467,
+      "geo_precision": "place"
     },
     {
       "name": "Bantry Hospice Golf Classic",
@@ -74,7 +98,10 @@
       "end": "2027-05-16",
       "location": "Bantry Bay Golf Club",
       "description": "Charity golf weekend raising funds for Bantry hospice.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.698689,
+      "lng": -9.445312,
+      "geo_precision": "place"
     },
     {
       "name": "Fastnet Film Festival",
@@ -82,7 +109,10 @@
       "end": "2027-05-31",
       "location": "Schull",
       "description": "Short film festival that takes over the village's pubs, halls and cafés, plus Cape Clear.",
-      "url": "https://www.fastnetfilmfestival.com/"
+      "url": "https://www.fastnetfilmfestival.com/",
+      "lat": 51.527103,
+      "lng": -9.546943,
+      "geo_precision": "town"
     },
     {
       "name": "Ring of Beara Cycle",
@@ -90,7 +120,10 @@
       "end": "2027-05-30",
       "location": "Kenmare, Co. Kerry",
       "description": "Popular sportive with 85, 110 and 140 km loops around the Beara Peninsula.",
-      "url": "https://ringofbearacyclekenmare.com/"
+      "url": "https://ringofbearacyclekenmare.com/",
+      "lat": 51.879101,
+      "lng": -9.583952,
+      "geo_precision": "town"
     },
     {
       "name": "West Cork Chamber Music Festival",
@@ -98,7 +131,10 @@
       "end": "2027-07-05",
       "location": "Bantry House & St Brendan's Church, Bantry",
       "description": "Ten days of world-class chamber music, masterclasses and fringe events in Bantry.",
-      "url": "https://www.westcorkmusic.ie/whats-on/chamber-music-programme/"
+      "url": "https://www.westcorkmusic.ie/whats-on/chamber-music-programme/",
+      "lat": 51.67977,
+      "lng": -9.45236,
+      "geo_precision": "town"
     },
     {
       "name": "West Cork Fit-Up Theatre Festival",
@@ -114,7 +150,10 @@
       "end": "2027-07-17",
       "location": "Bantry",
       "description": "Eight days of readings, talks and writing workshops in Bantry.",
-      "url": "https://www.westcorkmusic.ie/whats-on/literary-festival-programme/"
+      "url": "https://www.westcorkmusic.ie/whats-on/literary-festival-programme/",
+      "lat": 51.67977,
+      "lng": -9.45236,
+      "geo_precision": "town"
     },
     {
       "name": "Wild Atlantic Mizen Cycle",
@@ -122,7 +161,10 @@
       "end": "2027-07-11",
       "location": "Bantry (start/finish)",
       "description": "Charity cycle around the Mizen and Sheep's Head (65/100/130 km), with a BBQ afterwards.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.67977,
+      "lng": -9.45236,
+      "geo_precision": "town"
     },
     {
       "name": "Eyeries Family Festival",
@@ -130,7 +172,10 @@
       "end": "2027-07-19",
       "location": "Eyeries, Beara",
       "description": "Village weekend with music, stalls, dog show, road bowling and kids' activities.",
-      "url": "https://eyeries.ie/about-the-festival"
+      "url": "https://eyeries.ie/about-the-festival",
+      "lat": 51.69367,
+      "lng": -9.957762,
+      "geo_precision": "town"
     },
     {
       "name": "Castletownbere Festival of the Sea",
@@ -138,7 +183,10 @@
       "end": "2027-08-03",
       "location": "Castletownbere, Beara",
       "description": "Harbour festival of music, seafood and maritime fun, starting on the August bank holiday weekend.",
-      "url": "https://bearatourism.com/see-more/festivals"
+      "url": "https://bearatourism.com/see-more/festivals",
+      "lat": 51.651416,
+      "lng": -9.910493,
+      "geo_precision": "town"
     },
     {
       "name": "All Ireland Coastal Rowing Championships",
@@ -146,7 +194,10 @@
       "end": "2027-08-16",
       "location": "Bantry Bay",
       "description": "National coastal rowing championships return to Bantry Bay.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.67977,
+      "lng": -9.45236,
+      "geo_precision": "town"
     },
     {
       "name": "Ellen Hutchins Festival",
@@ -154,7 +205,10 @@
       "end": "2027-08-23",
       "location": "Bantry & Ballylickey, around Bantry Bay",
       "description": "Walks, talks and workshops celebrating Ireland's first female botanist.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.67977,
+      "lng": -9.45236,
+      "geo_precision": "town"
     },
     {
       "name": "Kenmare Fair Day",
@@ -162,7 +216,10 @@
       "end": "2027-08-16",
       "location": "Kenmare town centre, Co. Kerry",
       "description": "Traditional horse and street fair held since the 1760s; the town centre is closed to traffic.",
-      "url": "https://www.lansdownekenmare.com/post/the-story-of-kenmare-fair-day"
+      "url": "https://www.lansdownekenmare.com/post/the-story-of-kenmare-fair-day",
+      "lat": 51.879101,
+      "lng": -9.583952,
+      "geo_precision": "town"
     },
     {
       "name": "Masters of Tradition",
@@ -170,15 +227,21 @@
       "end": "2027-08-23",
       "location": "Bantry House & St Brendan's Church, Bantry",
       "description": "Five-day festival of Irish traditional music curated by Martin Hayes.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.67977,
+      "lng": -9.45236,
+      "geo_precision": "town"
     },
     {
       "name": "Bere Island Arts Festival",
       "start": "2027-09-16",
       "end": "2027-09-20",
-      "location": "Bere Island, Beara",
+      "location": "Rerrin, Bere Island, Beara",
       "description": "Island festival of music, art and culture.",
-      "url": "https://www.bereislandartsfestival.ie/"
+      "url": "https://www.bereislandartsfestival.ie/",
+      "lat": 51.635305,
+      "lng": -9.816507,
+      "geo_precision": "town"
     },
     {
       "name": "Culture Night",
@@ -194,7 +257,10 @@
       "end": "2027-09-19",
       "location": "Eccles Hotel, Glengarriff",
       "description": "Cycling sportive from Glengarriff over the Caha Pass and around Beara.",
-      "url": "https://www.discoverireland.ie/cork/tour-de-beara-cycle-2027"
+      "url": "https://www.discoverireland.ie/cork/tour-de-beara-cycle-2027",
+      "lat": 51.752313,
+      "lng": -9.540868,
+      "geo_precision": "place"
     },
     {
       "name": "Skibbereen Walking Festival",
@@ -202,7 +268,10 @@
       "end": "2027-09-27",
       "location": "Skibbereen",
       "description": "Guided walks for all abilities over the last weekend of September.",
-      "url": "https://skibbereen.ie/skibbereen-walking-festival/"
+      "url": "https://skibbereen.ie/skibbereen-walking-festival/",
+      "lat": 51.547823,
+      "lng": -9.266211,
+      "geo_precision": "town"
     },
     {
       "name": "Fastnet Rally",
@@ -210,7 +279,10 @@
       "end": "2027-10-25",
       "location": "Westlodge Hotel, Bantry",
       "description": "Motorsport rally based in Bantry.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.672228,
+      "lng": -9.474958,
+      "geo_precision": "place"
     },
     {
       "name": "Bantry New Year's Eve Fireworks",
@@ -218,7 +290,10 @@
       "end": "2028-01-01",
       "location": "Wolfe Tone Square, Bantry",
       "description": "Free annual New Year's Eve party on the square: music from about 9pm, fireworks about 10pm.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.681033,
+      "lng": -9.45467,
+      "geo_precision": "place"
     },
     {
       "name": "Bantry St Patrick's Day Parade",
@@ -226,7 +301,10 @@
       "end": "2028-03-18",
       "location": "Wolfe Tone Square, Bantry",
       "description": "Parade with floats and marching bands, plus Irish dancing on the square (from 12:15pm, parade at 1pm).",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "lat": 51.681033,
+      "lng": -9.45467,
+      "geo_precision": "place"
     }
   ],
   "holidays": [

@@ -1,0 +1,184 @@
+{
+  "Bantry": {
+    "lat": 51.67977,
+    "lng": -9.45236,
+    "matched": "Bantry",
+    "precision": "town"
+  },
+  "Bantry & Ballylickey, around Bantry Bay": {
+    "lat": 51.67977,
+    "lng": -9.45236,
+    "matched": "Bantry",
+    "precision": "town"
+  },
+  "Bantry (start/finish)": {
+    "lat": 51.67977,
+    "lng": -9.45236,
+    "matched": "Bantry",
+    "precision": "town"
+  },
+  "Bantry Bay": {
+    "lat": 51.67977,
+    "lng": -9.45236,
+    "matched": "Bantry",
+    "precision": "town"
+  },
+  "Bantry Bay Golf Club": {
+    "lat": 51.698689,
+    "lng": -9.445312,
+    "matched": "Bantry Bay Golf Club",
+    "precision": "place"
+  },
+  "Bantry House & St Brendan's Church, Bantry": {
+    "lat": 51.67977,
+    "lng": -9.45236,
+    "matched": "Bantry",
+    "precision": "town"
+  },
+  "Bantry, Bere Island, Glengarriff and nationwide": null,
+  "Bere Island, Beara": {
+    "lat": 51.628547,
+    "lng": -9.86691,
+    "matched": "Bere Island",
+    "precision": "town"
+  },
+  "Black's Brewery & Distillery, Kinsale": {
+    "lat": 51.705737,
+    "lng": -8.522982,
+    "matched": "Kinsale",
+    "precision": "town"
+  },
+  "Castletownbere, Beara": {
+    "lat": 51.651416,
+    "lng": -9.910493,
+    "matched": "Castletownbere",
+    "precision": "town"
+  },
+  "Eccles Hotel, Glengarriff": {
+    "lat": 51.752313,
+    "lng": -9.540868,
+    "matched": "Eccles Hotel, Glengarriff",
+    "precision": "place"
+  },
+  "Eyeries, Beara": {
+    "lat": 51.69367,
+    "lng": -9.957762,
+    "matched": "Eyeries",
+    "precision": "town"
+  },
+  "Kenmare town centre, Co. Kerry": {
+    "lat": 51.879101,
+    "lng": -9.583952,
+    "matched": "Kenmare",
+    "precision": "town"
+  },
+  "Kenmare, Co. Kerry": {
+    "lat": 51.879101,
+    "lng": -9.583952,
+    "matched": "Kenmare",
+    "precision": "town"
+  },
+  "Rerrin, Bere Island, Beara": {
+    "lat": 51.635305,
+    "lng": -9.816507,
+    "matched": "Rerrin",
+    "precision": "town"
+  },
+  "Schull": {
+    "lat": 51.527103,
+    "lng": -9.546943,
+    "matched": "Schull",
+    "precision": "town"
+  },
+  "Skibbereen": {
+    "lat": 51.547823,
+    "lng": -9.266211,
+    "matched": "Skibbereen",
+    "precision": "town"
+  },
+  "The Lansdowne, Kenmare": {
+    "lat": 51.879053,
+    "lng": -9.581521,
+    "matched": "The Lansdowne, Kenmare",
+    "precision": "place"
+  },
+  "Venues across West Cork (incl. Glengarriff hall, Whiddy Island)": null,
+  "Westlodge Hotel, Bantry": {
+    "lat": 51.672228,
+    "lng": -9.474958,
+    "matched": "Westlodge Hotel, Bantry",
+    "precision": "place"
+  },
+  "Wolfe Tone Square & Bantry House, Bantry": {
+    "lat": 51.67977,
+    "lng": -9.45236,
+    "matched": "Bantry",
+    "precision": "town"
+  },
+  "Wolfe Tone Square, Bantry": {
+    "lat": 51.681033,
+    "lng": -9.45467,
+    "matched": "Wolfe Tone Square, Bantry",
+    "precision": "place"
+  },
+  "town:Bantry": {
+    "lat": 51.67977,
+    "lng": -9.45236,
+    "matched": "Bantry",
+    "precision": "town"
+  },
+  "town:Bere Island": {
+    "lat": 51.628547,
+    "lng": -9.86691,
+    "matched": "Bere Island",
+    "precision": "town"
+  },
+  "town:Castletownbere": {
+    "lat": 51.651416,
+    "lng": -9.910493,
+    "matched": "Castletownbere",
+    "precision": "town"
+  },
+  "town:Eyeries": {
+    "lat": 51.69367,
+    "lng": -9.957762,
+    "matched": "Eyeries",
+    "precision": "town"
+  },
+  "town:Glengarriff": {
+    "lat": 51.750197,
+    "lng": -9.549976,
+    "matched": "Glengarriff",
+    "precision": "town"
+  },
+  "town:Kenmare": {
+    "lat": 51.879101,
+    "lng": -9.583952,
+    "matched": "Kenmare",
+    "precision": "town"
+  },
+  "town:Kinsale": {
+    "lat": 51.705737,
+    "lng": -8.522982,
+    "matched": "Kinsale",
+    "precision": "town"
+  },
+  "town:Rerrin": {
+    "lat": 51.635305,
+    "lng": -9.816507,
+    "matched": "Rerrin",
+    "precision": "town"
+  },
+  "town:Schull": {
+    "lat": 51.527103,
+    "lng": -9.546943,
+    "matched": "Schull",
+    "precision": "town"
+  },
+  "town:Skibbereen": {
+    "lat": 51.547823,
+    "lng": -9.266211,
+    "matched": "Skibbereen",
+    "precision": "town"
+  }
+}

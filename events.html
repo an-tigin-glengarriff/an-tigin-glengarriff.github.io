@@ -17,6 +17,31 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Uncial+Antiqua&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<style>
+.ev-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 var(--m)}
+.ev-chips button{font:inherit;font-size:.85rem;font-weight:500;padding:7px 14px;border-radius:999px;border:1px solid rgba(39,34,32,.25);background:#fffefb;color:inherit;cursor:pointer}
+.ev-chips button[aria-pressed="true"]{background:#094730;border-color:#094730;color:#fff}
+.ev-explore{display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:var(--xl);align-items:start}
+@media (max-width:860px){.ev-explore{grid-template-columns:1fr}}
+.ev-cal .cal-day.has-info{cursor:pointer}
+.ev-cal .cal-day.sel{box-shadow:inset 0 0 0 2px #094730}
+.ev-cal .cal-day.in-month{background:#f3efe8}
+.cal-dots{position:absolute;bottom:14%;left:0;right:0;display:flex;justify-content:center;gap:3px;pointer-events:none}
+.cal-dots .cal-ev,.cal-dots .cal-hol{position:static;margin:0;width:6px;height:6px;border-radius:50%;display:block}
+.cal-hol{background:#1e9e4a}
+.legend i.cal-hol-key{width:8px;height:8px;border-radius:50%;background:#1e9e4a;vertical-align:1px}
+.evc-detail{margin-top:var(--m);font-size:.92rem}
+.evc-detail h4{margin:0 0 6px;font-size:1rem}
+.evc-detail p{margin:0 0 10px}
+.evc-detail .hol{color:#1a7a3c;font-weight:600}
+.ev-mlist ul li{flex-direction:column;gap:2px;border-bottom:1px solid rgba(39,34,32,.08)}
+.ev-mlist li button{all:unset;cursor:pointer;font-weight:600}
+.ev-mlist li button:hover,.ev-mlist li button:focus-visible{text-decoration:underline}
+.ev-mlist li.active button{color:#094730}
+.ev-mlist small{color:var(--grey)}
+.ev-pop b{display:block;margin-bottom:2px}
+@media (max-width:520px){.cal-dots{bottom:10%;gap:2px}.cal-dots .cal-ev,.cal-dots .cal-hol{width:5px;height:5px}.ev-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}.ev-chips button{flex:none}}
+</style>
 </head>
 <body>
 <header class="header">
@@ -43,7 +68,29 @@
     </div>
   </div>
 </section>
-<section class="section" style="padding-top:0">
+<section class="section bg-paper" id="ev-explore">
+  <div class="wrap">
+    <div class="intro" style="margin-bottom:var(--xl)"><h2>Calendar &amp; map.</h2><p class="muted" style="margin:0">Pick a month to see what's on and where. Click a pin, a day or an event for details. Updated automatically from our West Cork Events calendar.</p></div>
+    <link rel="stylesheet" href="assets/leaflet/leaflet.css">
+    <div class="ev-chips" id="ev-chips" role="group" aria-label="Show events for"></div>
+    <div class="walks-map reveal" id="ev-map" role="region" aria-label="Map of West Cork events"></div>
+    <p class="muted walks-map__key"><span class="key key--walk"></span> Events (click a pin for details) <span class="key key--home"></span> An Tigín</p>
+    <div class="ev-explore">
+      <div class="cal ev-cal">
+        <div class="cal__head"><button id="evc-prev" aria-label="Previous month">&larr;</button><h3 id="evc-title"></h3><button id="evc-next" aria-label="Next month">&rarr;</button></div>
+        <div class="cal-grid" id="evc-dow"></div>
+        <div class="cal-grid" id="evc-days" style="margin-top:6px"></div>
+        <div class="legend"><span><i class="cal-ev-key"></i>West Cork event</span><span><i class="cal-hol-key"></i>Bank holiday</span></div>
+        <div class="evc-detail" id="evc-detail" aria-live="polite"></div>
+      </div>
+      <div class="walks ev-mlist">
+        <div><h3 id="ev-mlist-title">Events</h3><ul id="ev-mlist"></ul>
+        <div id="ev-unmapped-wrap" hidden><h3 style="margin-top:var(--l)">Location not mapped</h3><ul id="ev-unmapped"></ul></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section">
   <div class="wrap">
     <div class="reveal" style="margin-bottom:var(--xl)">
       <span class="eyebrow">Every year</span>
@@ -74,8 +121,7 @@
         <li><a href="https://www.bantry.ie/whats-on/" target="_blank" rel="noopener">All Ireland Coastal Rowing Championships</a><span class="ev-meta">Bantry Bay · usually August · <b>in calendar</b></span></li>
         <li><a href="https://www.ellenhutchins.com/" target="_blank" rel="noopener">Ellen Hutchins Festival</a><span class="ev-meta">Bantry &amp; Ballylickey · usually August · <b>in calendar</b></span></li>
         <li><a href="https://www.westcorkmusic.ie/" target="_blank" rel="noopener">Masters of Tradition</a><span class="ev-meta">Bantry · usually August · <b>in calendar</b></span></li>
-        <li><a href="https://www.bantry.ie/whats-on/" target="_blank" rel="noopener">Bantry Agricultural Show</a><span class="ev-meta">Bantry · usually summer</span></li>
-        <li><a href="https://capeclearstorytelling.com/" target="_blank" rel="noopener">Cape Clear International Storytelling Festival</a><span class="ev-meta">Cape Clear Island · usually early September</span></li>
+        <li><a href="https://www.bantryshow.ie/" target="_blank" rel="noopener">Bantry Agricultural Show</a><span class="ev-meta">Bantry · usually mid–late August (a Sunday)</span></li>
         <li><a href="https://tastecork.ie/food-producers/a-taste-of-west-cork" target="_blank" rel="noopener">A Taste of West Cork Food Festival</a><span class="ev-meta">Skibbereen &amp; across West Cork · usually September</span></li>
         <li><a href="https://drimoleaguesingingfestival.ie/" target="_blank" rel="noopener">Drimoleague Singing Festival</a><span class="ev-meta">Drimoleague · usually mid–late September</span></li>
         <li><a href="https://culturenight.ie/" target="_blank" rel="noopener">Culture Night</a><span class="ev-meta">Bantry, Glengarriff, Bere Island &amp; nationwide · usually September · <b>in calendar</b></span></li>
@@ -103,10 +149,24 @@
         <li><a href="https://aceh.ie/festivals/" target="_blank" rel="noopener">Allihies Family Festival</a><span class="ev-meta">Allihies · usually August</span></li>
         <li><a href="https://bearatourism.com/see-more/festivals" target="_blank" rel="noopener">Adrigole &amp; Garnish festivals, Bere Island Regatta</a><span class="ev-meta">Adrigole, Garnish &amp; Bere Island · usually August</span></li>
         <li><a href="https://visitglengarriff.ie/glengarriff-events-at-a-glance/" target="_blank" rel="noopener">Swim Around Garnish Island</a><span class="ev-meta">Glengarriff · usually August</span></li>
-        <li><a href="https://www.bereislandartsfestival.ie/" target="_blank" rel="noopener">Bere Island Arts Festival</a><span class="ev-meta">Bere Island · usually September · <b>in calendar</b></span></li>
         <li><a href="https://www.discoverireland.ie/cork/tour-de-beara-cycle-2027" target="_blank" rel="noopener">Tour de Beara Cycle</a><span class="ev-meta">Glengarriff · usually September · <b>in calendar</b></span></li>
         <li><a href="https://acmm.ie/allihies-autumn-school/" target="_blank" rel="noopener">Allihies Autumn School</a><span class="ev-meta">Allihies · usually October</span></li>
         <li><a href="https://visitglengarriff.ie/glengarriff-events-at-a-glance/" target="_blank" rel="noopener">Glengarriff Christmas Shopping Night</a><span class="ev-meta">Glengarriff · usually December</span></li>
+      </ul>
+    </div>
+    <div class="ev-group reveal">
+      <h3>Islands</h3>
+      <p class="muted">Bere, Dursey, Cape Clear, Sherkin &amp; Heir — a short ferry hop away (Dursey by cable car)</p>
+      <ul class="ev-dir">
+        <li><a href="https://westcorkislands.com/summer-islands-festival/" target="_blank" rel="noopener">Summer on the Islands Festival</a><span class="ev-meta">Bere, Dursey, Heir, Cape Clear, Garinish, Sherkin, Long &amp; Whiddy · usually May – September</span></li>
+        <li><a href="https://www.openear.ie/" target="_blank" rel="noopener">Open Ear Festival</a><span class="ev-meta">Sherkin Island · usually June bank holiday weekend</span></li>
+        <li><a href="https://www.durseyisland.ie/dursey-island-summer-festival.html" target="_blank" rel="noopener">Dursey Island Summer Festival</a><span class="ev-meta">Dursey Island · usually June</span></li>
+        <li><a href="https://westcorkislands.com/events/cape-clear-lavender-festival/" target="_blank" rel="noopener">Cape Clear Lavender Festival</a><span class="ev-meta">Cape Clear Island · usually late June</span></li>
+        <li><a href="https://westcorkislands.com/events/bobstock-festival-2025/" target="_blank" rel="noopener">Bobstock Festival</a><span class="ev-meta">Cape Clear Island · usually early July</span></li>
+        <li><a href="https://westcorkislands.com/events/bere-island-festival/" target="_blank" rel="noopener">Bere Island Family Festival</a><span class="ev-meta">Bere Island · usually early August</span></li>
+        <li><a href="https://heirisland.ie/see-do/activities/heir-island-regatta/" target="_blank" rel="noopener">Heir Island Regatta</a><span class="ev-meta">Heir Island · usually early August</span></li>
+        <li><a href="https://capeclearstorytelling.com/" target="_blank" rel="noopener">Cape Clear International Storytelling Festival</a><span class="ev-meta">Cape Clear Island · usually early September</span></li>
+        <li><a href="https://www.bereislandartsfestival.ie/" target="_blank" rel="noopener">Bere Island Arts Festival</a><span class="ev-meta">Bere Island · usually mid-September · <b>in calendar</b></span></li>
       </ul>
     </div>
     <div class="ev-group reveal">
@@ -145,6 +205,103 @@ fetch('events.json',{cache:'no-store'}).then(function(r){return r.json();}).then
   m.className='ev-meta';m.textContent=e.location||'';b.appendChild(a);b.appendChild(m);li.appendChild(d);li.appendChild(b);ul.appendChild(li);});
  if(j.updated)document.getElementById('ev-updated').textContent='Last updated: '+new Date(j.updated).toLocaleString();
 }).catch(function(){ul.innerHTML='<li class="muted">Events could not be loaded right now.</li>';});
+})();
+</script>
+<script src="assets/leaflet/leaflet.js"></script>
+<script>
+(function(){
+var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],FULL=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function p(s){var a=s.split('-');return new Date(+a[0],+a[1]-1,+a[2]);}
+function key(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function fmt(d){return d.getDate()+' '+MONTHS[d.getMonth()]+' '+d.getFullYear();}
+function range(s,e){var a=p(s),b=p(e);b.setDate(b.getDate()-1);if(b<=a)return fmt(a);
+ if(a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth())return a.getDate()+'–'+fmt(b);
+ if(a.getFullYear()===b.getFullYear())return a.getDate()+' '+MONTHS[a.getMonth()]+' – '+fmt(b);return fmt(a)+' – '+fmt(b);}
+function esc(t){var d=document.createElement('div');d.textContent=t==null?'':t;return d.innerHTML;}
+function mkey(y,m){return y+'-'+String(m+1).padStart(2,'0');}
+var today=new Date();today.setHours(0,0,0,0);var tk=key(today);
+var events=[],hols=[],months=[],sel='all',calY=today.getFullYear(),calM=today.getMonth(),selDay=null,map=null,layer=null,groups={},HOME=[51.7283264,-9.5554595];
+function overlaps(e,y,m){var a=mkey(y,m)+'-01',b=key(new Date(y,m+1,1));return e.start<b&&e.end>a;}
+function inMonthList(){return sel==='all'?events:events.filter(function(e){var a=sel.split('-');return overlaps(e,+a[0],+a[1]-1);});}
+function gk(e){return e.lat+','+e.lng;}
+/* ---- map ---- */
+function initMap(){var el=document.getElementById('ev-map');if(!el||!window.L)return;
+ map=L.map(el,{scrollWheelZoom:false});
+ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+ L.circleMarker(HOME,{radius:11,color:'#fff',weight:3,fillColor:'#bf7737',fillOpacity:1}).addTo(map).bindPopup('<b>An Tigín</b><br>Glengarriff, Co. Cork');
+ layer=L.layerGroup().addTo(map);}
+function evHtml(e){return '<b>'+esc(e.name)+'</b><small>'+esc(range(e.start,e.end))+'</small><br><span>'+esc(e.location)+'</span>'+(e.url?'<br><a href="'+esc(e.url)+'" target="_blank" rel="noopener">Event website ↗</a>':'');}
+function drawMap(){if(!map)return;layer.clearLayers();groups={};var pts=[HOME];
+ inMonthList().forEach(function(e){if(e.lat==null)return;var k=gk(e);(groups[k]=groups[k]||{ll:[e.lat,e.lng],ev:[]}).ev.push(e);});
+ Object.keys(groups).forEach(function(k){var g=groups[k];pts.push(g.ll);
+  g.marker=L.circleMarker(g.ll,{radius:8,color:'#fff',weight:2,fillColor:'#094730',fillOpacity:1}).addTo(layer)
+   .bindPopup('<div class="ev-pop">'+g.ev.map(evHtml).join('<hr style="border:0;border-top:1px solid #ddd;margin:8px 0">')+'<br><a href="https://www.google.com/maps/dir/?api=1&destination='+g.ll[0]+','+g.ll[1]+'" target="_blank" rel="noopener">Directions ↗</a></div>',{maxWidth:260});
+  g.marker.on('popupopen',function(){markActive(g.ev);});});
+ map.fitBounds(pts,{padding:[30,30],maxZoom:11});}
+function openOnMap(e){if(!map||e.lat==null)return;var g=groups[gk(e)];if(!g)return;
+ document.getElementById('ev-map').scrollIntoView({behavior:'smooth',block:'center'});
+ map.setView(g.ll,Math.max(map.getZoom(),11));g.marker.openPopup();}
+/* ---- list ---- */
+var liByEv=[];
+function markActive(evs){liByEv.forEach(function(x){x[1].classList.toggle('active',evs.indexOf(x[0])>=0);});}
+function drawList(){var ul=document.getElementById('ev-mlist'),un=document.getElementById('ev-unmapped');ul.innerHTML='';un.innerHTML='';liByEv=[];
+ var a=sel.split('-');document.getElementById('ev-mlist-title').textContent=sel==='all'?'All upcoming events':'Events in '+FULL[+a[1]-1]+' '+a[0];
+ var list=inMonthList(),nUn=0;
+ if(!list.length)ul.innerHTML='<li class="muted">No events listed for this month.</li>';
+ list.forEach(function(e){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.textContent=e.name;
+  var sm=document.createElement('small');sm.textContent=range(e.start,e.end)+' · '+(e.location||'');li.appendChild(b);li.appendChild(sm);
+  if(e.url){var w=document.createElement('a');w.href=e.url;w.target='_blank';w.rel='noopener';w.textContent='Event website ↗';w.style.fontSize='.85rem';li.appendChild(w);}
+  if(e.lat!=null){b.title='Show on map';b.onclick=function(){openOnMap(e);};ul.appendChild(li);}
+  else{b.onclick=function(){showCal(p(e.start>tk?e.start:tk));};un.appendChild(li);nUn++;}
+  liByEv.push([e,li]);});
+ document.getElementById('ev-unmapped-wrap').hidden=!nUn;}
+/* ---- chips ---- */
+function drawChips(){var c=document.getElementById('ev-chips');c.innerHTML='';
+ [['all','All events']].concat(months.map(function(k){var a=k.split('-');return [k,MONTHS[+a[1]-1]+' '+a[0]];})).forEach(function(x){
+  var b=document.createElement('button');b.type='button';b.textContent=x[1];b.setAttribute('aria-pressed',x[0]===sel);b.dataset.m=x[0];
+  b.onclick=function(){setMonth(x[0],true);};c.appendChild(b);});}
+function setMonth(m,moveCal){sel=m;[].forEach.call(document.querySelectorAll('#ev-chips button'),function(b){b.setAttribute('aria-pressed',b.dataset.m===sel);if(b.dataset.m===sel&&b.scrollIntoView&&b.parentNode.scrollWidth>b.parentNode.clientWidth)b.parentNode.scrollLeft=b.offsetLeft-b.parentNode.offsetLeft-12;});
+ if(moveCal&&m!=='all'){var a=m.split('-');calY=+a[0];calM=+a[1]-1;selDay=null;}drawCal();drawList();drawMap();}
+/* ---- calendar ---- */
+function evOn(k){return events.filter(function(e){return k>=e.start&&k<e.end;});}
+function holOn(k){return hols.filter(function(h){return h.date===k;});}
+var minM=today.getFullYear()*12+today.getMonth(),maxM=minM+11;
+function drawCal(){var y=calY,m=calM,cur=y*12+m;
+ document.getElementById('evc-title').textContent=FULL[m]+' '+y;document.getElementById('evc-prev').disabled=cur<=minM;document.getElementById('evc-next').disabled=cur>=maxM;
+ var g=document.getElementById('evc-days');g.innerHTML='';var lead=(new Date(y,m,1).getDay()+6)%7,days=new Date(y,m+1,0).getDate();
+ for(var i=0;i<lead;i++)g.appendChild(document.createElement('div'));
+ for(var d=1;d<=days;d++){(function(d){var c=document.createElement('div'),dt=new Date(y,m,d),k=key(dt);c.textContent=d;c.className='cal-day'+(dt<today?' cal-past':'');
+  if(dt.getTime()===today.getTime())c.className+=' cal-today';
+  var ev=dt<today?[]:evOn(k),hl=dt<today?[]:holOn(k);
+  if(ev.length||hl.length){var dots=document.createElement('span');dots.className='cal-dots';
+   if(ev.length){var a=document.createElement('span');a.className='cal-ev';dots.appendChild(a);}
+   if(hl.length){var h=document.createElement('span');h.className='cal-hol';dots.appendChild(h);}
+   c.appendChild(dots);c.className+=' has-info';c.tabIndex=0;c.setAttribute('role','button');
+   c.title=hl.map(function(x){return x.name+' (bank holiday)';}).concat(ev.map(function(x){return x.name;})).join(', ');
+   c.onclick=function(){selDay=k;drawCal();showDay(k);};c.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.onclick();}};}
+  if(k===selDay)c.className+=' sel';g.appendChild(c);})(d);}
+ if(!selDay||selDay.slice(0,7)!==mkey(y,m))document.getElementById('evc-detail').innerHTML='<p class="muted">Tap a marked day for details.</p>';}
+function showDay(k){var box=document.getElementById('evc-detail'),dt=p(k),ev=evOn(k),hl=holOn(k);box.innerHTML='';
+ var h=document.createElement('h4');h.textContent=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dt.getDay()]+' '+fmt(dt);box.appendChild(h);
+ hl.forEach(function(x){var q=document.createElement('p');q.className='hol';q.textContent=x.name+' (bank holiday)';box.appendChild(q);});
+ ev.forEach(function(e){var q=document.createElement('p');q.innerHTML='<b>'+esc(e.name)+'</b><br><small class="muted">'+esc(range(e.start,e.end))+' · '+esc(e.location)+'</small><br>';
+  if(e.url){var a=document.createElement('a');a.href=e.url;a.target='_blank';a.rel='noopener';a.textContent='Event website ↗';q.appendChild(a);}
+  if(e.lat!=null){if(e.url)q.appendChild(document.createTextNode(' · '));var b=document.createElement('a');b.href='#ev-map';b.textContent='Show on map';b.onclick=function(x){x.preventDefault();if(sel!=='all'&&!overlaps(e,+sel.split('-')[0],+sel.split('-')[1]-1))setMonth('all',false);openOnMap(e);};q.appendChild(b);}
+  else{q.appendChild(document.createTextNode(e.url?' · location not mapped':'Location not mapped'));}
+  box.appendChild(q);});}
+function showCal(d){calY=d.getFullYear();calM=d.getMonth();syncFromCal();}
+function syncFromCal(){selDay=null;var k=mkey(calY,calM);if(sel!=='all'||months.indexOf(k)>=0){if(months.indexOf(k)>=0)setMonth(k,false);else{sel='none';setMonth(k,false);}}else drawCal();}
+document.getElementById('evc-prev').onclick=function(){var c=calY*12+calM-1;if(c<minM)return;calY=Math.floor(c/12);calM=c%12;syncFromCal();};
+document.getElementById('evc-next').onclick=function(){var c=calY*12+calM+1;if(c>maxM)return;calY=Math.floor(c/12);calM=c%12;syncFromCal();};
+var dow=document.getElementById('evc-dow');['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(n){var e=document.createElement('div');e.className='cal-dow';e.textContent=n;dow.appendChild(e);});
+initMap();drawCal();
+fetch('events.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+ events=(j.events||[]).filter(function(e){return p(e.end)>today;});hols=j.holidays||[];
+ var set={};events.forEach(function(e){for(var c=minM;c<=maxM;c++){var y=Math.floor(c/12),m=c%12;if(overlaps(e,y,m))set[mkey(y,m)]=1;}});
+ months=Object.keys(set).sort();drawChips();
+ /* start on the calendar's current month in sync with the chips */
+ if(months.indexOf(mkey(calY,calM))>=0)setMonth(mkey(calY,calM),false);else setMonth('all',false);
+}).catch(function(){document.getElementById('ev-mlist').innerHTML='<li class="muted">Events could not be loaded right now.</li>';});
 })();
 </script>
 <footer class="footer">
