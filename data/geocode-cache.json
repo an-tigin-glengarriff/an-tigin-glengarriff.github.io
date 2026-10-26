@@ -90,6 +90,18 @@
     "matched": "Eyeries",
     "precision": "town"
   },
+  "GAA pitch, Rerrin, Bere Island, Co. Cork": {
+    "lat": 51.632369,
+    "lng": -9.81755,
+    "matched": "parkrun.ie start",
+    "precision": "place"
+  },
+  "Glengarriff Nature Reserve (amenity area), Kenmare Road, Glengarriff, Co. Cork": {
+    "lat": 51.755548,
+    "lng": -9.566904,
+    "matched": "parkrun.ie start",
+    "precision": "place"
+  },
   "Kenmare town centre, Co. Kerry": {
     "lat": 51.879101,
     "lng": -9.583952,
@@ -138,6 +150,12 @@
     "matched": "Rerrin",
     "precision": "town"
   },
+  "Rineen Woods, Union Hall, Co. Cork": {
+    "lat": 51.551575,
+    "lng": -9.170294,
+    "matched": "parkrun.ie start",
+    "precision": "place"
+  },
   "Schull": {
     "lat": 51.527103,
     "lng": -9.546943,
@@ -166,6 +184,12 @@
     "lat": 51.879053,
     "lng": -9.581521,
     "matched": "The Lansdowne, Kenmare",
+    "precision": "place"
+  },
+  "The Show Grounds, Park Road (N71), Clonakilty, Co. Cork": {
+    "lat": 51.617636,
+    "lng": -8.89884,
+    "matched": "parkrun.ie start",
     "precision": "place"
   },
   "The Square, Castletownbere": {
