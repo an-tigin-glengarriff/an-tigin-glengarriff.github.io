@@ -324,5 +324,11 @@
     "lng": -9.266211,
     "matched": "Skibbereen",
     "precision": "town"
+  },
+  "Jolly Roger, Sherkin Island, Co. Cork": {
+    "lat": 51.478514,
+    "lng": -9.402837,
+    "matched": "Jolly Roger, Sherkin Island",
+    "precision": "place"
   }
 }

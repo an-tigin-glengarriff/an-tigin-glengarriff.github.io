@@ -21,6 +21,7 @@
 .ev-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 var(--m)}
 .ev-chips button{font:inherit;font-size:.85rem;font-weight:500;padding:7px 14px;border-radius:999px;border:1px solid rgba(39,34,32,.25);background:#fffefb;color:inherit;cursor:pointer}
 .ev-chips button[aria-pressed="true"]{background:#094730;border-color:#094730;color:#fff}
+.ev-sub{font-size:.95rem;margin:var(--l) 0 6px}
 .ev-explore{display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:var(--xl);align-items:start}
 @media (max-width:860px){.ev-explore{grid-template-columns:1fr}}
 .ev-cal .cal-day.has-info{cursor:pointer}
@@ -71,18 +72,7 @@
   <img class="hero__img" src="files/gallery/geri-garnish-glengarriff-from-the-air.jpg" alt="Garnish Island and Glengarriff harbour from the air">
   <div class="wrap"><span class="eyebrow" style="color:rgba(245,244,239,.8)">Events</span><h1>What's on nearby.</h1><p>Festivals, markets and music across West Cork, Beara and Kenmare.</p></div>
 </section>
-<section class="section">
-  <div class="wrap">
-    <div class="reveal" style="max-width:860px">
-      <span class="eyebrow">Upcoming</span>
-      <h2>Upcoming West Cork events</h2>
-      <ul class="ev-list" id="ev-upcoming"><li class="muted">Loading events…</li></ul>
-      <p id="ev-updated" class="muted" style="font-size:.8rem;margin:16px 0 0"></p>
-      <p class="muted" style="margin-top:24px">Planning a stay around an event? <a href="calendar.html">Check our availability</a>.</p>
-    </div>
-  </div>
-</section>
-<section class="section bg-paper" id="ev-explore">
+<section class="section" id="ev-explore">
   <div class="wrap">
     <div class="intro" style="margin-bottom:var(--xl)"><h2>Calendar &amp; map.</h2><p class="muted" style="margin:0">Pick a month to see what's on and where. Click a pin, a day or an event for details. Updated automatically from our West Cork Events calendar.</p></div>
     <link rel="stylesheet" href="assets/leaflet/leaflet.css">
@@ -102,6 +92,17 @@
         <div id="ev-reg-wrap" hidden><h3 style="margin-top:var(--l)">Markets &amp; regular events</h3><p class="muted" style="font-size:.85rem;margin:0 0 6px">Every week or month — shown on the map for every month they run.</p><ul id="ev-reg"></ul></div>
         <div id="ev-unmapped-wrap" hidden><h3 style="margin-top:var(--l)">Location not mapped</h3><ul id="ev-unmapped"></ul></div></div>
       </div>
+    </div>
+  </div>
+</section>
+<section class="section bg-paper">
+  <div class="wrap">
+    <div class="reveal" style="max-width:860px">
+      <span class="eyebrow">Upcoming</span>
+      <h2>Upcoming West Cork events</h2>
+      <ul class="ev-list" id="ev-upcoming"><li class="muted">Loading events…</li></ul>
+      <p id="ev-updated" class="muted" style="font-size:.8rem;margin:16px 0 0"></p>
+      <p class="muted" style="margin-top:24px">Planning a stay around an event? <a href="calendar.html">Check our availability</a>.</p>
     </div>
   </div>
 </section>
@@ -189,7 +190,6 @@
         <li><a href="https://skibbereen.ie/festivals-events/" target="_blank" rel="noopener">Skibbereen Blues, Soul &amp; Roots Festival</a><span class="ev-meta">Skibbereen · usually mid-August (2026: 13–16 Aug)</span></li>
         <li><a href="https://skibbereen.ie/festivals-events/" target="_blank" rel="noopener">Baltimore Regatta</a><span class="ev-meta">Baltimore · usually late August (2026: 26–28 Aug)</span></li>
         <li><a href="https://skibbereen.ie/festivals-events/" target="_blank" rel="noopener">Baltimore Deep Sea Angling Festival</a><span class="ev-meta">Baltimore · usually late August (2026: 27–30 Aug)</span></li>
-        <li><a href="https://skibbereen.ie/festivals-events/" target="_blank" rel="noopener">Cape Clear Half Marathon &amp; 10k</a><span class="ev-meta">Cape Clear Island · usually late August (2026: 29 Aug)</span></li>
         <li><a href="https://skibbereen.ie/skibbereen-walking-festival/" target="_blank" rel="noopener">Skibbereen Walking Festival</a><span class="ev-meta">Skibbereen · usually last weekend of September · <b>in calendar</b></span></li>
         <li><a href="https://skibbereen.ie/festivals-events/" target="_blank" rel="noopener">Idir Dhá Tíde</a><span class="ev-meta">St Brigid&#x27;s Church, Union Hall · usually late September (2026: 26–27 Sept)</span></li>
         <li><a href="https://www.liveatstmatthews.com/" target="_blank" rel="noopener">Live at St Matthew&#x27;s</a><span class="ev-meta">St Matthew&#x27;s Church, Baltimore · concerts through the year</span></li>
@@ -215,17 +215,31 @@
     </div>
     <div class="ev-group reveal">
       <h3>Islands</h3>
-      <p class="muted">Bere, Dursey, Cape Clear, Sherkin &amp; Heir — a short ferry hop away (Dursey by cable car)</p>
+      <p class="muted">Bere, Dursey, Cape Clear, Sherkin &amp; Heir — a short ferry hop away (Dursey by cable car). Dates in brackets are last year&#x27;s; check before you go.</p>
       <ul class="ev-dir">
         <li><a href="https://westcorkislands.com/summer-islands-festival/" target="_blank" rel="noopener">Summer on the Islands Festival</a><span class="ev-meta">Bere, Dursey, Heir, Cape Clear, Garinish, Sherkin, Long &amp; Whiddy · usually May – September</span></li>
-        <li><a href="https://www.openear.ie/" target="_blank" rel="noopener">Open Ear Festival</a><span class="ev-meta">Sherkin Island · usually June bank holiday weekend</span></li>
         <li><a href="https://www.durseyisland.ie/dursey-island-summer-festival.html" target="_blank" rel="noopener">Dursey Island Summer Festival</a><span class="ev-meta">Dursey Island · usually June</span></li>
-        <li><a href="https://westcorkislands.com/events/cape-clear-lavender-festival/" target="_blank" rel="noopener">Cape Clear Lavender Festival</a><span class="ev-meta">Cape Clear Island · usually late June</span></li>
-        <li><a href="https://westcorkislands.com/events/bobstock-festival-2025/" target="_blank" rel="noopener">Bobstock Festival</a><span class="ev-meta">Cape Clear Island · usually early July</span></li>
         <li><a href="https://westcorkislands.com/events/bere-island-festival/" target="_blank" rel="noopener">Bere Island Family Festival</a><span class="ev-meta">Bere Island · usually early August</span></li>
         <li><a href="https://heirisland.ie/see-do/activities/heir-island-regatta/" target="_blank" rel="noopener">Heir Island Regatta</a><span class="ev-meta">Heir Island · usually early August</span></li>
-        <li><a href="https://capeclearstorytelling.com/" target="_blank" rel="noopener">Cape Clear International Storytelling Festival</a><span class="ev-meta">Cape Clear Island · usually early September</span></li>
         <li><a href="https://www.bereislandartsfestival.ie/" target="_blank" rel="noopener">Bere Island Arts Festival</a><span class="ev-meta">Bere Island · usually mid-September · <b>in calendar</b></span></li>
+      </ul>
+      <h4 class="ev-sub">Cape Clear (Oileán Chléire)</h4>
+      <ul class="ev-dir">
+        <li><a href="https://capeclearlavender.com/2026-cape-clear-lavender-festival/" target="_blank" rel="noopener">Cape Clear Lavender Festival</a><span class="ev-meta">Cape Clear Island · usually late June (2026: 27–28 June)</span></li>
+        <li><a href="https://westcorkislands.com/events/bobstock-festival-2025/" target="_blank" rel="noopener">Bobstock Festival</a><span class="ev-meta">Cape Clear Island · usually early July (2026: 3–4 July)</span></li>
+        <li><a href="https://westcorkislands.com/events/cape-clears-heritage-week-events/" target="_blank" rel="noopener">Heritage Week on Cape Clear (Seachtain na hOidhreachta)</a><span class="ev-meta">Cape Clear Island · usually mid-August (2026: 17–21 Aug)</span></li>
+        <li><a href="https://www.sientries.co.uk/event/the-cape-clear-island-races-2026" target="_blank" rel="noopener">Cape Clear Island Races (half marathon &amp; 10k)</a><span class="ev-meta">Cape Clear Island · late August (2026: 29 Aug, first year)</span></li>
+        <li><a href="https://capeclearstorytelling.com/" target="_blank" rel="noopener">Cape Clear International Storytelling Festival</a><span class="ev-meta">Cape Clear Island · usually early September (2026: 4–6 Sept)</span></li>
+      </ul>
+      <h4 class="ev-sub">Sherkin Island</h4>
+      <ul class="ev-dir">
+        <li><a href="https://sherkinisland.ie/festivals/" target="_blank" rel="noopener">Sherkin St Patrick&#x27;s Day Parade</a><span class="ev-meta">Jolly Roger, Sherkin · 17 March · <b>in calendar</b></span></li>
+        <li><a href="https://www.openear.ie/" target="_blank" rel="noopener">Open Ear Festival</a><span class="ev-meta">Sherkin North Shore · usually June bank holiday weekend (2026: 28–31 May)</span></li>
+        <li><a href="https://creativeplaceswci.ie/project/sherkin-island-community-exhibition-dancing-at-the-crossroads-and-the-islander-book-the-story-of-us/" target="_blank" rel="noopener">Community Art Exhibition &amp; Dancing at the Crossroads</a><span class="ev-meta">Sherkin Island · usually June (2026: from 5 June; dancing 28 June)</span></li>
+        <li><a href="https://sherkinisland.ie/events-2/" target="_blank" rel="noopener">Sherkin art exhibitions</a><span class="ev-meta">Community Hall, Sherkin · weekly through the summer</span></li>
+        <li><a href="https://westcorkislands.com/events/sherkin-do-run-run/" target="_blank" rel="noopener">Sherkin Do Run Run (4–8 km fun run)</a><span class="ev-meta">Sherkin Island · usually August (2026: 8 Aug)</span></li>
+        <li><a href="https://westcorkislands.com/events/sherkin-island-dog-show/" target="_blank" rel="noopener">Sherkin Beach Dog Show &amp; Barking Mad Art Exhibition</a><span class="ev-meta">Cow Strand, Sherkin · usually September (2026: 19 Sept)</span></li>
+        <li><a href="https://www.swimpro.ie/events/baltimore-wet-weekend-sherkin-2k-2026" target="_blank" rel="noopener">Sherkin to Baltimore 2k swim</a><span class="ev-meta">Sherkin pier to Baltimore · usually late September (2026: 26 Sept)</span></li>
       </ul>
     </div>
     <div class="ev-group reveal">

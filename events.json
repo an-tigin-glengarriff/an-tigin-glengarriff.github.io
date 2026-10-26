@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-26T20:45:37Z",
+  "updated": "2026-10-26T20:54:08Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
   "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
@@ -110,6 +110,18 @@
       "type": "yearly",
       "lat": 51.681033,
       "lng": -9.45467,
+      "geo_precision": "place"
+    },
+    {
+      "name": "Sherkin Island St Patrick's Day Parade",
+      "start": "2027-03-17",
+      "end": "2027-03-18",
+      "location": "Jolly Roger, Sherkin Island, Co. Cork",
+      "description": "\"The world's shortest and best, probably\" St Patrick's Day parade, with St Patrick, music and the snakes banished, held every 17 March at the Jolly Roger hill on Sherkin (a short ferry from Baltimore). Check the island's page for this year's start time.",
+      "url": "https://sherkinisland.ie/festivals/",
+      "type": "yearly",
+      "lat": 51.478514,
+      "lng": -9.402837,
       "geo_precision": "place"
     },
     {
@@ -380,6 +392,18 @@
       "type": "yearly",
       "lat": 51.681033,
       "lng": -9.45467,
+      "geo_precision": "place"
+    },
+    {
+      "name": "Sherkin Island St Patrick's Day Parade",
+      "start": "2028-03-17",
+      "end": "2028-03-18",
+      "location": "Jolly Roger, Sherkin Island, Co. Cork",
+      "description": "\"The world's shortest and best, probably\" St Patrick's Day parade, with St Patrick, music and the snakes banished, held every 17 March at the Jolly Roger hill on Sherkin (a short ferry from Baltimore). Check the island's page for this year's start time.",
+      "url": "https://sherkinisland.ie/festivals/",
+      "type": "yearly",
+      "lat": 51.478514,
+      "lng": -9.402837,
       "geo_precision": "place"
     }
   ],
