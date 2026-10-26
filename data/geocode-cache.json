@@ -1,4 +1,16 @@
 {
+  "Ballydehob Community Hall & village pubs, Ballydehob, Co. Cork": {
+    "lat": 51.562193,
+    "lng": -9.460739,
+    "matched": "Ballydehob",
+    "precision": "town"
+  },
+  "Ballydehob Community Hall & village, Ballydehob, Co. Cork": {
+    "lat": 51.562193,
+    "lng": -9.460739,
+    "matched": "Ballydehob",
+    "precision": "town"
+  },
   "Bantry": {
     "lat": 51.67977,
     "lng": -9.45236,
@@ -95,6 +107,12 @@
     "lng": -9.460739,
     "matched": "Ballydehob",
     "precision": "town"
+  },
+  "Main Street, Ballydehob, Co. Cork": {
+    "lat": 51.562667,
+    "lng": -9.461766,
+    "matched": "Main Street, Ballydehob, Co. Cork",
+    "precision": "place"
   },
   "Market Square, Dunmanway": {
     "lat": 51.721503,

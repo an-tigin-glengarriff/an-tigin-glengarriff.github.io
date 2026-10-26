@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-26T20:20:57Z",
+  "updated": "2026-10-26T20:37:32Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
   "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
@@ -89,6 +89,18 @@
       "geo_precision": "town"
     },
     {
+      "name": "Ballydehob St Patrick's Day Parade",
+      "start": "2027-03-17",
+      "end": "2027-03-18",
+      "location": "Main Street, Ballydehob, Co. Cork",
+      "description": "Colourful costumes and floats, vintage tractors, antique cars and the local volunteer emergency services parade through the village on 17 March.",
+      "url": "https://www.ballydehob.ie/festivals/",
+      "type": "yearly",
+      "lat": 51.562667,
+      "lng": -9.461766,
+      "geo_precision": "place"
+    },
+    {
       "name": "Bantry St Patrick's Day Parade",
       "start": "2027-03-17",
       "end": "2027-03-18",
@@ -99,6 +111,18 @@
       "lat": 51.681033,
       "lng": -9.45467,
       "geo_precision": "place"
+    },
+    {
+      "name": "Ballydehob Traditional Music Festival",
+      "start": "2027-03-18",
+      "end": "2027-03-22",
+      "location": "Ballydehob Community Hall & village pubs, Ballydehob, Co. Cork",
+      "description": "Féile Átha an Dá Chab: all-star concert, session trail around the village pubs, music, song and dance workshops, céilí and sean-nós dancing. Dates as announced by the festival (18–21 March 2027).",
+      "url": "https://www.facebook.com/BallydehobTradFestival/",
+      "type": "oneoff",
+      "lat": 51.562193,
+      "lng": -9.460739,
+      "geo_precision": "town"
     },
     {
       "name": "Bantry Hospice Golf Classic",
@@ -134,6 +158,18 @@
       "type": "oneoff",
       "lat": 51.879101,
       "lng": -9.583952,
+      "geo_precision": "town"
+    },
+    {
+      "name": "Fastnet Maritime and Folk Festival",
+      "start": "2027-06-18",
+      "end": "2027-06-21",
+      "location": "Ballydehob Community Hall & village, Ballydehob, Co. Cork",
+      "description": "15th year: sea songs, shanties, traditional and folk music in the pubs, a maritime song-writing competition, craft stalls and a fundraising concert in Ballydehob Community Hall (Sat 19 June). Most events free.",
+      "url": "https://fastnetmaritime.com/",
+      "type": "oneoff",
+      "lat": 51.562193,
+      "lng": -9.460739,
       "geo_precision": "town"
     },
     {
@@ -320,6 +356,18 @@
       "type": "yearly",
       "lat": 51.681033,
       "lng": -9.45467,
+      "geo_precision": "place"
+    },
+    {
+      "name": "Ballydehob St Patrick's Day Parade",
+      "start": "2028-03-17",
+      "end": "2028-03-18",
+      "location": "Main Street, Ballydehob, Co. Cork",
+      "description": "Colourful costumes and floats, vintage tractors, antique cars and the local volunteer emergency services parade through the village on 17 March.",
+      "url": "https://www.ballydehob.ie/festivals/",
+      "type": "yearly",
+      "lat": 51.562667,
+      "lng": -9.461766,
       "geo_precision": "place"
     },
     {
