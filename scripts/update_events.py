@@ -156,7 +156,7 @@ def write(old, events, cal_id, ics_url, holidays, regular):
         print(f"No change ({len(events)} events, {len(regular)} regular, {len(holidays)} holidays)."); return
     data = {"updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "calendar_id": cal_id, "ics_url": ics_url,
-            "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
+            "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
             "events": events, "regular": regular, "holidays": holidays}
     with open(OUT, "w") as f: json.dump(data, f, indent=2, ensure_ascii=False); f.write("\n")
     print(f"Wrote {len(events)} events, {len(regular)} regular, {len(holidays)} holidays.")
@@ -259,7 +259,7 @@ def regular_entry(ev, today, horizon):
     return {"name": ev.get("summary", "Event"), "rule": rule_text(ev["rrule"]), "times": times,
             "next": nxt.isoformat(), "months": months, "location": ev.get("location", ""),
             "description": re.sub(r"https?://\S+", "", desc).strip(), "url": urls[-1] if urls else "",
-            "rrule": ev["rrule"]}
+            "rrule": ev["rrule"], "type": "monthly" if r.get("FREQ") == "MONTHLY" else "weekly"}
 
 def main():
     if not CAL_ID:
@@ -295,7 +295,7 @@ def main():
     for ev in vevents:
         if "rid" in ev: overrides.setdefault(ev.get("uid"), {})[ev["rid"]] = ev
     out, regular = [], []
-    def add(ev, s):
+    def add(ev, s, typ="oneoff"):
         dur = (ev.get("e", ev["s"] + timedelta(days=1)) - ev["s"])
         e = s + dur
         if e <= today or s > horizon or ev.get("status") == "CANCELLED": return
@@ -303,7 +303,8 @@ def main():
         urls = re.findall(r"https?://\S+", desc)
         text_ = re.sub(r"https?://\S+", "", desc).strip()
         out.append({"name": ev.get("summary", "Event"), "start": s.isoformat(), "end": e.isoformat(),
-                    "location": ev.get("location", ""), "description": text_, "url": urls[-1] if urls else ""})
+                    "location": ev.get("location", ""), "description": text_, "url": urls[-1] if urls else "",
+                    "type": typ})
     for ev in vevents:
         if "rid" in ev: continue
         if "rrule" in ev and is_regular(ev["rrule"]):
@@ -316,8 +317,9 @@ def main():
             for occ in rule.between(start_dt, datetime.combine(horizon, datetime.min.time()), inc=True):
                 s = occ.date()
                 if s in ev["exdate"]: continue
-                if s in ov: add(ov[s], ov[s]["s"])
-                else: add(ev, s)
+                typ = "yearly" if _rparts(ev["rrule"]).get("FREQ") == "YEARLY" else "oneoff"
+                if s in ov: add(ov[s], ov[s]["s"], typ)
+                else: add(ev, s, typ)
         else:
             add(ev, ev["s"])
     out.sort(key=lambda x: (x["start"], x["name"]))

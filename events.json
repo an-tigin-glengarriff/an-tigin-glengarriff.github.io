@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-26T20:10:12Z",
+  "updated": "2026-10-26T20:20:57Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
-  "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
+  "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
   "events": [
     {
       "name": "Kenmare Samhain / Halloween Festival",
@@ -11,6 +11,7 @@
       "location": "Kenmare, Co. Kerry",
       "description": "Week of Halloween fun in Kenmare with a parade on 31 Oct.",
       "url": "https://www.kenmare.ie/whats-on-1/halloween-samhain-festival",
+      "type": "oneoff",
       "lat": 51.879101,
       "lng": -9.583952,
       "geo_precision": "town"
@@ -22,6 +23,7 @@
       "location": "Wolfe Tone Square & Bantry House, Bantry",
       "description": "Free family Halloween parade, spooky walk at Bantry House and a disco in the square.",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "oneoff",
       "lat": 51.67977,
       "lng": -9.45236,
       "geo_precision": "town"
@@ -33,6 +35,7 @@
       "location": "Kenmare, Co. Kerry",
       "description": "Three-day design festival with talks and more than 40 designers and makers.",
       "url": "https://www.designkenmare.com/",
+      "type": "oneoff",
       "lat": 51.879101,
       "lng": -9.583952,
       "geo_precision": "town"
@@ -44,6 +47,7 @@
       "location": "Black's Brewery & Distillery, Kinsale",
       "description": "Free festive market with local makers, artisan food and live music (1–7pm).",
       "url": "https://www.kinsale.ie/event/blacks-christmas-market/",
+      "type": "oneoff",
       "lat": 51.705737,
       "lng": -8.522982,
       "geo_precision": "town"
@@ -55,6 +59,7 @@
       "location": "Wolfe Tone Square, Bantry",
       "description": "Free annual New Year's Eve party on the square: music from about 9pm, fireworks about 10pm.",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "yearly",
       "lat": 51.681033,
       "lng": -9.45467,
       "geo_precision": "place"
@@ -66,6 +71,7 @@
       "location": "The Lansdowne, Kenmare",
       "description": "Weekend festival of music and wellness at The Lansdowne.",
       "url": "https://www.kenmare.ie/whats-on",
+      "type": "oneoff",
       "lat": 51.879053,
       "lng": -9.581521,
       "geo_precision": "place"
@@ -77,6 +83,7 @@
       "location": "Bantry",
       "description": "Five-day St Patrick's festival with live music in pubs, dancing and family events.",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "oneoff",
       "lat": 51.67977,
       "lng": -9.45236,
       "geo_precision": "town"
@@ -88,6 +95,7 @@
       "location": "Wolfe Tone Square, Bantry",
       "description": "Parade with floats and marching bands, plus Irish dancing on the square (from 12:15pm, parade at 1pm).",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "yearly",
       "lat": 51.681033,
       "lng": -9.45467,
       "geo_precision": "place"
@@ -99,6 +107,7 @@
       "location": "Bantry Bay Golf Club",
       "description": "Charity golf weekend raising funds for Bantry hospice.",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "oneoff",
       "lat": 51.698689,
       "lng": -9.445312,
       "geo_precision": "place"
@@ -110,6 +119,7 @@
       "location": "Schull",
       "description": "Short film festival that takes over the village's pubs, halls and cafés, plus Cape Clear.",
       "url": "https://www.fastnetfilmfestival.com/",
+      "type": "oneoff",
       "lat": 51.527103,
       "lng": -9.546943,
       "geo_precision": "town"
@@ -121,6 +131,7 @@
       "location": "Kenmare, Co. Kerry",
       "description": "Popular sportive with 85, 110 and 140 km loops around the Beara Peninsula.",
       "url": "https://ringofbearacyclekenmare.com/",
+      "type": "oneoff",
       "lat": 51.879101,
       "lng": -9.583952,
       "geo_precision": "town"
@@ -132,6 +143,7 @@
       "location": "Bantry House & St Brendan's Church, Bantry",
       "description": "Ten days of world-class chamber music, masterclasses and fringe events in Bantry.",
       "url": "https://www.westcorkmusic.ie/whats-on/chamber-music-programme/",
+      "type": "oneoff",
       "lat": 51.67977,
       "lng": -9.45236,
       "geo_precision": "town"
@@ -142,7 +154,8 @@
       "end": "2027-08-02",
       "location": "Venues across West Cork (incl. Glengarriff hall, Whiddy Island)",
       "description": "Touring pop-up theatre in village halls across West Cork.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "type": "oneoff"
     },
     {
       "name": "West Cork Literary Festival",
@@ -151,6 +164,7 @@
       "location": "Bantry",
       "description": "Eight days of readings, talks and writing workshops in Bantry.",
       "url": "https://www.westcorkmusic.ie/whats-on/literary-festival-programme/",
+      "type": "oneoff",
       "lat": 51.67977,
       "lng": -9.45236,
       "geo_precision": "town"
@@ -162,6 +176,7 @@
       "location": "Bantry (start/finish)",
       "description": "Charity cycle around the Mizen and Sheep's Head (65/100/130 km), with a BBQ afterwards.",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "oneoff",
       "lat": 51.67977,
       "lng": -9.45236,
       "geo_precision": "town"
@@ -173,6 +188,7 @@
       "location": "Eyeries, Beara",
       "description": "Village weekend with music, stalls, dog show, road bowling and kids' activities.",
       "url": "https://eyeries.ie/about-the-festival",
+      "type": "oneoff",
       "lat": 51.69367,
       "lng": -9.957762,
       "geo_precision": "town"
@@ -184,6 +200,7 @@
       "location": "Castletownbere, Beara",
       "description": "Harbour festival of music, seafood and maritime fun, starting on the August bank holiday weekend.",
       "url": "https://bearatourism.com/see-more/festivals",
+      "type": "oneoff",
       "lat": 51.651416,
       "lng": -9.910493,
       "geo_precision": "town"
@@ -195,6 +212,7 @@
       "location": "Bantry Bay",
       "description": "National coastal rowing championships return to Bantry Bay.",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "oneoff",
       "lat": 51.67977,
       "lng": -9.45236,
       "geo_precision": "town"
@@ -206,6 +224,7 @@
       "location": "Bantry & Ballylickey, around Bantry Bay",
       "description": "Walks, talks and workshops celebrating Ireland's first female botanist.",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "oneoff",
       "lat": 51.67977,
       "lng": -9.45236,
       "geo_precision": "town"
@@ -217,6 +236,7 @@
       "location": "Kenmare town centre, Co. Kerry",
       "description": "Traditional horse and street fair held since the 1760s; the town centre is closed to traffic.",
       "url": "https://www.lansdownekenmare.com/post/the-story-of-kenmare-fair-day",
+      "type": "yearly",
       "lat": 51.879101,
       "lng": -9.583952,
       "geo_precision": "town"
@@ -228,6 +248,7 @@
       "location": "Bantry House & St Brendan's Church, Bantry",
       "description": "Five-day festival of Irish traditional music curated by Martin Hayes.",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "oneoff",
       "lat": 51.67977,
       "lng": -9.45236,
       "geo_precision": "town"
@@ -239,6 +260,7 @@
       "location": "Rerrin, Bere Island, Beara",
       "description": "Island festival of music, art and culture.",
       "url": "https://www.bereislandartsfestival.ie/",
+      "type": "oneoff",
       "lat": 51.635305,
       "lng": -9.816507,
       "geo_precision": "town"
@@ -249,7 +271,8 @@
       "end": "2027-09-18",
       "location": "Bantry, Bere Island, Glengarriff and nationwide",
       "description": "Free night of cultural events, talks and performances in towns across Ireland.",
-      "url": "https://www.bantry.ie/whats-on/"
+      "url": "https://www.bantry.ie/whats-on/",
+      "type": "oneoff"
     },
     {
       "name": "Tour de Beara Cycle",
@@ -258,6 +281,7 @@
       "location": "Eccles Hotel, Glengarriff",
       "description": "Cycling sportive from Glengarriff over the Caha Pass and around Beara.",
       "url": "https://www.discoverireland.ie/cork/tour-de-beara-cycle-2027",
+      "type": "oneoff",
       "lat": 51.752313,
       "lng": -9.540868,
       "geo_precision": "place"
@@ -269,6 +293,7 @@
       "location": "Skibbereen",
       "description": "Guided walks for all abilities over the last weekend of September.",
       "url": "https://skibbereen.ie/skibbereen-walking-festival/",
+      "type": "yearly",
       "lat": 51.547823,
       "lng": -9.266211,
       "geo_precision": "town"
@@ -280,6 +305,7 @@
       "location": "Westlodge Hotel, Bantry",
       "description": "Motorsport rally based in Bantry.",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "oneoff",
       "lat": 51.672228,
       "lng": -9.474958,
       "geo_precision": "place"
@@ -291,6 +317,7 @@
       "location": "Wolfe Tone Square, Bantry",
       "description": "Free annual New Year's Eve party on the square: music from about 9pm, fireworks about 10pm.",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "yearly",
       "lat": 51.681033,
       "lng": -9.45467,
       "geo_precision": "place"
@@ -302,6 +329,7 @@
       "location": "Wolfe Tone Square, Bantry",
       "description": "Parade with floats and marching bands, plus Irish dancing on the square (from 12:15pm, parade at 1pm).",
       "url": "https://www.bantry.ie/whats-on/",
+      "type": "yearly",
       "lat": 51.681033,
       "lng": -9.45467,
       "geo_precision": "place"
@@ -331,6 +359,7 @@
       "description": "Every Wednesday morning all year, 9:30am–12:30pm: organic veg, plants, bread and cakes.",
       "url": "https://irishfoodie.ie/events/ballydehob-pop-up-shop/",
       "rrule": "FREQ=WEEKLY;BYDAY=WE",
+      "type": "weekly",
       "lat": 51.562193,
       "lng": -9.460739,
       "geo_precision": "town"
@@ -358,6 +387,7 @@
       "description": "Every Sunday, 11am–1pm: local growers, bakers and makers.",
       "url": "https://westcorkpeople.ie/health-lifestyle/food-drinks/baltimore-aims-to-increase-local-access-to-fresh-food-with-community-market/",
       "rrule": "FREQ=WEEKLY;BYDAY=SU",
+      "type": "weekly",
       "lat": 51.483321,
       "lng": -9.373205,
       "geo_precision": "town"
@@ -385,6 +415,7 @@
       "description": "Every Saturday, 9:30am–1:30pm.",
       "url": "https://www.discoverireland.ie/cork/bandon-farmers-market",
       "rrule": "FREQ=WEEKLY;BYDAY=SA",
+      "type": "weekly",
       "lat": 51.746171,
       "lng": -8.73693,
       "geo_precision": "town"
@@ -412,6 +443,7 @@
       "description": "Every Friday, 9:30am–3pm. Food, produce, crafts and curios. The largest market is on the first Friday of every month (traditional Fair Day).",
       "url": "https://www.bantry.ie/things-to-do/bantry-market/",
       "rrule": "FREQ=WEEKLY;BYDAY=FR",
+      "type": "weekly",
       "lat": 51.681033,
       "lng": -9.45467,
       "geo_precision": "place"
@@ -439,6 +471,7 @@
       "description": "First Thursday of every month (traditional market day), also most Thursdays in summer. Food, plants, bric-a-brac and more.",
       "url": "https://www.discoverireland.ie/cork/castletownbere-market",
       "rrule": "FREQ=MONTHLY;BYDAY=1TH",
+      "type": "monthly",
       "lat": 51.651431,
       "lng": -9.910072,
       "geo_precision": "place"
@@ -466,6 +499,7 @@
       "description": "Every Friday, 9am–2pm.",
       "url": "https://www.discoverireland.ie/cork/clonakilty-farmers-market",
       "rrule": "FREQ=WEEKLY;BYDAY=FR",
+      "type": "weekly",
       "lat": 51.621867,
       "lng": -8.892039,
       "geo_precision": "place"
@@ -493,6 +527,7 @@
       "description": "Every Thursday, 10am–2pm.",
       "url": "https://thefamilyedit.ie/listing/dunmanway-farmers-market-cork/",
       "rrule": "FREQ=WEEKLY;BYDAY=TH",
+      "type": "weekly",
       "lat": 51.721503,
       "lng": -9.114266,
       "geo_precision": "place"
@@ -520,6 +555,7 @@
       "description": "Wednesday is the main market day, 9am–5pm (smaller market Mon–Sat in season).",
       "url": "https://iomst.ie/markets/kenmare-market/",
       "rrule": "FREQ=WEEKLY;BYDAY=WE",
+      "type": "weekly",
       "lat": 51.88038,
       "lng": -9.583942,
       "geo_precision": "place"
@@ -547,6 +583,7 @@
       "description": "Every Wednesday all year, 9:30am–2:30pm.",
       "url": "https://www.discoverireland.ie/cork/kinsale-farmers-market",
       "rrule": "FREQ=WEEKLY;BYDAY=WE",
+      "type": "weekly",
       "lat": 51.705594,
       "lng": -8.522953,
       "geo_precision": "place"
@@ -574,6 +611,7 @@
       "description": "Every Saturday morning, about 9:30am–1:30pm.",
       "url": "https://www.discoverireland.ie/cork/rosscarbery-farmers-market",
       "rrule": "FREQ=WEEKLY;BYDAY=SA",
+      "type": "weekly",
       "lat": 51.577551,
       "lng": -9.032646,
       "geo_precision": "place"
@@ -595,6 +633,7 @@
       "description": "Sundays from Easter to the end of September, 10am–2pm (weather permitting). The 2027 season start date is set by the market; check the website.",
       "url": "https://www.schullmarket.ie/",
       "rrule": "FREQ=WEEKLY;BYDAY=SU;BYMONTH=4,5,6,7,8,9",
+      "type": "weekly",
       "lat": 51.527103,
       "lng": -9.546943,
       "geo_precision": "town"
@@ -622,6 +661,7 @@
       "description": "Every Saturday from 9:30am (to about 1:30–2pm).",
       "url": "https://www.discoverireland.ie/cork/skibbereen-farmers-market",
       "rrule": "FREQ=WEEKLY;BYDAY=SA",
+      "type": "weekly",
       "lat": 51.549199,
       "lng": -9.268946,
       "geo_precision": "place"
