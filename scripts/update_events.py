@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Fetch the PUBLIC 'West Cork Events' Google Calendar iCal and write events.json
-(all-day events, yearly RRULEs expanded ~18 months ahead). On failure, leaves the old events.
+(all-day events, yearly RRULEs expanded ~18 months ahead; daily/weekly/monthly
+RRULEs such as markets go into a separate "regular" list). On failure, leaves the old events.
 Also writes a "holidays" list: Republic of Ireland public (bank) holidays computed from the
 statutory rules for the same window (actual dates; no substitute days)."""
 import json, os, re, sys, urllib.request
@@ -36,7 +37,7 @@ TOWNS = ["Glengarriff", "Bantry", "Ballylickey", "Kenmare", "Kinsale", "Schull",
          "Castletownbere", "Eyeries", "Allihies", "Adrigole", "Bere Island", "Durrus", "Ahakista",
          "Ballydehob", "Baltimore", "Clonakilty", "Drimoleague", "Dunmanway", "Rosscarbery",
          "Union Hall", "Castletownshend", "Goleen", "Crookhaven", "Cape Clear", "Sherkin",
-         "Whiddy Island", "Rerrin", "Kilcrohane", "Lauragh", "Ardgroom", "Sneem", "Timoleague", "Courtmacsherry"]
+         "Whiddy Island", "Rerrin", "Bandon", "Kilcrohane", "Lauragh", "Ardgroom", "Sneem", "Timoleague", "Courtmacsherry"]
 # Locations that span many places are listed as "location not mapped" instead of a misleading pin.
 MULTI = re.compile(r"\b(across|nationwide|various|venues)\b", re.I)
 _last_q = [0.0]
@@ -149,24 +150,116 @@ def load_old():
         with open(OUT) as f: return json.load(f)
     except Exception: return {}
 
-def write(old, events, cal_id, ics_url, holidays):
+def write(old, events, cal_id, ics_url, holidays, regular):
     if (old.get("events") == events and old.get("calendar_id") == cal_id
-            and old.get("holidays") == holidays):
-        print(f"No change ({len(events)} events, {len(holidays)} holidays)."); return
+            and old.get("holidays") == holidays and old.get("regular", []) == regular):
+        print(f"No change ({len(events)} events, {len(regular)} regular, {len(holidays)} holidays)."); return
     data = {"updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "calendar_id": cal_id, "ics_url": ics_url,
-            "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
-            "events": events, "holidays": holidays}
+            "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
+            "events": events, "regular": regular, "holidays": holidays}
     with open(OUT, "w") as f: json.dump(data, f, indent=2, ensure_ascii=False); f.write("\n")
-    print(f"Wrote {len(events)} events, {len(holidays)} holidays.")
+    print(f"Wrote {len(events)} events, {len(regular)} regular, {len(holidays)} holidays.")
 
 def keep_old_events(reason):
     """Event fetch failed: keep the old events but still refresh holidays."""
     old = load_old(); today = date.today()
     print(f"{reason}; keeping existing events.")
     write(old, add_coords([dict(e) for e in old.get("events", [])]), old.get("calendar_id", CAL_ID), old.get("ics_url", ICS_URL),
-          holidays_window(today, today + timedelta(days=548)))
+          holidays_window(today, today + timedelta(days=548)),
+          add_coords([dict(e) for e in old.get("regular", [])]))
     return 0
+
+# ---------- Regular (weekly / monthly / daily) events ----------
+# A recurring event whose RRULE is DAILY, WEEKLY or MONTHLY (e.g. a Friday market) is not
+# expanded into dozens of dated entries; it goes into "regular" once, with a readable rule
+# ("every Friday", "1st Thursday of the month", "Sundays, Apr–Sep"), times, next date and
+# the months it runs in. YEARLY rules (festivals) are still expanded into "events".
+DAYN = {"MO": "Monday", "TU": "Tuesday", "WE": "Wednesday", "TH": "Thursday", "FR": "Friday",
+        "SA": "Saturday", "SU": "Sunday"}
+MON3 = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+ORD = {1: "1st", 2: "2nd", 3: "3rd", 4: "4th", -1: "last"}
+
+def _rparts(rrule):
+    return dict(x.split("=", 1) for x in rrule.split(";") if "=" in x)
+
+def is_regular(rrule):
+    return _rparts(rrule).get("FREQ") in ("DAILY", "WEEKLY", "MONTHLY")
+
+def _months_txt(ms):
+    ms = sorted(ms)
+    if ms == list(range(ms[0], ms[-1] + 1)) and len(ms) > 2:
+        return f"{MON3[ms[0]-1]}–{MON3[ms[-1]-1]}"
+    return ", ".join(MON3[m-1] for m in ms)
+
+def rule_text(rrule):
+    r = _rparts(rrule); f = r.get("FREQ"); iv = int(r.get("INTERVAL", "1") or 1)
+    days = [d for d in r.get("BYDAY", "").split(",") if d]
+    months = [int(m) for m in r.get("BYMONTH", "").split(",") if m]
+    if f == "DAILY":
+        base = "daily" if iv == 1 else f"every {iv} days"
+    elif f == "WEEKLY":
+        names = [DAYN.get(d[-2:], d) for d in days] or ["week"]
+        joined = " & ".join(names) if len(names) <= 2 else ", ".join(names[:-1]) + " & " + names[-1]
+        if months:
+            base = " & ".join(n + "s" for n in names)
+        else:
+            base = ("every " if iv == 1 else "every other " if iv == 2 else f"every {iv} weeks on ") + joined
+    elif f == "MONTHLY":
+        pos = r.get("BYSETPOS")
+        parts = []
+        for d in days:
+            m = re.match(r"([+-]?\d+)?([A-Z]{2})$", d)
+            if not m: continue
+            n = int(m.group(1) or pos or 0)
+            parts.append(f"{ORD.get(n, str(n) + 'th')} {DAYN[m.group(2)]}" if n else DAYN[m.group(2)])
+        if parts:
+            base = " & ".join(parts) + " of the month"
+        elif r.get("BYMONTHDAY"):
+            base = f"day {r['BYMONTHDAY']} of each month"
+        else:
+            base = "monthly"
+        if iv > 1: base += f" (every {iv} months)"
+    else:
+        base = "regularly"
+    if months and len(months) < 12:
+        base = (base[0].upper() + base[1:]) + ", " + _months_txt(months)
+    return base
+
+def _local_time(raw):
+    """'TZID=..:20261030T093000' / '20261030T093000Z' -> datetime in Europe/Dublin, or None (all-day)."""
+    from zoneinfo import ZoneInfo
+    v = raw.split(":")[-1]
+    if "T" not in v: return None
+    dt = datetime.strptime(v[:15], "%Y%m%dT%H%M%S")
+    if v.endswith("Z"):
+        dt = dt.replace(tzinfo=timezone.utc).astimezone(ZoneInfo("Europe/Dublin"))
+    return dt
+
+def _hm(dt):
+    h = dt.hour % 12 or 12
+    return f"{h}{'' if dt.minute == 0 else ':%02d' % dt.minute}{'am' if dt.hour < 12 else 'pm'}"
+
+def regular_entry(ev, today, horizon):
+    start_dt = datetime.combine(ev["s"], datetime.min.time())
+    try:
+        rule = rrulestr(ev["rrule"], dtstart=start_dt)
+    except Exception:
+        return None
+    nxt = None
+    for occ in rule.xafter(datetime.combine(today, datetime.min.time()), count=60, inc=True):
+        if occ.date() not in ev["exdate"]: nxt = occ.date(); break
+    if not nxt or nxt > horizon or ev.get("status") == "CANCELLED": return None
+    r = _rparts(ev["rrule"])
+    months = [int(m) for m in r.get("BYMONTH", "").split(",") if m] or list(range(1, 13))
+    t1 = _local_time(ev.get("s_raw", "")); t2 = _local_time(ev.get("e_raw", ""))
+    times = f"{_hm(t1)}–{_hm(t2)}" if t1 and t2 else ""
+    desc = ev.get("description", "")
+    urls = re.findall(r"https?://\S+", desc)
+    return {"name": ev.get("summary", "Event"), "rule": rule_text(ev["rrule"]), "times": times,
+            "next": nxt.isoformat(), "months": months, "location": ev.get("location", ""),
+            "description": re.sub(r"https?://\S+", "", desc).strip(), "url": urls[-1] if urls else "",
+            "rrule": ev["rrule"]}
 
 def main():
     if not CAL_ID:
@@ -189,8 +282,8 @@ def main():
         elif cur is not None:
             k, _, v = line.partition(":"); k = k.split(";")[0]
             try:
-                if k == "DTSTART": cur["s"] = d8(v)
-                elif k == "DTEND": cur["e"] = d8(v)
+                if k == "DTSTART": cur["s"] = d8(v); cur["s_raw"] = v.strip()
+                elif k == "DTEND": cur["e"] = d8(v); cur["e_raw"] = v.strip()
                 elif k == "RRULE": cur["rrule"] = v
                 elif k == "EXDATE": cur["exdate"] += [d8(x) for x in v.split(",")]
                 elif k == "RECURRENCE-ID": cur["rid"] = d8(v)
@@ -201,7 +294,7 @@ def main():
     overrides = {}
     for ev in vevents:
         if "rid" in ev: overrides.setdefault(ev.get("uid"), {})[ev["rid"]] = ev
-    out = []
+    out, regular = [], []
     def add(ev, s):
         dur = (ev.get("e", ev["s"] + timedelta(days=1)) - ev["s"])
         e = s + dur
@@ -213,7 +306,10 @@ def main():
                     "location": ev.get("location", ""), "description": text_, "url": urls[-1] if urls else ""})
     for ev in vevents:
         if "rid" in ev: continue
-        if "rrule" in ev:
+        if "rrule" in ev and is_regular(ev["rrule"]):
+            re_ = regular_entry(ev, today, horizon)
+            if re_: regular.append(re_)
+        elif "rrule" in ev:
             start_dt = datetime.combine(ev["s"], datetime.min.time())
             rule = rrulestr(ev["rrule"], dtstart=start_dt)
             ov = overrides.get(ev.get("uid"), {})
@@ -225,7 +321,8 @@ def main():
         else:
             add(ev, ev["s"])
     out.sort(key=lambda x: (x["start"], x["name"]))
-    write(load_old(), add_coords(out), CAL_ID, ICS_URL, holidays_window(today, horizon))
+    regular.sort(key=lambda x: (x["name"]))
+    write(load_old(), add_coords(out), CAL_ID, ICS_URL, holidays_window(today, horizon), add_coords(regular))
     return 0
 
 if __name__ == "__main__":

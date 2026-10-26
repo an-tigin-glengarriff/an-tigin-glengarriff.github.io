@@ -54,10 +54,22 @@
     "matched": "Castletownbere",
     "precision": "town"
   },
+  "Community Hall, Baltimore": {
+    "lat": 51.483321,
+    "lng": -9.373205,
+    "matched": "Baltimore",
+    "precision": "town"
+  },
   "Eccles Hotel, Glengarriff": {
     "lat": 51.752313,
     "lng": -9.540868,
     "matched": "Eccles Hotel, Glengarriff",
+    "precision": "place"
+  },
+  "Emmet Square, Clonakilty": {
+    "lat": 51.621867,
+    "lng": -8.892039,
+    "matched": "Emmet Square, Clonakilty",
     "precision": "place"
   },
   "Eyeries, Beara": {
@@ -78,6 +90,30 @@
     "matched": "Kenmare",
     "precision": "town"
   },
+  "Levis' Corner House, Main Street, Ballydehob": {
+    "lat": 51.562193,
+    "lng": -9.460739,
+    "matched": "Ballydehob",
+    "precision": "town"
+  },
+  "Market Square, Dunmanway": {
+    "lat": 51.721503,
+    "lng": -9.114266,
+    "matched": "Market Square, Dunmanway",
+    "precision": "place"
+  },
+  "Old Market Garden, Bandon": {
+    "lat": 51.746171,
+    "lng": -8.73693,
+    "matched": "Bandon",
+    "precision": "town"
+  },
+  "Pier Road Car Park, Schull": {
+    "lat": 51.527103,
+    "lng": -9.546943,
+    "matched": "Schull",
+    "precision": "town"
+  },
   "Rerrin, Bere Island, Beara": {
     "lat": 51.635305,
     "lng": -9.816507,
@@ -90,16 +126,46 @@
     "matched": "Schull",
     "precision": "town"
   },
+  "Short Quay, Kinsale": {
+    "lat": 51.705594,
+    "lng": -8.522953,
+    "matched": "Short Quay, Kinsale",
+    "precision": "place"
+  },
   "Skibbereen": {
     "lat": 51.547823,
     "lng": -9.266211,
     "matched": "Skibbereen",
     "precision": "town"
   },
+  "The Fairfield, Bridge Street, Skibbereen": {
+    "lat": 51.549199,
+    "lng": -9.268946,
+    "matched": "The Fairfield, Bridge Street, Skibbereen",
+    "precision": "place"
+  },
   "The Lansdowne, Kenmare": {
     "lat": 51.879053,
     "lng": -9.581521,
     "matched": "The Lansdowne, Kenmare",
+    "precision": "place"
+  },
+  "The Square, Castletownbere": {
+    "lat": 51.651431,
+    "lng": -9.910072,
+    "matched": "The Square, Castletownbere",
+    "precision": "place"
+  },
+  "The Square, Kenmare": {
+    "lat": 51.88038,
+    "lng": -9.583942,
+    "matched": "The Square, Kenmare",
+    "precision": "place"
+  },
+  "The Square, Rosscarbery": {
+    "lat": 51.577551,
+    "lng": -9.032646,
+    "matched": "The Square, Rosscarbery",
     "precision": "place"
   },
   "Venues across West Cork (incl. Glengarriff hall, Whiddy Island)": null,
@@ -121,6 +187,24 @@
     "matched": "Wolfe Tone Square, Bantry",
     "precision": "place"
   },
+  "town:Ballydehob": {
+    "lat": 51.562193,
+    "lng": -9.460739,
+    "matched": "Ballydehob",
+    "precision": "town"
+  },
+  "town:Baltimore": {
+    "lat": 51.483321,
+    "lng": -9.373205,
+    "matched": "Baltimore",
+    "precision": "town"
+  },
+  "town:Bandon": {
+    "lat": 51.746171,
+    "lng": -8.73693,
+    "matched": "Bandon",
+    "precision": "town"
+  },
   "town:Bantry": {
     "lat": 51.67977,
     "lng": -9.45236,
@@ -137,6 +221,18 @@
     "lat": 51.651416,
     "lng": -9.910493,
     "matched": "Castletownbere",
+    "precision": "town"
+  },
+  "town:Clonakilty": {
+    "lat": 51.623216,
+    "lng": -8.891407,
+    "matched": "Clonakilty",
+    "precision": "town"
+  },
+  "town:Dunmanway": {
+    "lat": 51.7202,
+    "lng": -9.11269,
+    "matched": "Dunmanway",
     "precision": "town"
   },
   "town:Eyeries": {
@@ -167,6 +263,12 @@
     "lat": 51.635305,
     "lng": -9.816507,
     "matched": "Rerrin",
+    "precision": "town"
+  },
+  "town:Rosscarbery": {
+    "lat": 51.584193,
+    "lng": -9.045038,
+    "matched": "Rosscarbery",
     "precision": "town"
   },
   "town:Schull": {

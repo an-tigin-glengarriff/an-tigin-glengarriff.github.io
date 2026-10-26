@@ -38,6 +38,8 @@
 .ev-mlist li button{all:unset;cursor:pointer;font-weight:600}
 .ev-mlist li button:hover,.ev-mlist li button:focus-visible{text-decoration:underline}
 .ev-mlist li.active button{color:#094730}
+.key--reg{background:#6f9a7f;margin-left:12px}
+#ev-reg li small b{font-weight:600;color:#094730}
 .ev-mlist small{color:var(--grey)}
 .ev-pop b{display:block;margin-bottom:2px}
 @media (max-width:520px){.cal-dots{bottom:10%;gap:2px}.cal-dots .cal-ev,.cal-dots .cal-hol{width:5px;height:5px}.ev-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}.ev-chips button{flex:none}}
@@ -74,7 +76,7 @@
     <link rel="stylesheet" href="assets/leaflet/leaflet.css">
     <div class="ev-chips" id="ev-chips" role="group" aria-label="Show events for"></div>
     <div class="walks-map reveal" id="ev-map" role="region" aria-label="Map of West Cork events"></div>
-    <p class="muted walks-map__key"><span class="key key--walk"></span> Events (click a pin for details) <span class="key key--home"></span> An Tigín</p>
+    <p class="muted walks-map__key"><span class="key key--walk"></span> Events (click a pin for details) <span class="key key--reg"></span> Markets &amp; regular events <span class="key key--home"></span> An Tigín</p>
     <div class="ev-explore">
       <div class="cal ev-cal">
         <div class="cal__head"><button id="evc-prev" aria-label="Previous month">&larr;</button><h3 id="evc-title"></h3><button id="evc-next" aria-label="Next month">&rarr;</button></div>
@@ -85,6 +87,7 @@
       </div>
       <div class="walks ev-mlist">
         <div><h3 id="ev-mlist-title">Events</h3><ul id="ev-mlist"></ul>
+        <div id="ev-reg-wrap" hidden><h3 style="margin-top:var(--l)">Markets &amp; regular events</h3><p class="muted" style="font-size:.85rem;margin:0 0 6px">Every week or month — shown on the map for every month they run.</p><ul id="ev-reg"></ul></div>
         <div id="ev-unmapped-wrap" hidden><h3 style="margin-top:var(--l)">Location not mapped</h3><ul id="ev-unmapped"></ul></div></div>
       </div>
     </div>
@@ -170,6 +173,24 @@
       </ul>
     </div>
     <div class="ev-group reveal">
+      <h3>Markets</h3>
+      <p class="muted">Weekly &amp; monthly markets in West Cork, Beara &amp; Kenmare — local food, crafts &amp; curios</p>
+      <ul class="ev-dir">
+        <li><a href="https://iomst.ie/markets/kenmare-market/" target="_blank" rel="noopener">Kenmare Market</a><span class="ev-meta">The Square, Kenmare · every Wednesday, 9am–5pm · <b>in calendar</b></span></li>
+        <li><a href="https://www.discoverireland.ie/cork/kinsale-farmers-market" target="_blank" rel="noopener">Kinsale Farmers Market</a><span class="ev-meta">Short Quay, Kinsale · every Wednesday, 9:30am–2:30pm · <b>in calendar</b></span></li>
+        <li><a href="https://irishfoodie.ie/events/ballydehob-pop-up-shop/" target="_blank" rel="noopener">Ballydehob Pop-Up Market at Levis&#x27;</a><span class="ev-meta">Levis&#x27; Corner House, Ballydehob · every Wednesday, 9:30am–12:30pm · <b>in calendar</b></span></li>
+        <li><a href="https://thefamilyedit.ie/listing/dunmanway-farmers-market-cork/" target="_blank" rel="noopener">Dunmanway Farmers Market</a><span class="ev-meta">Market Square, Dunmanway · every Thursday, 10am–2pm · <b>in calendar</b></span></li>
+        <li><a href="https://www.discoverireland.ie/cork/castletownbere-market" target="_blank" rel="noopener">Castletownbere Market</a><span class="ev-meta">The Square, Castletownbere · 1st Thursday of the month (most Thursdays in summer), 9:30am–1:30pm · <b>in calendar</b></span></li>
+        <li><a href="https://www.bantry.ie/things-to-do/bantry-market/" target="_blank" rel="noopener">Bantry Market</a><span class="ev-meta">Wolfe Tone Square, Bantry · every Friday, 9:30am–3pm (biggest on the 1st Friday) · <b>in calendar</b></span></li>
+        <li><a href="https://www.discoverireland.ie/cork/clonakilty-farmers-market" target="_blank" rel="noopener">Clonakilty Farmers Market</a><span class="ev-meta">Emmet Square, Clonakilty · every Friday, 9am–2pm · <b>in calendar</b></span></li>
+        <li><a href="https://www.discoverireland.ie/cork/skibbereen-farmers-market" target="_blank" rel="noopener">Skibbereen Farmers Market</a><span class="ev-meta">The Fairfield, Skibbereen · every Saturday, 9:30am–1:30pm · <b>in calendar</b></span></li>
+        <li><a href="https://www.discoverireland.ie/cork/rosscarbery-farmers-market" target="_blank" rel="noopener">Rosscarbery Farmers Market</a><span class="ev-meta">The Square, Rosscarbery · every Saturday morning · <b>in calendar</b></span></li>
+        <li><a href="https://www.discoverireland.ie/cork/bandon-farmers-market" target="_blank" rel="noopener">Bandon Farmers Market</a><span class="ev-meta">Old Market Garden, Bandon · every Saturday, 9:30am–1:30pm · <b>in calendar</b></span></li>
+        <li><a href="https://westcorkpeople.ie/health-lifestyle/food-drinks/baltimore-aims-to-increase-local-access-to-fresh-food-with-community-market/" target="_blank" rel="noopener">Baltimore Community Market</a><span class="ev-meta">Community Hall, Baltimore · every Sunday, 11am–1pm · <b>in calendar</b></span></li>
+        <li><a href="https://www.schullmarket.ie/" target="_blank" rel="noopener">Schull Country Market</a><span class="ev-meta">Pier Road, Schull · Sundays, Easter – end of September, 10am–2pm · <b>in calendar</b></span></li>
+      </ul>
+    </div>
+    <div class="ev-group reveal">
       <h3>Kenmare</h3>
       <p class="muted">Over the Caha Pass in Co. Kerry, about 40 minutes away</p>
       <ul class="ev-dir">
@@ -220,10 +241,13 @@ function range(s,e){var a=p(s),b=p(e);b.setDate(b.getDate()-1);if(b<=a)return fm
 function esc(t){var d=document.createElement('div');d.textContent=t==null?'':t;return d.innerHTML;}
 function mkey(y,m){return y+'-'+String(m+1).padStart(2,'0');}
 var today=new Date();today.setHours(0,0,0,0);var tk=key(today);
-var events=[],hols=[],months=[],sel='all',calY=today.getFullYear(),calM=today.getMonth(),selDay=null,map=null,layer=null,groups={},HOME=[51.7283264,-9.5554595];
+var events=[],regular=[],hols=[],months=[],sel='all',calY=today.getFullYear(),calM=today.getMonth(),selDay=null,map=null,layer=null,groups={},HOME=[51.7283264,-9.5554595];
 function overlaps(e,y,m){var a=mkey(y,m)+'-01',b=key(new Date(y,m+1,1));return e.start<b&&e.end>a;}
 function inMonthList(){return sel==='all'?events:events.filter(function(e){var a=sel.split('-');return overlaps(e,+a[0],+a[1]-1);});}
 function gk(e){return e.lat+','+e.lng;}
+function selMonth(){return sel==='all'?0:sel==='none'?calM+1:+sel.split('-')[1];}
+function regIn(){var m=selMonth();return m?regular.filter(function(r){return (r.months||[]).indexOf(m)>=0;}):regular;}
+function regWhen(r){return r.rule.charAt(0).toUpperCase()+r.rule.slice(1)+(r.times?' · '+r.times:'');}
 /* ---- map ---- */
 function initMap(){var el=document.getElementById('ev-map');if(!el||!window.L)return;
  map=L.map(el,{scrollWheelZoom:false});
@@ -231,11 +255,13 @@ function initMap(){var el=document.getElementById('ev-map');if(!el||!window.L)re
  L.circleMarker(HOME,{radius:11,color:'#fff',weight:3,fillColor:'#bf7737',fillOpacity:1}).addTo(map).bindPopup('<b>An Tigín</b><br>Glengarriff, Co. Cork');
  layer=L.layerGroup().addTo(map);}
 function evHtml(e){return '<b>'+esc(e.name)+'</b><small>'+esc(range(e.start,e.end))+'</small><br><span>'+esc(e.location)+'</span>'+(e.url?'<br><a href="'+esc(e.url)+'" target="_blank" rel="noopener">Event website ↗</a>':'');}
+function regHtml(r){return '<b>'+esc(r.name)+'</b><small>'+esc(regWhen(r))+'</small><br><span>'+esc(r.location)+'</span>'+(r.url?'<br><a href="'+esc(r.url)+'" target="_blank" rel="noopener">Website ↗</a>':'');}
 function drawMap(){if(!map)return;layer.clearLayers();groups={};var pts=[HOME];
- inMonthList().forEach(function(e){if(e.lat==null)return;var k=gk(e);(groups[k]=groups[k]||{ll:[e.lat,e.lng],ev:[]}).ev.push(e);});
+ inMonthList().concat(regIn()).forEach(function(e){if(e.lat==null)return;var k=gk(e);(groups[k]=groups[k]||{ll:[e.lat,e.lng],ev:[]}).ev.push(e);});
  Object.keys(groups).forEach(function(k){var g=groups[k];pts.push(g.ll);
-  g.marker=L.circleMarker(g.ll,{radius:8,color:'#fff',weight:2,fillColor:'#094730',fillOpacity:1}).addTo(layer)
-   .bindPopup('<div class="ev-pop">'+g.ev.map(evHtml).join('<hr style="border:0;border-top:1px solid #ddd;margin:8px 0">')+'<br><a href="https://www.google.com/maps/dir/?api=1&destination='+g.ll[0]+','+g.ll[1]+'" target="_blank" rel="noopener">Directions ↗</a></div>',{maxWidth:260});
+  var onlyReg=g.ev.every(function(x){return x.rule;});
+  g.marker=L.circleMarker(g.ll,{radius:onlyReg?7:8,color:'#fff',weight:2,fillColor:onlyReg?'#6f9a7f':'#094730',fillOpacity:1}).addTo(layer)
+   .bindPopup('<div class="ev-pop">'+g.ev.map(function(x){return x.rule?regHtml(x):evHtml(x);}).join('<hr style="border:0;border-top:1px solid #ddd;margin:8px 0">')+'<br><a href="https://www.google.com/maps/dir/?api=1&destination='+g.ll[0]+','+g.ll[1]+'" target="_blank" rel="noopener">Directions ↗</a></div>',{maxWidth:260});
   g.marker.on('popupopen',function(){markActive(g.ev);});});
  map.fitBounds(pts,{padding:[30,30],maxZoom:11});}
 function openOnMap(e){if(!map||e.lat==null)return;var g=groups[gk(e)];if(!g)return;
@@ -254,6 +280,13 @@ function drawList(){var ul=document.getElementById('ev-mlist'),un=document.getEl
   if(e.lat!=null){b.title='Show on map';b.onclick=function(){openOnMap(e);};ul.appendChild(li);}
   else{b.onclick=function(){showCal(p(e.start>tk?e.start:tk));};un.appendChild(li);nUn++;}
   liByEv.push([e,li]);});
+ var rl=document.getElementById('ev-reg');rl.innerHTML='';var rg=regIn();
+ rg.forEach(function(r){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.textContent=r.name;
+  var sm=document.createElement('small');sm.innerHTML='<b>'+esc(regWhen(r))+'</b> · '+esc(r.location||'');li.appendChild(b);li.appendChild(sm);
+  if(r.url){var w=document.createElement('a');w.href=r.url;w.target='_blank';w.rel='noopener';w.textContent='Website ↗';w.style.fontSize='.85rem';li.appendChild(w);}
+  if(r.lat!=null){b.title='Show on map';b.onclick=function(){openOnMap(r);};}
+  rl.appendChild(li);liByEv.push([r,li]);});
+ document.getElementById('ev-reg-wrap').hidden=!rg.length;
  document.getElementById('ev-unmapped-wrap').hidden=!nUn;}
 /* ---- chips ---- */
 function drawChips(){var c=document.getElementById('ev-chips');c.innerHTML='';
@@ -296,7 +329,7 @@ document.getElementById('evc-next').onclick=function(){var c=calY*12+calM+1;if(c
 var dow=document.getElementById('evc-dow');['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(n){var e=document.createElement('div');e.className='cal-dow';e.textContent=n;dow.appendChild(e);});
 initMap();drawCal();
 fetch('events.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
- events=(j.events||[]).filter(function(e){return p(e.end)>today;});hols=j.holidays||[];
+ events=(j.events||[]).filter(function(e){return p(e.end)>today;});regular=j.regular||[];hols=j.holidays||[];
  var set={};events.forEach(function(e){for(var c=minM;c<=maxM;c++){var y=Math.floor(c/12),m=c%12;if(overlaps(e,y,m))set[mkey(y,m)]=1;}});
  months=Object.keys(set).sort();drawChips();
  /* start on the calendar's current month in sync with the chips */
