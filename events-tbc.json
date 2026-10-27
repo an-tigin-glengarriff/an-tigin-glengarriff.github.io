@@ -1,0 +1,833 @@
+{
+ "note": "Events and festivals whose next dates are not published yet. Shown on events.html as 'dates TBC' under their place and on the map. An entry disappears by itself once a dated event with the same name is in the West Cork Events calendar. months = usual month numbers; last = last year's dates (for reference only). lat/lng are town-level.",
+ "events": [
+  {
+   "name": "West Cork Rally",
+   "place": "Clonakilty",
+   "location": "Clonakilty",
+   "url": "https://www.westcorkrally.com/",
+   "months": [
+    3
+   ],
+   "usual": "March",
+   "lat": 51.623216,
+   "lng": -8.891407
+  },
+  {
+   "name": "Baltimore Fiddle Fair",
+   "place": "Baltimore",
+   "location": "Baltimore",
+   "url": "https://www.fiddlefair.com/",
+   "months": [
+    5
+   ],
+   "usual": "May",
+   "lat": 51.483321,
+   "lng": -9.373205
+  },
+  {
+   "name": "Baltimore Wooden Boat Festival",
+   "place": "Baltimore",
+   "location": "Baltimore",
+   "url": "https://baltimorewoodenboatfestival.com/",
+   "months": [
+    5
+   ],
+   "usual": "late May",
+   "lat": 51.483321,
+   "lng": -9.373205
+  },
+  {
+   "name": "Bantry Walking Festival",
+   "place": "Bantry",
+   "location": "Bantry & Sheep's Head",
+   "url": "https://www.bantry.ie/things-to-do/outdoor/walk-hike/",
+   "months": [
+    6
+   ],
+   "usual": "June bank holiday",
+   "lat": 51.67977,
+   "lng": -9.45236
+  },
+  {
+   "name": "Durrus Festival",
+   "place": "Durrus",
+   "location": "Durrus",
+   "url": "https://www.southernstar.ie/news/durrus-set-for-festival-weekend-4365769",
+   "months": [
+    6
+   ],
+   "usual": "late June",
+   "lat": 51.621558,
+   "lng": -9.523438
+  },
+  {
+   "name": "Calves Week",
+   "place": "Schull",
+   "location": "Schull",
+   "url": "https://shsc.ie/calves-week/calves-week",
+   "months": [
+    8
+   ],
+   "usual": "early August",
+   "lat": 51.527103,
+   "lng": -9.546943
+  },
+  {
+   "name": "Bantry Agricultural Show",
+   "place": "Bantry",
+   "location": "Bantry",
+   "url": "https://www.bantryshow.ie/",
+   "months": [
+    8
+   ],
+   "usual": "mid–late August (a Sunday)",
+   "lat": 51.67977,
+   "lng": -9.45236
+  },
+  {
+   "name": "A Taste of West Cork Food Festival",
+   "place": "Across West Cork",
+   "location": "Skibbereen & across West Cork",
+   "url": "https://tastecork.ie/food-producers/a-taste-of-west-cork",
+   "months": [
+    9
+   ],
+   "usual": "September"
+  },
+  {
+   "name": "Drimoleague Singing Festival",
+   "place": "Drimoleague",
+   "location": "Drimoleague",
+   "url": "https://drimoleaguesingingfestival.ie/",
+   "months": [
+    9
+   ],
+   "usual": "mid–late September",
+   "lat": 51.66085,
+   "lng": -9.25997
+  },
+  {
+   "name": "Kinsale Gourmet Festival",
+   "place": "Kinsale",
+   "location": "Kinsale",
+   "url": "https://kinsalegoodfoodcircle.ie/festivals/kinsale-gourmet-festival/",
+   "months": [
+    10
+   ],
+   "usual": "October",
+   "lat": 51.705737,
+   "lng": -8.522982
+  },
+  {
+   "name": "Clonakilty Waterfront Marathon",
+   "place": "Clonakilty",
+   "location": "Clonakilty",
+   "url": "https://runclon.ie/",
+   "months": [
+    11
+   ],
+   "usual": "late November",
+   "lat": 51.623216,
+   "lng": -8.891407
+  },
+  {
+   "name": "Bantry Christmas lights switch-on",
+   "place": "Bantry",
+   "location": "Bantry",
+   "url": "https://www.corkcoco.ie/en/events/christmas-events-in-cork-county-2025",
+   "months": [
+    11
+   ],
+   "usual": "late November",
+   "lat": 51.67977,
+   "lng": -9.45236
+  },
+  {
+   "name": "Clonakilty Christmas Market",
+   "place": "Clonakilty",
+   "location": "Clonakilty",
+   "url": "https://www.clonakilty.ie/events",
+   "months": [
+    12
+   ],
+   "usual": "December",
+   "lat": 51.623216,
+   "lng": -8.891407
+  },
+  {
+   "name": "Ballydehob Jazz & Arts Festival",
+   "place": "Ballydehob",
+   "location": "Ballydehob",
+   "url": "https://ballydehobjazzfestival.org/",
+   "months": [
+    4,
+    5
+   ],
+   "usual": "May bank holiday weekend",
+   "last": "2026: 30 Apr – 4 May",
+   "lat": 51.562193,
+   "lng": -9.460739
+  },
+  {
+   "name": "Ballydehob Country Music Festival",
+   "place": "Ballydehob",
+   "location": "Ballydehob",
+   "url": "https://ballydehobcountrymusic.com/",
+   "months": [
+    5,
+    6
+   ],
+   "usual": "June bank holiday weekend",
+   "last": "2026: 29 May – 1 June",
+   "lat": 51.562193,
+   "lng": -9.460739
+  },
+  {
+   "name": "Ballydehob Summer & Old Boats Festival",
+   "place": "Ballydehob",
+   "location": "Ballydehob & the quay",
+   "url": "https://www.ballydehob.ie/festivals/",
+   "months": [
+    8
+   ],
+   "usual": "mid-August",
+   "last": "2026: 15–23 Aug",
+   "lat": 51.562193,
+   "lng": -9.460739
+  },
+  {
+   "name": "Vintage & Old-Time Threshing",
+   "place": "Ballydehob",
+   "location": "Ballydehob",
+   "url": "https://www.ballydehob.ie/festivals/",
+   "months": [
+    10
+   ],
+   "usual": "1st weekend of October",
+   "lat": 51.562193,
+   "lng": -9.460739
+  },
+  {
+   "name": "Ballydehob Christmas Craft & Food Fair",
+   "place": "Ballydehob",
+   "location": "Community Hall, Ballydehob",
+   "url": "https://www.ballydehob.ie/festivals/",
+   "months": [
+    11
+   ],
+   "usual": "late November",
+   "last": "2025: Sun 30 Nov",
+   "lat": 51.562193,
+   "lng": -9.460739
+  },
+  {
+   "name": "Bandon Agricultural Show",
+   "place": "Bandon",
+   "location": "Bandon",
+   "url": "https://www.bandonshow.com/",
+   "months": [
+    5
+   ],
+   "usual": "mid-May",
+   "last": "2026: 17 May",
+   "lat": 51.746171,
+   "lng": -8.73693
+  },
+  {
+   "name": "Bike Week Skibbereen",
+   "place": "Skibbereen",
+   "location": "Skibbereen Showgrounds",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    5
+   ],
+   "usual": "May",
+   "last": "2026: 9–17 May",
+   "lat": 51.547823,
+   "lng": -9.266211
+  },
+  {
+   "name": "Clonakilty Agricultural Show",
+   "place": "Clonakilty",
+   "location": "Clonakilty Showgrounds",
+   "url": "https://www.clonakiltyshow.ie/",
+   "months": [
+    6
+   ],
+   "usual": "early June",
+   "last": "2026: 7 June",
+   "lat": 51.623216,
+   "lng": -8.891407
+  },
+  {
+   "name": "Leap Horse & Pony Show",
+   "place": "Leap",
+   "location": "Keamore, Leap",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    6
+   ],
+   "usual": "June bank holiday Monday",
+   "last": "2026: 1 June",
+   "lat": 51.581063,
+   "lng": -9.143339
+  },
+  {
+   "name": "Schull Fastnet Triathlon",
+   "place": "Schull",
+   "location": "Schull",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    6
+   ],
+   "usual": "early June",
+   "last": "2026: 6 June",
+   "lat": 51.527103,
+   "lng": -9.546943
+  },
+  {
+   "name": "Bishopsland Agricultural Show",
+   "place": "Bishopsland",
+   "location": "Bishopsland",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    6
+   ],
+   "usual": "mid-June",
+   "last": "2026: 14 June"
+  },
+  {
+   "name": "Baltimore Pirate Festival",
+   "place": "Baltimore",
+   "location": "Baltimore",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    6
+   ],
+   "usual": "late June",
+   "last": "2026: 19–21 June",
+   "lat": 51.483321,
+   "lng": -9.373205
+  },
+  {
+   "name": "Clonakilty Old Time Fair",
+   "place": "Clonakilty",
+   "location": "Clonakilty",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    7
+   ],
+   "usual": "early July",
+   "last": "2026: 4 July",
+   "lat": 51.623216,
+   "lng": -8.891407
+  },
+  {
+   "name": "Dunmanway Show",
+   "place": "Dunmanway",
+   "location": "Dromleena Lawn, Dunmanway",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    7
+   ],
+   "usual": "early July",
+   "last": "2026: 5 July",
+   "lat": 51.7202,
+   "lng": -9.11269
+  },
+  {
+   "name": "Run Skibb",
+   "place": "Skibbereen",
+   "location": "Skibbereen",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    7
+   ],
+   "usual": "July",
+   "last": "2026: 10–12 July",
+   "lat": 51.547823,
+   "lng": -9.266211
+  },
+  {
+   "name": "Barryroe Show",
+   "place": "Barryroe",
+   "location": "Barryroe GAA grounds",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    7
+   ],
+   "usual": "July",
+   "last": "2026: 11 July"
+  },
+  {
+   "name": "Carbery Agricultural Show",
+   "place": "Skibbereen",
+   "location": "Skibbereen Showgrounds",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    7
+   ],
+   "usual": "mid-July",
+   "last": "2026: 16 July",
+   "lat": 51.547823,
+   "lng": -9.266211
+  },
+  {
+   "name": "Festival by the Sea, Union Hall",
+   "place": "Union Hall",
+   "location": "Union Hall",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    7
+   ],
+   "usual": "July",
+   "last": "2026: 17 July",
+   "lat": 51.558808,
+   "lng": -9.13991
+  },
+  {
+   "name": "St Barrahane's Church Music Festival",
+   "place": "Castletownshend",
+   "location": "Castletownshend",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    7,
+    8
+   ],
+   "usual": "mid-July – late August (concerts)",
+   "lat": 51.527834,
+   "lng": -9.177778
+  },
+  {
+   "name": "Skibbereen Arts Festival",
+   "place": "Skibbereen",
+   "location": "Skibbereen",
+   "url": "https://www.skibbereenartsfestival.com/",
+   "months": [
+    7,
+    8
+   ],
+   "usual": "late July",
+   "last": "2026: 24 July – 2 Aug",
+   "lat": 51.547823,
+   "lng": -9.266211
+  },
+  {
+   "name": "Schull Agricultural Show",
+   "place": "Schull",
+   "location": "Schull",
+   "url": "https://www.schullagrishow.ie/",
+   "months": [
+    7
+   ],
+   "usual": "late July",
+   "last": "2026: 26 July",
+   "lat": 51.527103,
+   "lng": -9.546943
+  },
+  {
+   "name": "Schull Regatta",
+   "place": "Schull",
+   "location": "Schull",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    8
+   ],
+   "usual": "August",
+   "last": "2026: 8–9 Aug",
+   "lat": 51.527103,
+   "lng": -9.546943
+  },
+  {
+   "name": "Skibbereen Blues, Soul & Roots Festival",
+   "place": "Skibbereen",
+   "location": "Skibbereen",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    8
+   ],
+   "usual": "mid-August",
+   "last": "2026: 13–16 Aug",
+   "lat": 51.547823,
+   "lng": -9.266211
+  },
+  {
+   "name": "Baltimore Regatta",
+   "place": "Baltimore",
+   "location": "Baltimore",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    8
+   ],
+   "usual": "late August",
+   "last": "2026: 26–28 Aug",
+   "lat": 51.483321,
+   "lng": -9.373205
+  },
+  {
+   "name": "Baltimore Deep Sea Angling Festival",
+   "place": "Baltimore",
+   "location": "Baltimore",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    8
+   ],
+   "usual": "late August",
+   "last": "2026: 27–30 Aug",
+   "lat": 51.483321,
+   "lng": -9.373205
+  },
+  {
+   "name": "Idir Dhá Tíde",
+   "place": "Union Hall",
+   "location": "St Brigid's Church, Union Hall",
+   "url": "https://skibbereen.ie/festivals-events/",
+   "months": [
+    9
+   ],
+   "usual": "late September",
+   "last": "2026: 26–27 Sept",
+   "lat": 51.558808,
+   "lng": -9.13991
+  },
+  {
+   "name": "Live at St Matthew's",
+   "place": "Baltimore",
+   "location": "St Matthew's Church, Baltimore",
+   "url": "https://www.liveatstmatthews.com/",
+   "months": [],
+   "usual": "",
+   "label": "Concerts through the year – see the website for dates",
+   "lat": 51.483321,
+   "lng": -9.373205
+  },
+  {
+   "name": "St Patrick's Day in Glengarriff",
+   "place": "Glengarriff",
+   "location": "Glengarriff",
+   "url": "https://westcorkcommunity.ie/what-a-week-ahead-2/",
+   "months": [
+    3
+   ],
+   "usual": "17 March",
+   "lat": 51.750197,
+   "lng": -9.549976
+  },
+  {
+   "name": "Glengarriff Walking Weekend",
+   "place": "Glengarriff",
+   "location": "Glengarriff",
+   "url": "https://visitglengarriff.ie/glengarriff-events-at-a-glance/",
+   "months": [
+    5
+   ],
+   "usual": "May",
+   "lat": 51.750197,
+   "lng": -9.549976
+  },
+  {
+   "name": "Jim Dowling Uilleann Pipe & Trad Festival",
+   "place": "Glengarriff",
+   "location": "Glengarriff",
+   "url": "https://jimdowlingfestival.ie/",
+   "months": [
+    6
+   ],
+   "usual": "June",
+   "lat": 51.750197,
+   "lng": -9.549976
+  },
+  {
+   "name": "Michael Dwyer Tin Whistle Festival",
+   "place": "Allihies",
+   "location": "Allihies",
+   "url": "https://bearatourism.com/see-more/festivals",
+   "months": [
+    6
+   ],
+   "usual": "June",
+   "lat": 51.641369,
+   "lng": -10.04444
+  },
+  {
+   "name": "Allihies Family Festival",
+   "place": "Allihies",
+   "location": "Allihies",
+   "url": "https://aceh.ie/festivals/",
+   "months": [
+    8
+   ],
+   "usual": "August",
+   "lat": 51.641369,
+   "lng": -10.04444
+  },
+  {
+   "name": "Adrigole & Garnish festivals, Bere Island Regatta",
+   "place": "Adrigole, Garnish & Bere Island",
+   "location": "Adrigole, Garnish & Bere Island",
+   "url": "https://bearatourism.com/see-more/festivals",
+   "months": [
+    8
+   ],
+   "usual": "August"
+  },
+  {
+   "name": "Swim Around Garnish Island",
+   "place": "Glengarriff",
+   "location": "Glengarriff",
+   "url": "https://visitglengarriff.ie/glengarriff-events-at-a-glance/",
+   "months": [
+    8
+   ],
+   "usual": "August",
+   "lat": 51.750197,
+   "lng": -9.549976
+  },
+  {
+   "name": "Allihies Autumn School",
+   "place": "Allihies",
+   "location": "Allihies",
+   "url": "https://acmm.ie/allihies-autumn-school/",
+   "months": [
+    10
+   ],
+   "usual": "October",
+   "lat": 51.641369,
+   "lng": -10.04444
+  },
+  {
+   "name": "Glengarriff Christmas Shopping Night",
+   "place": "Glengarriff",
+   "location": "Glengarriff",
+   "url": "https://visitglengarriff.ie/glengarriff-events-at-a-glance/",
+   "months": [
+    12
+   ],
+   "usual": "December",
+   "lat": 51.750197,
+   "lng": -9.549976
+  },
+  {
+   "name": "Summer on the Islands Festival",
+   "place": "Various islands",
+   "location": "Bere, Dursey, Heir, Cape Clear, Garinish, Sherkin, Long & Whiddy",
+   "url": "https://westcorkislands.com/summer-islands-festival/",
+   "months": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "usual": "May – September"
+  },
+  {
+   "name": "Dursey Island Summer Festival",
+   "place": "Dursey Island",
+   "location": "Dursey Island",
+   "url": "https://www.durseyisland.ie/dursey-island-summer-festival.html",
+   "months": [
+    6
+   ],
+   "usual": "June",
+   "lat": 51.595955,
+   "lng": -10.198303
+  },
+  {
+   "name": "Bere Island Family Festival",
+   "place": "Bere Island",
+   "location": "Bere Island",
+   "url": "https://westcorkislands.com/events/bere-island-festival/",
+   "months": [
+    8
+   ],
+   "usual": "early August",
+   "lat": 51.628547,
+   "lng": -9.86691
+  },
+  {
+   "name": "Heir Island Regatta",
+   "place": "Heir Island",
+   "location": "Heir Island",
+   "url": "https://heirisland.ie/see-do/activities/heir-island-regatta/",
+   "months": [
+    8
+   ],
+   "usual": "early August",
+   "lat": 51.494297,
+   "lng": -9.442125
+  },
+  {
+   "name": "Cape Clear Lavender Festival",
+   "place": "Cape Clear Island",
+   "location": "Cape Clear Island",
+   "url": "https://capeclearlavender.com/2026-cape-clear-lavender-festival/",
+   "months": [
+    6
+   ],
+   "usual": "late June",
+   "last": "2026: 27–28 June",
+   "lat": 51.436963,
+   "lng": -9.497705
+  },
+  {
+   "name": "Bobstock Festival",
+   "place": "Cape Clear Island",
+   "location": "Cape Clear Island",
+   "url": "https://westcorkislands.com/events/bobstock-festival-2025/",
+   "months": [
+    7
+   ],
+   "usual": "early July",
+   "last": "2026: 3–4 July",
+   "lat": 51.436963,
+   "lng": -9.497705
+  },
+  {
+   "name": "Heritage Week on Cape Clear (Seachtain na hOidhreachta)",
+   "place": "Cape Clear Island",
+   "location": "Cape Clear Island",
+   "url": "https://westcorkislands.com/events/cape-clears-heritage-week-events/",
+   "months": [
+    8
+   ],
+   "usual": "mid-August",
+   "last": "2026: 17–21 Aug",
+   "lat": 51.436963,
+   "lng": -9.497705
+  },
+  {
+   "name": "Cape Clear Island Races (half marathon & 10k)",
+   "place": "Cape Clear Island",
+   "location": "Cape Clear Island",
+   "url": "https://www.sientries.co.uk/event/the-cape-clear-island-races-2026",
+   "months": [
+    8
+   ],
+   "usual": "late August",
+   "last": "2026: 29 Aug, first year",
+   "lat": 51.436963,
+   "lng": -9.497705
+  },
+  {
+   "name": "Cape Clear International Storytelling Festival",
+   "place": "Cape Clear Island",
+   "location": "Cape Clear Island",
+   "url": "https://capeclearstorytelling.com/",
+   "months": [
+    9
+   ],
+   "usual": "early September",
+   "last": "2026: 4–6 Sept",
+   "lat": 51.436963,
+   "lng": -9.497705
+  },
+  {
+   "name": "Open Ear Festival",
+   "place": "Sherkin Island",
+   "location": "Sherkin North Shore",
+   "url": "https://www.openear.ie/",
+   "months": [
+    5,
+    6
+   ],
+   "usual": "June bank holiday weekend",
+   "last": "2026: 28–31 May",
+   "lat": 51.478514,
+   "lng": -9.402837
+  },
+  {
+   "name": "Community Art Exhibition & Dancing at the Crossroads",
+   "place": "Sherkin Island",
+   "location": "Sherkin Island",
+   "url": "https://creativeplaceswci.ie/project/sherkin-island-community-exhibition-dancing-at-the-crossroads-and-the-islander-book-the-story-of-us/",
+   "months": [
+    6
+   ],
+   "usual": "June",
+   "last": "2026: from 5 June; dancing 28 June",
+   "lat": 51.478514,
+   "lng": -9.402837
+  },
+  {
+   "name": "Sherkin art exhibitions",
+   "place": "Sherkin Island",
+   "location": "Community Hall, Sherkin",
+   "url": "https://sherkinisland.ie/events-2/",
+   "months": [
+    6,
+    7,
+    8
+   ],
+   "usual": "",
+   "label": "Weekly through the summer – see the website for dates",
+   "lat": 51.478514,
+   "lng": -9.402837
+  },
+  {
+   "name": "Sherkin Do Run Run (4–8 km fun run)",
+   "place": "Sherkin Island",
+   "location": "Sherkin Island",
+   "url": "https://westcorkislands.com/events/sherkin-do-run-run/",
+   "months": [
+    8
+   ],
+   "usual": "August",
+   "last": "2026: 8 Aug",
+   "lat": 51.478514,
+   "lng": -9.402837
+  },
+  {
+   "name": "Sherkin Beach Dog Show & Barking Mad Art Exhibition",
+   "place": "Sherkin Island",
+   "location": "Cow Strand, Sherkin",
+   "url": "https://westcorkislands.com/events/sherkin-island-dog-show/",
+   "months": [
+    9
+   ],
+   "usual": "September",
+   "last": "2026: 19 Sept",
+   "lat": 51.478514,
+   "lng": -9.402837
+  },
+  {
+   "name": "Sherkin to Baltimore 2k swim",
+   "place": "Sherkin Island",
+   "location": "Sherkin pier to Baltimore",
+   "url": "https://www.swimpro.ie/events/baltimore-wet-weekend-sherkin-2k-2026",
+   "months": [
+    9
+   ],
+   "usual": "late September",
+   "last": "2026: 26 Sept",
+   "lat": 51.478514,
+   "lng": -9.402837
+  },
+  {
+   "name": "Kenmare St Patrick's Day Parade",
+   "place": "Kenmare",
+   "location": "Kenmare",
+   "url": "https://www.kenmare.ie/whats-on",
+   "months": [
+    3
+   ],
+   "usual": "17 March",
+   "lat": 51.879101,
+   "lng": -9.583952
+  },
+  {
+   "name": "Christmas in Kenmare",
+   "place": "Kenmare",
+   "location": "Kenmare",
+   "url": "https://www.kenmare.ie/whats-on-1/christmas-in-kenmare",
+   "months": [
+    11,
+    12
+   ],
+   "usual": "late November – December",
+   "lat": 51.879101,
+   "lng": -9.583952
+  }
+ ]
+}

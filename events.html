@@ -22,6 +22,24 @@
 .ev-chips button{font:inherit;font-size:.85rem;font-weight:500;padding:7px 14px;border-radius:999px;border:1px solid rgba(39,34,32,.25);background:#fffefb;color:inherit;cursor:pointer}
 .ev-chips button[aria-pressed="true"]{background:#094730;border-color:#094730;color:#fff}
 .ev-sub{font-size:.95rem;margin:var(--l) 0 6px}
+.ev-tbc{margin-top:var(--xl)}
+.ev-tbc h3{margin:0 0 4px}
+.ev-tbc__cols{column-width:270px;column-gap:var(--xl);margin-top:var(--m)}
+.ev-tbc__town{break-inside:avoid;margin:0 0 var(--m)}
+.ev-tbc__town h4{margin:0 0 4px;font-size:1rem;display:flex;align-items:center;gap:8px}
+.ev-tbc__town h4 button{all:unset;cursor:pointer;font-weight:700}
+.ev-tbc__town h4 button:hover,.ev-tbc__town h4 button:focus-visible{text-decoration:underline}
+.ev-tbc__town h4 span{font:600 .72rem/1 system-ui,sans-serif;background:#7b4bb3;color:#fff;border-radius:9px;padding:3px 7px}
+.ev-tbc ul{list-style:none;margin:0;padding:0}
+.ev-tbc li{display:flex;flex-direction:column;gap:2px;padding:7px 0 7px 12px;border-bottom:1px solid rgba(39,34,32,.08);border-left:3px dashed #7b4bb3}
+.ev-tbc li button{all:unset;cursor:pointer;font-weight:600}
+.ev-tbc li button:hover,.ev-tbc li button:focus-visible{text-decoration:underline}
+.ev-tbc li.active button{color:#094730}
+.ev-tbc li small{color:var(--grey)}
+.ev-tbc li small b{font-weight:600;color:#5d3a8e}
+.ev-tbc li a{font-size:.85rem}
+.ev-pop__it i.tbc,.ev-legend i.tbc,.ev-pop__mix i.tbc{background:#fff;border:2px solid #7b4bb3;box-sizing:border-box}
+.ev-pop__it.tbc small b{color:#5d3a8e;font-weight:600}
 .ev-explore{display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:var(--xl);align-items:start}
 @media (max-width:860px){.ev-explore{grid-template-columns:1fr}}
 .ev-cal .cal-day.has-info{cursor:pointer}
@@ -78,7 +96,7 @@
     <link rel="stylesheet" href="assets/leaflet/leaflet.css">
     <div class="ev-chips" id="ev-chips" role="group" aria-label="Show events for"></div>
     <div class="walks-map reveal" id="ev-map" role="region" aria-label="Map of West Cork events"></div>
-    <p class="muted ev-legend" id="ev-legend"><span><i style="background:#bf7737"></i>Dated event</span><span><i style="background:#7b4bb3"></i>Every year</span><span><i style="background:#2f6fb5"></i>Monthly</span><span><i style="background:#2e8b57"></i>Weekly</span><span><i class="rings"></i>One ring per event at that place (number = total)</span><span><i class="home"></i>An Tigín</span></p>
+    <p class="muted ev-legend" id="ev-legend"><span><i style="background:#bf7737"></i>Dated event</span><span><i style="background:#7b4bb3"></i>Every year</span><span><i class="tbc"></i>Dates TBC (shown at their usual time of year)</span><span><i style="background:#2f6fb5"></i>Monthly</span><span><i style="background:#2e8b57"></i>Weekly</span><span><i class="rings"></i>One ring per event at that place (number = total)</span><span><i class="home"></i>An Tigín</span></p>
     <div class="ev-explore">
       <div class="cal ev-cal">
         <div class="cal__head"><button id="evc-prev" aria-label="Previous month">&larr;</button><h3 id="evc-title"></h3><button id="evc-next" aria-label="Next month">&rarr;</button></div>
@@ -92,6 +110,11 @@
         <div id="ev-reg-wrap" hidden><h3 style="margin-top:var(--l)">Markets &amp; regular events</h3><p class="muted" style="font-size:.85rem;margin:0 0 6px">Every week or month — shown on the map for every month they run.</p><ul id="ev-reg"></ul></div>
         <div id="ev-unmapped-wrap" hidden><h3 style="margin-top:var(--l)">Location not mapped</h3><ul id="ev-unmapped"></ul></div></div>
       </div>
+    </div>
+    <div class="ev-tbc" id="ev-tbc-wrap" hidden>
+      <h3 id="ev-tbc-title">Dates to be confirmed</h3>
+      <p class="muted" style="font-size:.9rem;margin:0">Festivals and events whose next dates haven't been announced yet, listed under their town or island with their usual time of year. They also show on the map pin for the place. Each one drops off this list by itself once its dates are in our calendar.</p>
+      <div class="ev-tbc__cols" id="ev-tbc"></div>
     </div>
   </div>
 </section>
@@ -322,13 +345,19 @@ function range(s,e){var a=p(s),b=p(e);b.setDate(b.getDate()-1);if(b<=a)return fm
 function esc(t){var d=document.createElement('div');d.textContent=t==null?'':t;return d.innerHTML;}
 function mkey(y,m){return y+'-'+String(m+1).padStart(2,'0');}
 var today=new Date();today.setHours(0,0,0,0);var tk=key(today);
-var events=[],regular=[],hols=[],months=[],sel='all',calY=today.getFullYear(),calM=today.getMonth(),selDay=null,map=null,layer=null,groups={},HOME=[51.7283264,-9.5554595];
+var events=[],regular=[],tbc=[],hols=[],months=[],sel='all',calY=today.getFullYear(),calM=today.getMonth(),selDay=null,map=null,layer=null,groups={},HOME=[51.7283264,-9.5554595];
 function overlaps(e,y,m){var a=mkey(y,m)+'-01',b=key(new Date(y,m+1,1));return e.start<b&&e.end>a;}
 /* A yearly event can have two occurrences inside the window (e.g. 17 Mar 2027 and 2028). Under "All"
    show each series once, at its next date; a month view only ever holds one occurrence. The calendar
    grid still uses every occurrence. */
 function sKey(e){return e.type==='yearly'?e.name+'|'+(e.location||''):null;}
 function oncePerSeries(list){var seen={};return list.filter(function(e){var k=sKey(e);if(!k)return true;if(seen[k])return false;seen[k]=1;return true;});}
+/* Undated events (events-tbc.json): next dates not published yet. They behave as "yearly" for colour and
+   rings, are marked "dates TBC", and show in All and in their usual months after the current one. */
+function selYM(){if(sel==='all')return null;if(sel==='none')return [calY,calM];var a=sel.split('-');return [+a[0],+a[1]-1];}
+function tbcIn(){var ym=selYM();if(!ym)return tbc;if(ym[0]*12+ym[1]<=today.getFullYear()*12+today.getMonth())return [];return tbc.filter(function(e){return (e.months||[]).indexOf(ym[1]+1)>=0;});}
+function tbcWhen(e){return e.label||('Dates TBC – usually '+e.usual+(e.last?' ('+e.last+')':''));}
+function norm(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'');}
 function inMonthList(){return sel==='all'?oncePerSeries(events):events.filter(function(e){var a=sel.split('-');return overlaps(e,+a[0],+a[1]-1);});}
 /* Events within NEAR_KM of a cluster's first point share one map marker (venues in the same
    town are 0–0.25 km apart; separate places are 1.7 km+). Clusters are built once from all
@@ -365,13 +394,14 @@ function initMap(){var el=document.getElementById('ev-map');if(!el||!window.L)re
  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
  L.marker(HOME,{zIndexOffset:1000,title:'An Tigín',icon:L.divIcon({className:'ev-home',html:'<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="2" y="2" width="26" height="26" rx="7" fill="#272220" stroke="#fff" stroke-width="2.5"/><path d="M8 15.5 15 9l7 6.5M10.5 14v7h9v-7" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>',iconSize:[30,30],iconAnchor:[15,15],popupAnchor:[0,-13]})}).addTo(map).bindPopup('<b>An Tigín</b><br>Glengarriff, Co. Cork');
  layer=L.layerGroup().addTo(map);}
-function itemHtml(e,hl){var when=e.rule?regWhen(e):range(e.start,e.end)+(e.type==='yearly'?' · every year':'');
- return '<li class="ev-pop__it'+(hl?' hl':'')+'"><i style="background:'+tcol(e)+'"></i><div><b>'+esc(e.name)+'</b><small>'+esc(when)+'</small>'+(e.location?'<small class="loc">'+esc(e.location)+'</small>':'')+(e.url?'<a href="'+esc(e.url)+'" target="_blank" rel="noopener">'+(e.rule?'Website':'Event website')+' ↗</a>':'')+'</div></li>';}
+function itemHtml(e,hl){var when=e.tbc?tbcWhen(e):e.rule?regWhen(e):range(e.start,e.end)+(e.type==='yearly'?' · every year':'');
+ return '<li class="ev-pop__it'+(hl?' hl':'')+(e.tbc?' tbc':'')+'"><i '+(e.tbc?'class="tbc"':'style="background:'+tcol(e)+'"')+'></i><div><b>'+esc(e.name)+'</b><small>'+(e.tbc?'<b>'+esc(when)+'</b>':esc(when))+'</small>'+(e.location?'<small class="loc">'+esc(e.location)+'</small>':'')+(e.url?'<a href="'+esc(e.url)+'" target="_blank" rel="noopener">'+(e.rule?'Website':'Event website')+' ↗</a>':'')+'</div></li>';}
 function popHtml(g){var n=g.ev.length;
- return '<div class="ev-pop">'+(n>1?'<h4>'+esc(g.place||'This place')+' · '+n+' events'+(sel==='all'?'':' this month')+'</h4><p class="ev-pop__mix">'+(function(){var c=typeCounts(g.ev);return TORDER.filter(function(t){return c[t];}).map(function(t){return '<span><i style="background:'+TYPES[t][0]+'"></i>'+c[t]+' '+TWORD[t]+'</span>';}).join('');})()+'</p>':'')+'<ul>'+g.ev.map(function(x){return itemHtml(x,x===g.hl);}).join('')+'</ul><a class="dir" href="https://www.google.com/maps/dir/?api=1&destination='+g.ll[0]+','+g.ll[1]+'" target="_blank" rel="noopener">Directions ↗</a></div>';}
-function sortEv(a,b){var t=TORDER.indexOf(a.type)-TORDER.indexOf(b.type);if(t)return t;return (a.start||a.next||'')<(b.start||b.next||'')?-1:1;}
+ return '<div class="ev-pop">'+(n>1?'<h4>'+esc(g.place||'This place')+' · '+n+' events'+(sel==='all'?'':' this month')+'</h4><p class="ev-pop__mix">'+(function(){var c=typeCounts(g.ev.filter(function(x){return !x.tbc;})),nt=g.ev.length-g.ev.filter(function(x){return !x.tbc;}).length;return TORDER.filter(function(t){return c[t];}).map(function(t){return '<span><i style="background:'+TYPES[t][0]+'"></i>'+c[t]+' '+TWORD[t]+'</span>';}).join('')+(nt?'<span><i class="tbc"></i>'+nt+' dates TBC</span>':'');})()+'</p>':'')+'<ul>'+g.ev.map(function(x){return itemHtml(x,x===g.hl);}).join('')+'</ul><a class="dir" href="https://www.google.com/maps/dir/?api=1&destination='+g.ll[0]+','+g.ll[1]+'" target="_blank" rel="noopener">Directions ↗</a></div>';}
+function sk(e){return e.start||e.next||(e.tbc?'9'+String((e.months||[0])[0]).padStart(2,'0'):'');}
+function sortEv(a,b){var t=TORDER.indexOf(etype(a))-TORDER.indexOf(etype(b));if(t)return t;return sk(a)<sk(b)?-1:1;}
 function drawMap(){if(!map)return;layer.clearLayers();groups={};var pts=[HOME];
- inMonthList().concat(regIn()).forEach(function(e){if(e._cid==null)return;var c=clusters[e._cid];(groups[c.id]=groups[c.id]||{ll:c.ll,place:c.place,ev:[]}).ev.push(e);});
+ inMonthList().concat(regIn()).concat(tbcIn()).forEach(function(e){if(e._cid==null)return;var c=clusters[e._cid];(groups[c.id]=groups[c.id]||{ll:c.ll,place:c.place,ev:[]}).ev.push(e);});
  Object.keys(groups).sort(function(x,y){return groups[y].ev.length-groups[x].ev.length;}).forEach(function(k){var g=groups[k];g.ev.sort(sortEv);pts.push(g.ll);
   g.marker=L.marker(g.ll,{icon:ringIcon(g.ev),title:g.ev.length>1?(g.place?g.place+': ':'')+g.ev.length+' events':g.ev[0].name,zIndexOffset:g.ev.length*10}).addTo(layer)
    .bindPopup(function(){return popHtml(g);},{maxWidth:290,maxHeight:320,autoPanPaddingTopLeft:[10,60]});
@@ -392,7 +422,7 @@ function drawList(){var ul=document.getElementById('ev-mlist'),un=document.getEl
  list.forEach(function(e){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.textContent=e.name;
   var sm=document.createElement('small');sm.textContent=range(e.start,e.end)+' · '+(e.location||'');li.appendChild(b);li.appendChild(sm);
   if(e.url){var w=document.createElement('a');w.href=e.url;w.target='_blank';w.rel='noopener';w.textContent='Event website ↗';w.style.fontSize='.85rem';li.appendChild(w);}
-  if(e.lat!=null){b.title='Show on map';b.onclick=function(){openOnMap(e);};ul.appendChild(li);}
+  if(e.lat!=null){b.title='Show on map';b.onclick=function(){showTbc(e);};ul.appendChild(li);}
   else{b.onclick=function(){showCal(p(e.start>tk?e.start:tk));};un.appendChild(li);nUn++;}
   liByEv.push([e,li]);});
  var rl=document.getElementById('ev-reg');rl.innerHTML='';var rg=regIn();
@@ -402,7 +432,23 @@ function drawList(){var ul=document.getElementById('ev-mlist'),un=document.getEl
   if(r.lat!=null){b.title='Show on map';b.onclick=function(){openOnMap(r);};}
   rl.appendChild(li);liByEv.push([r,li]);});
  document.getElementById('ev-reg-wrap').hidden=!rg.length;
+ drawTbc();
  document.getElementById('ev-unmapped-wrap').hidden=!nUn;}
+function showTbc(e){if(tbcIn().indexOf(e)<0)setMonth('all',false);openOnMap(e);}
+function drawTbc(){var box=document.getElementById('ev-tbc'),wrap=document.getElementById('ev-tbc-wrap'),list=tbc,by={},places=[];box.innerHTML='';
+ list.forEach(function(e){if(!by[e.place]){by[e.place]=[];places.push(e.place);}by[e.place].push(e);});
+ places.sort(function(a,b){return a<b?-1:1;});
+ places.forEach(function(pl){var es=by[pl].slice().sort(function(a,b){return sk(a)<sk(b)?-1:1;}),div=document.createElement('div'),h=document.createElement('h4'),mapped=es.filter(function(e){return e._cid!=null;})[0];div.className='ev-tbc__town';
+  if(mapped){var hb=document.createElement('button');hb.type='button';hb.textContent=pl;hb.title='Show on map';hb.onclick=function(){showTbc(mapped);};h.appendChild(hb);}else h.appendChild(document.createTextNode(pl));
+  var n=document.createElement('span');n.textContent=es.length;h.appendChild(n);div.appendChild(h);
+  var ul=document.createElement('ul');
+  es.forEach(function(e){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.textContent=e.name;
+   var sm=document.createElement('small');sm.innerHTML='<b>'+esc(tbcWhen(e))+'</b>'+(e.location&&norm(e.location)!==norm(pl)?' · '+esc(e.location):'');li.appendChild(b);li.appendChild(sm);
+   if(e.url){var w=document.createElement('a');w.href=e.url;w.target='_blank';w.rel='noopener';w.textContent='Event website ↗';li.appendChild(w);}
+   if(e._cid!=null){b.title='Show on map';b.onclick=function(){showTbc(e);};}else{b.style.cursor='default';}
+   ul.appendChild(li);liByEv.push([e,li]);});
+  div.appendChild(ul);box.appendChild(div);});
+ wrap.hidden=!list.length;}
 /* ---- chips ---- */
 function drawChips(){var c=document.getElementById('ev-chips');c.innerHTML='';
  [['all','All events']].concat(months.map(function(k){var a=k.split('-');return [k,MONTHS[+a[1]-1]+' '+a[0]];})).forEach(function(x){
@@ -443,8 +489,11 @@ document.getElementById('evc-prev').onclick=function(){var c=calY*12+calM-1;if(c
 document.getElementById('evc-next').onclick=function(){var c=calY*12+calM+1;if(c>maxM)return;calY=Math.floor(c/12);calM=c%12;syncFromCal();};
 var dow=document.getElementById('evc-dow');['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(n){var e=document.createElement('div');e.className='cal-dow';e.textContent=n;dow.appendChild(e);});
 initMap();drawCal();
-fetch('events.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
- events=(j.events||[]).filter(function(e){return p(e.end)>today;});regular=j.regular||[];hols=j.holidays||[];buildClusters(events.concat(regular));
+Promise.all([fetch('events.json',{cache:'no-store'}).then(function(r){return r.json();}),fetch('events-tbc.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():{events:[]};}).catch(function(){return {events:[]};})]).then(function(res){var j=res[0],tj=res[1];
+ events=(j.events||[]).filter(function(e){return p(e.end)>today;});regular=j.regular||[];hols=j.holidays||[];
+ var have=events.concat(regular).map(function(e){return norm(e.name);});
+ tbc=(tj.events||[]).filter(function(t){var n=norm(t.name);return !have.some(function(h){return h.indexOf(n)>=0||n.indexOf(h)>=0;});}).map(function(t){t.type='yearly';t.tbc=true;return t;});
+ buildClusters(events.concat(regular).concat(tbc));
  var set={};events.forEach(function(e){for(var c=minM;c<=maxM;c++){var y=Math.floor(c/12),m=c%12;if(overlaps(e,y,m))set[mkey(y,m)]=1;}});
  months=Object.keys(set).sort();drawChips();
  /* start on the calendar's current month in sync with the chips */
