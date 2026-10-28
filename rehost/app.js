@@ -35,7 +35,9 @@ var CONTACT_EMAIL = 'hello@example.com';
 
   // services picker
   var rows=[].slice.call(document.querySelectorAll('.svc'));
-  var KEY='rehost-picks-v1',state={};
+  document.querySelectorAll('[data-contact]').forEach(function(a){a.href='mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent('Website check');});
+  if(!rows.length||!document.getElementById('send'))return;
+  var KEY='rehost-picks-v2',state={};
   try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){state={};}
   rows.forEach(function(r){var i=r.dataset.i;if(state[i]){var inp=r.querySelector('input[value='+state[i]+']');if(inp){inp.checked=true;r.dataset.v=state[i];}}
     r.addEventListener('change',function(e){state[i]=e.target.value;r.dataset.v=e.target.value;save();render();});});
@@ -47,8 +49,8 @@ var CONTACT_EMAIL = 'hello@example.com';
   function suggest(yes){
     var names=yes.map(nm),has=function(a){return a.some(function(x){return names.indexOf(x)>-1;});};
     if(!names.length)return null;
-    var pkg=has(['Instagram','Facebook','Email inbox management','WhatsApp morning summary','Posts','X (Twitter)','TikTok','TripAdvisor','Google reviews'])?'Full service':has(['Local guides with maps','Local events calendar','Listing management'])?'Growth':'Essentials';
-    var add=names.filter(function(x){return /ordering automation/.test(x);});
+    var pkg=has(['Instagram','Facebook','Email inbox management','WhatsApp morning summary','Posts','X (Twitter)','TikTok','Google reviews','Other review sites'])?'Full service':has(['Area pages with maps','News and events page','Listings and directories','Live bookings or availability calendar'])?'Growth':'Essentials';
+    var add=names.filter(function(x){return /ordering automation|SEO/.test(x);});
     return {pkg:pkg,add:add};
   }
   function render(){
@@ -56,7 +58,7 @@ var CONTACT_EMAIL = 'hello@example.com';
     $('c-yes').textContent=y.length;$('c-maybe').textContent=m.length;$('c-no').textContent=n.length;$('c-left').textContent=left;
     var tot=rows.length,mt=document.querySelector('.meter');
     mt.querySelector('.y').style.width=(y.length/tot*100)+'%';mt.querySelector('.m').style.width=(m.length/tot*100)+'%';mt.querySelector('.n').style.width=(n.length/tot*100)+'%';
-    $('sum-sub').textContent=(y.length+m.length+n.length)?(left?left+' still to decide.':'All 17 decided. Nice one.'):'Nothing picked yet. Choose Yes, Maybe or No for each service.';
+    $('sum-sub').textContent=(y.length+m.length+n.length)?(left?left+' still to decide.':'All '+tot+' decided. Nice one.'):'Nothing picked yet. Choose Yes, Maybe or No for each service.';
     var h='';
     if(y.length)h+='<h4>Yes</h4><ul>'+y.map(function(r){return '<li>'+esc(nm(r))+'</li>';}).join('')+'</ul>';
     if(m.length)h+='<h4>Maybe</h4><ul>'+m.map(function(r){return '<li>'+esc(nm(r))+'</li>';}).join('')+'</ul>';
@@ -80,6 +82,5 @@ var CONTACT_EMAIL = 'hello@example.com';
   }
   ['f-name','f-biz'].forEach(function(id){$(id).addEventListener('input',function(){$('send').href=mailto();});});
   $('reset').addEventListener('click',function(){state={};save();rows.forEach(function(r){delete r.dataset.v;r.querySelectorAll('input').forEach(function(i){i.checked=false;});});render();});
-  document.querySelectorAll('[data-contact]').forEach(function(a){a.href='mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent('Website check');});
   render();
 })();

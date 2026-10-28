@@ -265,3 +265,25 @@ td.num{font-weight:700;color:var(--deep);white-space:nowrap}
 .hero-art>svg{filter:drop-shadow(0 18px 22px rgba(14,27,38,.16))}
 .timeline::before{display:none}
 .timeline>li:not(:last-child)::before{content:"";position:absolute;left:23px;top:49px;bottom:0;width:3px;background:linear-gradient(var(--sea-2),var(--deep))}
+/* v2: sectors, hospitality page */
+.addons.two{grid-template-columns:repeat(2,1fr)}@media (max-width:960px){.addons.two{grid-template-columns:1fr}}
+.addon-card p a{color:var(--sea);font-weight:600}
+.sectors{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:960px){.sectors{grid-template-columns:1fr 1fr}}@media (max-width:600px){.sectors{grid-template-columns:1fr}}
+.sector{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;color:var(--ink);text-decoration:none}
+.sector svg.ic{width:46px;height:46px;padding:10px;border-radius:14px;background:#e6f6f3;color:var(--sea);margin-bottom:8px}
+.sector b{font-size:1.12rem}.sector p{color:var(--muted);margin:0;font-size:.95rem}
+.sector.live{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
+.sector.live svg.ic{background:rgba(20,184,166,.18);color:var(--sea-2)}
+.sector.live p{color:#a9b8c3}
+.sector.live:hover,.sector.live:focus-visible{transform:translateY(-3px)}
+.sector .go{margin-top:auto;padding-top:12px;display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--sea-2)}
+.sector .go svg{width:18px;height:18px}
+.together.light{grid-template-columns:repeat(3,1fr)}
+@media (max-width:1000px){.together.light{grid-template-columns:1fr 1fr}}@media (max-width:600px){.together.light{grid-template-columns:1fr}}
+.together.light .tog{background:#fff;border-color:var(--line)}
+.together.light .tog svg{background:#e6f6f3;color:var(--sea)}
+.together.light .tog b{color:var(--ink)}.together.light .tog p{color:var(--muted)}
+.crumb{display:inline-flex;align-items:center;gap:6px;color:var(--sea);font-weight:700;font-size:.85rem;text-decoration:none}
+.crumb svg{width:16px;height:16px}.crumb-sep{margin:0 8px;color:var(--muted)}
+.foot a{color:inherit}
