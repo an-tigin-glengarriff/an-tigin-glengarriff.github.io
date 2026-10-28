@@ -317,3 +317,11 @@ td.num{font-weight:700;color:var(--deep);white-space:nowrap}
 .summary .ferr::before{content:"! ";font-weight:800}
 .summary .form-msg{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:rgba(242,107,79,.16);border:1px solid rgba(255,138,115,.5);color:#ffd2c7;font-size:.88rem;font-weight:600}
 .summary form{margin:0}
+/* v5: Get in touch form */
+.cta-form{background:rgba(14,27,38,.55);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:22px 24px;position:relative;align-self:start}
+.cta-form .btn{width:100%;justify-content:center;margin-top:16px}
+.cta-form input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;font:inherit;font-size:.95rem}
+.cta-form input::placeholder{color:#8496a3}
+.cta-form .req-note{margin-top:0}
+.cta .cta-note{font-size:.95rem;color:#a9b8c3}
+.cta-form.summary{position:relative;top:auto;box-shadow:none;background:rgba(14,27,38,.55)}

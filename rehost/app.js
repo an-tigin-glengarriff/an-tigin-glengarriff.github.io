@@ -33,6 +33,45 @@ var CONTACT_EMAIL = 'hello@example.com';
   function sel(t){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;var p=document.getElementById(x.getAttribute('aria-controls'));p.hidden=!on;if(on)p.querySelectorAll('.rv').forEach(function(r){r.classList.add('in');});});}
   tabs.forEach(function(t,i){t.addEventListener('click',function(){sel(t);});t.addEventListener('keydown',function(e){var k=e.key,j=null;if(k==='ArrowRight')j=(i+1)%tabs.length;if(k==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;if(j!==null){e.preventDefault();sel(tabs[j]);tabs[j].focus();}});});
 
+  // ---- shared contact details: selection panel + Get in touch (one validation, one saved copy) ----
+  var g=function(id){return document.getElementById(id);};
+  var CKEYS=['name','biz','email','phone','site'],CKEY='rehost-contact-v1',cd={};
+  try{var raw=JSON.parse(localStorage.getItem(CKEY)||'{}')||{};CKEYS.forEach(function(k){cd[k]=raw[k]||raw['f-'+k]||'';});if(!cd.site)cd.site=localStorage.getItem('rehost-site-v1')||'';}catch(e){CKEYS.forEach(function(k){cd[k]=cd[k]||'';});}
+  function saveCd(){try{localStorage.setItem(CKEY,JSON.stringify(cd));}catch(e){}}
+  var EMPTY={name:'Please enter your name.',biz:'Please enter your business name.',email:'Please enter your email address.',phone:'Please enter your phone number.',site:'Please enter your website address.'};
+  function fieldError(k,v){v=(v||'').trim();
+    if(!v)return EMPTY[k];
+    if(k==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))return 'Please enter a valid email address, like you@yourbusiness.ie.';
+    if(k==='phone'&&(v.replace(/\D/g,'').length<7||/[^\d\s()+.\-]/.test(v)))return 'Please enter a valid phone number, like 087 123 4567.';
+    if(k==='site'&&(/\s/.test(v)||!/[a-z0-9-]\.[a-z]{2,}/i.test(v)))return 'Please enter a website address, like yourbusiness.ie.';
+    return '';}
+  function contactLines(v){return ['Name: '+v.name,'Business: '+v.biz,'Email: '+v.email,'Phone: '+v.phone,'Website: '+v.site];}
+  var groups=[];
+  function ContactGroup(pre,msgId,onChange){
+    var grp={pre:pre,onChange:onChange};
+    grp.show=function(k,msg){var el=g(pre+k),er=g(pre+k+'-err');if(!el)return;if(msg){el.setAttribute('aria-invalid','true');er.textContent=msg;er.hidden=false;}else{el.removeAttribute('aria-invalid');er.textContent='';er.hidden=true;}};
+    grp.values=function(){var v={};CKEYS.forEach(function(k){v[k]=g(pre+k).value.trim();});return v;};
+    grp.allOk=function(){return CKEYS.every(function(k){return !fieldError(k,g(pre+k).value);});};
+    grp.validate=function(){var first=null;CKEYS.forEach(function(k){var m=fieldError(k,g(pre+k).value);grp.show(k,m);if(m&&!first)first=k;});
+      var fm=g(msgId);if(first){fm.textContent='Please fill in all the required fields before sending.';fm.hidden=false;g(pre+first).focus();}else{fm.hidden=true;fm.textContent='';}
+      return !first;};
+    grp.tidy=function(k){var el=g(pre+k);if(el.getAttribute('aria-invalid')&&!fieldError(k,el.value))grp.show(k,'');if(!g(msgId).hidden&&grp.allOk())g(msgId).hidden=true;};
+    CKEYS.forEach(function(k){var el=g(pre+k);el.value=cd[k]||'';
+      el.addEventListener('input',function(){cd[k]=el.value;saveCd();
+        groups.forEach(function(o){if(o!==grp){var x=g(o.pre+k);if(x.value!==el.value)x.value=el.value;o.tidy(k);}if(o.onChange)o.onChange();});
+        grp.tidy(k);});
+      el.addEventListener('blur',function(){if(el.getAttribute('aria-invalid'))grp.show(k,fieldError(k,el.value));});});
+    groups.push(grp);return grp;}
+  // Get in touch form
+  if(g('c-form')){
+    var cgrp,contactMailto=function(){var v=cgrp.values();var L=['Hello,',''].concat(contactLines(v),['','I\u2019d like a website check and a chat about what my business needs.','','Thanks']);
+      return 'mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent('Website check'+(v.biz?' \u2013 '+v.biz:''))+'&body='+encodeURIComponent(L.join('\n'));};
+    cgrp=ContactGroup('c-','c-msg',function(){g('c-send').href=contactMailto();});
+    g('c-send').href=contactMailto();
+    g('c-send').addEventListener('click',function(e){if(!cgrp.validate()){e.preventDefault();return;}this.href=contactMailto();});
+    g('c-form').addEventListener('submit',function(e){e.preventDefault();if(cgrp.validate())window.location.href=contactMailto();});
+  }
+
   // services picker
   var rows=[].slice.call(document.querySelectorAll('.svc'));
   document.querySelectorAll('[data-contact]').forEach(function(a){a.href='mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent(a.getAttribute('data-subject')||'Website check');});
@@ -71,7 +110,7 @@ var CONTACT_EMAIL = 'hello@example.com';
   function mailto(){
     var v=function(id){return $(id).value.trim();},name=v('f-name'),biz=v('f-biz'),email=v('f-email'),phone=v('f-phone'),site=v('f-site');
     var L=[];L.push('Hello,','','Here are the services I\u2019m interested in.','');
-    L.push('Name: '+name,'Business: '+biz,'Email: '+email,'Phone: '+phone,'Website: '+site,'');
+    L.push.apply(L,contactLines({name:name,biz:biz,email:email,phone:phone,site:site}));L.push('');
     var groups={};rows.forEach(function(r){(groups[r.dataset.area]=groups[r.dataset.area]||[]).push(r);});
     ['yes','maybe','no'].forEach(function(v){var list=pick(v);if(!list.length)return;L.push((v==='yes'?'YES':v==='maybe'?'MAYBE':'NO')+' ('+list.length+')');list.forEach(function(r){L.push('- '+nm(r)+' ['+r.dataset.area+']');});L.push('');});
     var undec=rows.filter(function(r){return !state[r.dataset.i];});
@@ -81,27 +120,9 @@ var CONTACT_EMAIL = 'hello@example.com';
     var subj='Services selection'+(biz?' \u2013 '+biz:'');
     return 'mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(L.join('\n'));
   }
-  // contact details: all required, saved in the browser
-  var CF=['f-name','f-biz','f-email','f-phone','f-site'],CKEY='rehost-contact-v1',cd={};
-  try{cd=JSON.parse(localStorage.getItem(CKEY)||'{}')||{};if(!cd['f-site']&&localStorage.getItem('rehost-site-v1'))cd['f-site']=localStorage.getItem('rehost-site-v1');}catch(e){cd={};}
-  function check(id){var x=$(id).value.trim();
-    if(!x)return {'f-name':'Please enter your name.','f-biz':'Please enter your business name.','f-email':'Please enter your email address.','f-phone':'Please enter your phone number.','f-site':'Please enter your website address.'}[id];
-    if(id==='f-email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(x))return 'Please enter a valid email address, like you@yourbusiness.ie.';
-    if(id==='f-phone'&&(x.replace(/\D/g,'').length<7||/[^\d\s()+.\-]/.test(x)))return 'Please enter a valid phone number, like 087 123 4567.';
-    if(id==='f-site'&&(/\s/.test(x)||!/[a-z0-9-]\.[a-z]{2,}/i.test(x)))return 'Please enter a website address, like yourbusiness.ie.';
-    return '';}
-  function showErr(id,msg){var el=$(id),er=$(id+'-err');if(msg){el.setAttribute('aria-invalid','true');er.textContent=msg;er.hidden=false;}else{el.removeAttribute('aria-invalid');er.textContent='';er.hidden=true;}}
-  function validate(){var first=null;CF.forEach(function(id){var m=check(id);showErr(id,m);if(m&&!first)first=id;});
-    var fm=$('form-msg');if(first){fm.textContent='Please fill in all the required fields before sending.';fm.hidden=false;$(first).focus();}else{fm.hidden=true;fm.textContent='';}
-    return !first;}
-  CF.forEach(function(id){var el=$(id);if(cd[id])el.value=cd[id];
-    el.addEventListener('input',function(){cd[id]=el.value;try{localStorage.setItem(CKEY,JSON.stringify(cd));}catch(e){}
-      if(el.getAttribute('aria-invalid')&&!check(id))showErr(id,'');
-      if(!$('form-msg').hidden&&CF.every(function(i){return !check(i);}))$('form-msg').hidden=true;
-      $('send').href=mailto();});
-    el.addEventListener('blur',function(){if(el.getAttribute('aria-invalid'))showErr(id,check(id));});});
-  $('send').addEventListener('click',function(e){if(!validate()){e.preventDefault();return;}this.href=mailto();});
-  $('sel-form').addEventListener('submit',function(e){e.preventDefault();if(validate())window.location.href=mailto();});
+  var pgrp=ContactGroup('f-','form-msg',function(){$('send').href=mailto();});
+  $('send').addEventListener('click',function(e){if(!pgrp.validate()){e.preventDefault();return;}this.href=mailto();});
+  $('sel-form').addEventListener('submit',function(e){e.preventDefault();if(pgrp.validate())window.location.href=mailto();});
   $('reset').addEventListener('click',function(){state={};save();rows.forEach(function(r){delete r.dataset.v;r.querySelectorAll('input').forEach(function(i){i.checked=false;});});render();});
   render();
 })();
