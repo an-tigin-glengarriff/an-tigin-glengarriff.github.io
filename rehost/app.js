@@ -35,7 +35,7 @@ var CONTACT_EMAIL = 'hello@example.com';
 
   // services picker
   var rows=[].slice.call(document.querySelectorAll('.svc'));
-  document.querySelectorAll('[data-contact]').forEach(function(a){a.href='mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent('Website check');});
+  document.querySelectorAll('[data-contact]').forEach(function(a){a.href='mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent(a.getAttribute('data-subject')||'Website check');});
   if(!rows.length||!document.getElementById('send'))return;
   var KEY='rehost-picks-v2',state={};
   try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){state={};}
@@ -50,7 +50,8 @@ var CONTACT_EMAIL = 'hello@example.com';
     var names=yes.map(nm),has=function(a){return a.some(function(x){return names.indexOf(x)>-1;});};
     if(!names.length)return null;
     var pkg=has(['Instagram','Facebook','Email inbox management','WhatsApp morning summary','Posts','X (Twitter)','TikTok','Google reviews','Other review sites'])?'Full service':has(['Area pages with maps','News and events page','Listings and directories','Live bookings or availability calendar'])?'Growth':'Essentials';
-    var add=names.filter(function(x){return /ordering automation|SEO/.test(x);});
+    var add=names.filter(function(x){return /ordering automation|SEO|AI consultation/.test(x);});
+    if(add.length===names.length)pkg=null;
     return {pkg:pkg,add:add};
   }
   function render(){
@@ -64,7 +65,7 @@ var CONTACT_EMAIL = 'hello@example.com';
     if(m.length)h+='<h4>Maybe</h4><ul>'+m.map(function(r){return '<li>'+esc(nm(r))+'</li>';}).join('')+'</ul>';
     $('chosen').innerHTML=h||'<p class="empty">Your Yes and Maybe picks will appear here.</p>';
     var s=suggest(y),sg=$('suggest');
-    if(s){sg.hidden=false;sg.innerHTML='Closest package: <b>'+s.pkg+'</b>'+(s.add.length?' + '+s.add.length+' add-on'+(s.add.length>1?'s':''):'')+'. <a href="#packages" style="color:#5eead4">See packages</a>';}else sg.hidden=true;
+    if(s){sg.hidden=false;sg.innerHTML=(s.pkg?'Closest package: <b>'+s.pkg+'</b>'+(s.add.length?' + '+s.add.length+' extra'+(s.add.length>1?'s':''):''):'<b>'+esc(s.add.join(', '))+'</b> on its own, or with any package')+'. <a href="#packages" style="color:#5eead4">See packages</a>';}else sg.hidden=true;
     $('send').href=mailto();
   }
   function mailto(){
@@ -75,7 +76,7 @@ var CONTACT_EMAIL = 'hello@example.com';
     ['yes','maybe','no'].forEach(function(v){var list=pick(v);if(!list.length)return;L.push((v==='yes'?'YES':v==='maybe'?'MAYBE':'NO')+' ('+list.length+')');list.forEach(function(r){L.push('- '+nm(r)+' ['+r.dataset.area+']');});L.push('');});
     var undec=rows.filter(function(r){return !state[r.dataset.i];});
     if(undec.length){L.push('NOT DECIDED ('+undec.length+')');undec.forEach(function(r){L.push('- '+nm(r));});L.push('');}
-    var s=suggest(pick('yes'));if(s)L.push('Closest package: '+s.pkg+(s.add.length?' + '+s.add.join(', '):''),'');
+    var s=suggest(pick('yes'));if(s)L.push(s.pkg?'Closest package: '+s.pkg+(s.add.length?' + '+s.add.join(', '):''):'Extras only: '+s.add.join(', '),'');
     L.push('Thanks');
     var subj='Services selection'+(biz?' \u2013 '+biz:'');
     return 'mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(L.join('\n'));
