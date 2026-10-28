@@ -69,9 +69,9 @@ var CONTACT_EMAIL = 'hello@example.com';
     $('send').href=mailto();
   }
   function mailto(){
-    var name=$('f-name').value.trim(),biz=$('f-biz').value.trim();
+    var name=$('f-name').value.trim(),biz=$('f-biz').value.trim(),site=$('f-site')?$('f-site').value.trim():'';
     var L=[];L.push('Hello,','','Here are the services I\u2019m interested in.','');
-    if(name)L.push('Name: '+name);if(biz)L.push('Business: '+biz);if(name||biz)L.push('');
+    if(site)L.push('Website: '+site);if(name)L.push('Name: '+name);if(biz)L.push('Business: '+biz);if(site||name||biz)L.push('');
     var groups={};rows.forEach(function(r){(groups[r.dataset.area]=groups[r.dataset.area]||[]).push(r);});
     ['yes','maybe','no'].forEach(function(v){var list=pick(v);if(!list.length)return;L.push((v==='yes'?'YES':v==='maybe'?'MAYBE':'NO')+' ('+list.length+')');list.forEach(function(r){L.push('- '+nm(r)+' ['+r.dataset.area+']');});L.push('');});
     var undec=rows.filter(function(r){return !state[r.dataset.i];});
@@ -81,6 +81,9 @@ var CONTACT_EMAIL = 'hello@example.com';
     var subj='Services selection'+(biz?' \u2013 '+biz:'');
     return 'mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(L.join('\n'));
   }
+  var SITEKEY='rehost-site-v1',fs=$('f-site');
+  if(fs){try{fs.value=localStorage.getItem(SITEKEY)||'';}catch(e){}
+    fs.addEventListener('input',function(){try{localStorage.setItem(SITEKEY,fs.value);}catch(e){}$('send').href=mailto();});}
   ['f-name','f-biz'].forEach(function(id){$(id).addEventListener('input',function(){$('send').href=mailto();});});
   $('reset').addEventListener('click',function(){state={};save();rows.forEach(function(r){delete r.dataset.v;r.querySelectorAll('input').forEach(function(i){i.checked=false;});});render();});
   render();
