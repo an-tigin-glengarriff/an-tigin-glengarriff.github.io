@@ -308,3 +308,12 @@ td.num{font-weight:700;color:var(--deep);white-space:nowrap}
 .ai-card svg.ic{background:#e6f6f3;color:var(--sea)}
 .ai-card p a{color:var(--sea);font-weight:600}
 .summary .opt{font-weight:500;color:#7f909c}
+/* v4: required contact fields */
+.summary input[type=tel]{width:100%;padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font:inherit;font-size:.95rem}
+.summary .req{color:#ffb199;font-weight:800}
+.summary .req-note{margin:14px 0 0;font-size:.8rem;color:#a9b8c3}
+.summary input[aria-invalid=true]{border-color:#ff8a73;background:rgba(242,107,79,.12)}
+.summary .ferr{margin:6px 0 0;font-size:.82rem;color:#ffb199;font-weight:600}
+.summary .ferr::before{content:"! ";font-weight:800}
+.summary .form-msg{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:rgba(242,107,79,.16);border:1px solid rgba(255,138,115,.5);color:#ffd2c7;font-size:.88rem;font-weight:600}
+.summary form{margin:0}

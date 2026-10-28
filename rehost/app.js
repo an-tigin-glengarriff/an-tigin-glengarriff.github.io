@@ -69,9 +69,9 @@ var CONTACT_EMAIL = 'hello@example.com';
     $('send').href=mailto();
   }
   function mailto(){
-    var name=$('f-name').value.trim(),biz=$('f-biz').value.trim(),site=$('f-site')?$('f-site').value.trim():'';
+    var v=function(id){return $(id).value.trim();},name=v('f-name'),biz=v('f-biz'),email=v('f-email'),phone=v('f-phone'),site=v('f-site');
     var L=[];L.push('Hello,','','Here are the services I\u2019m interested in.','');
-    if(site)L.push('Website: '+site);if(name)L.push('Name: '+name);if(biz)L.push('Business: '+biz);if(site||name||biz)L.push('');
+    L.push('Name: '+name,'Business: '+biz,'Email: '+email,'Phone: '+phone,'Website: '+site,'');
     var groups={};rows.forEach(function(r){(groups[r.dataset.area]=groups[r.dataset.area]||[]).push(r);});
     ['yes','maybe','no'].forEach(function(v){var list=pick(v);if(!list.length)return;L.push((v==='yes'?'YES':v==='maybe'?'MAYBE':'NO')+' ('+list.length+')');list.forEach(function(r){L.push('- '+nm(r)+' ['+r.dataset.area+']');});L.push('');});
     var undec=rows.filter(function(r){return !state[r.dataset.i];});
@@ -81,10 +81,27 @@ var CONTACT_EMAIL = 'hello@example.com';
     var subj='Services selection'+(biz?' \u2013 '+biz:'');
     return 'mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(L.join('\n'));
   }
-  var SITEKEY='rehost-site-v1',fs=$('f-site');
-  if(fs){try{fs.value=localStorage.getItem(SITEKEY)||'';}catch(e){}
-    fs.addEventListener('input',function(){try{localStorage.setItem(SITEKEY,fs.value);}catch(e){}$('send').href=mailto();});}
-  ['f-name','f-biz'].forEach(function(id){$(id).addEventListener('input',function(){$('send').href=mailto();});});
+  // contact details: all required, saved in the browser
+  var CF=['f-name','f-biz','f-email','f-phone','f-site'],CKEY='rehost-contact-v1',cd={};
+  try{cd=JSON.parse(localStorage.getItem(CKEY)||'{}')||{};if(!cd['f-site']&&localStorage.getItem('rehost-site-v1'))cd['f-site']=localStorage.getItem('rehost-site-v1');}catch(e){cd={};}
+  function check(id){var x=$(id).value.trim();
+    if(!x)return {'f-name':'Please enter your name.','f-biz':'Please enter your business name.','f-email':'Please enter your email address.','f-phone':'Please enter your phone number.','f-site':'Please enter your website address.'}[id];
+    if(id==='f-email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(x))return 'Please enter a valid email address, like you@yourbusiness.ie.';
+    if(id==='f-phone'&&(x.replace(/\D/g,'').length<7||/[^\d\s()+.\-]/.test(x)))return 'Please enter a valid phone number, like 087 123 4567.';
+    if(id==='f-site'&&(/\s/.test(x)||!/[a-z0-9-]\.[a-z]{2,}/i.test(x)))return 'Please enter a website address, like yourbusiness.ie.';
+    return '';}
+  function showErr(id,msg){var el=$(id),er=$(id+'-err');if(msg){el.setAttribute('aria-invalid','true');er.textContent=msg;er.hidden=false;}else{el.removeAttribute('aria-invalid');er.textContent='';er.hidden=true;}}
+  function validate(){var first=null;CF.forEach(function(id){var m=check(id);showErr(id,m);if(m&&!first)first=id;});
+    var fm=$('form-msg');if(first){fm.textContent='Please fill in all the required fields before sending.';fm.hidden=false;$(first).focus();}else{fm.hidden=true;fm.textContent='';}
+    return !first;}
+  CF.forEach(function(id){var el=$(id);if(cd[id])el.value=cd[id];
+    el.addEventListener('input',function(){cd[id]=el.value;try{localStorage.setItem(CKEY,JSON.stringify(cd));}catch(e){}
+      if(el.getAttribute('aria-invalid')&&!check(id))showErr(id,'');
+      if(!$('form-msg').hidden&&CF.every(function(i){return !check(i);}))$('form-msg').hidden=true;
+      $('send').href=mailto();});
+    el.addEventListener('blur',function(){if(el.getAttribute('aria-invalid'))showErr(id,check(id));});});
+  $('send').addEventListener('click',function(e){if(!validate()){e.preventDefault();return;}this.href=mailto();});
+  $('sel-form').addEventListener('submit',function(e){e.preventDefault();if(validate())window.location.href=mailto();});
   $('reset').addEventListener('click',function(){state={};save();rows.forEach(function(r){delete r.dataset.v;r.querySelectorAll('input').forEach(function(i){i.checked=false;});});render();});
   render();
 })();
