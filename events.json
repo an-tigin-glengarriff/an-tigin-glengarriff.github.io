@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-27T00:32:44Z",
+  "updated": "2026-10-29T05:57:26Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
   "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
@@ -412,7 +412,7 @@
       "name": "Ballydehob Pop-Up Market at Levis'",
       "rule": "every Wednesday",
       "times": "9:30am–12:30pm",
-      "next": "2026-10-28",
+      "next": "2026-11-04",
       "months": [
         1,
         2,
@@ -720,7 +720,7 @@
       "name": "Kenmare Market",
       "rule": "every Wednesday",
       "times": "9am–5pm",
-      "next": "2026-10-28",
+      "next": "2026-11-04",
       "months": [
         1,
         2,
@@ -748,7 +748,7 @@
       "name": "Kinsale Farmers Market",
       "rule": "every Wednesday",
       "times": "9:30am–2:30pm",
-      "next": "2026-10-28",
+      "next": "2026-11-04",
       "months": [
         1,
         2,
