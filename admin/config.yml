@@ -1,0 +1,38 @@
+backend:
+  name: github
+  repo: an-tigin-glengarriff/an-tigin-glengarriff.github.io
+  branch: main
+  base_url: https://api.netlify.com
+  site_domain: an-tigin-glengarriff.netlify.app
+
+media_folder: files/gallery
+public_folder: /files/gallery
+
+collections:
+  - name: events
+    label: Events
+    files:
+      - name: events-tbc
+        label: Events with dates TBC
+        file: events-tbc.json
+        format: json
+        fields:
+          - { label: Note (leave as is), name: note, widget: text }
+          - label: Events
+            name: events
+            widget: list
+            summary: "{{fields.name}}, {{fields.place}}"
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Label, name: label, widget: string, required: false }
+              - { label: Place, name: place, widget: string }
+              - { label: Location, name: location, widget: string }
+              - { label: Website, name: url, widget: string }
+              - { label: Usual time of year, name: usual, widget: string }
+              - { label: Last year's dates, name: last, widget: string, required: false }
+              - label: Usual months
+                name: months
+                widget: list
+                field: { label: Month number, name: month, widget: number, value_type: int, min: 1, max: 12 }
+              - { label: Latitude, name: lat, widget: number, value_type: float, step: 0.000001, required: false }
+              - { label: Longitude, name: lng, widget: number, value_type: float, step: 0.000001, required: false }
