@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-07T00:08:31Z",
+  "updated": "2026-11-08T01:29:12Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
   "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
@@ -444,7 +444,7 @@
       "name": "Bandon Farmers Market",
       "rule": "every Saturday",
       "times": "9:30am–1:30pm",
-      "next": "2026-11-07",
+      "next": "2026-11-14",
       "months": [
         1,
         2,
@@ -500,7 +500,7 @@
       "name": "Bere Island parkrun",
       "rule": "every Saturday",
       "times": "9:30am–10:30am",
-      "next": "2026-11-07",
+      "next": "2026-11-14",
       "months": [
         1,
         2,
@@ -528,7 +528,7 @@
       "name": "Castlehaven parkrun",
       "rule": "every Saturday",
       "times": "9:30am–10:30am",
-      "next": "2026-11-07",
+      "next": "2026-11-14",
       "months": [
         1,
         2,
@@ -612,7 +612,7 @@
       "name": "Clonakilty parkrun",
       "rule": "every Saturday",
       "times": "9:30am–10:30am",
-      "next": "2026-11-07",
+      "next": "2026-11-14",
       "months": [
         1,
         2,
@@ -668,7 +668,7 @@
       "name": "Glengarriff parkrun",
       "rule": "every Saturday",
       "times": "9:30am–10:30am",
-      "next": "2026-11-07",
+      "next": "2026-11-14",
       "months": [
         1,
         2,
@@ -752,7 +752,7 @@
       "name": "Rosscarbery Farmers Market",
       "rule": "every Saturday",
       "times": "9:30am–1:30pm",
-      "next": "2026-11-07",
+      "next": "2026-11-14",
       "months": [
         1,
         2,
@@ -802,7 +802,7 @@
       "name": "Skibbereen Farmers Market",
       "rule": "every Saturday",
       "times": "9:30am–1:30pm",
-      "next": "2026-11-07",
+      "next": "2026-11-14",
       "months": [
         1,
         2,
