@@ -26,7 +26,25 @@
 .cal-tip{margin:var(--s,8px) 0 0;font-size:.9rem;color:#5f5853;min-height:1.4em}
 .cal-evlist .cal-hol-li{color:#1a7a3c}
 .cal-evlist .cal-hol-li i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#1e9e4a;margin-right:6px;vertical-align:1px}
-@media (max-width:520px){.cal-dots{bottom:10%;gap:2px}.cal-dots .cal-ev,.cal-dots .cal-hol{width:5px;height:5px}}
+button.cal-day{font:inherit;color:inherit;border:0;margin:0;padding:0;width:100%;background:none;cursor:pointer}
+button.cal-day.cal-avail{background:#e3eadb;color:var(--spring)}
+button.cal-day.cal-booked{background:#efe4da;color:#a3896f}
+button.cal-day.cal-past{color:#c8c2bb;background:transparent}
+button.cal-day.cal-unknown{color:#9e9790;background:transparent}
+button.cal-day.cal-today{outline:2px solid var(--dark)}
+button.cal-day.cal-stay{background:var(--spring);color:var(--light)}
+button.cal-day.cal-in{box-shadow:inset 0 0 0 2px var(--dark)}
+button.cal-day:focus-visible{outline:2px solid var(--dark);outline-offset:2px}
+button.cal-day[aria-disabled="true"]{cursor:default}
+.legend i.cal-stay{background:var(--spring);box-shadow:none}
+.stay-panel{margin-top:var(--l);padding-top:var(--l);border-top:1px solid rgba(39,34,32,.1)}
+.stay-min{margin:0 0 8px;font-weight:700;letter-spacing:-.03em;color:var(--black)}
+.stay-hint,.stay-note{margin:0 0 12px;color:#5f5853;font-size:.95rem}
+.stay-summary{margin:0 0 12px;color:var(--black);font-weight:600}
+.stay-summary:empty{margin:0}
+.stay-book{margin-top:4px}
+.stay-book[hidden]{display:none}
+@media (max-width:520px){.cal-dots{bottom:10%;gap:2px}.cal-dots .cal-ev,.cal-dots .cal-hol{width:5px;height:5px}.stay-book{width:100%;justify-content:space-between;white-space:normal}}
 </style>
 </head>
 <body>
@@ -49,7 +67,14 @@
       <div class="cal__head"><button id="cal-prev" aria-label="Previous month">&larr;</button><h3 id="cal-title"></h3><button id="cal-next" aria-label="Next month">&rarr;</button></div>
       <div class="cal-grid" id="cal-dow" style="margin-bottom:6px"></div>
       <div class="cal-grid" id="cal-days"></div>
-      <div class="legend"><span><i class="cal-avail"></i>Available</span><span><i class="cal-booked"></i>Booked</span><span><i class="cal-ev-key"></i>West Cork event</span><span><i class="cal-hol-key"></i>Bank holiday</span></div>
+      <div class="legend"><span><i class="cal-avail"></i>Available</span><span><i class="cal-booked"></i>Booked</span><span><i class="cal-stay"></i>Selected stay</span><span><i class="cal-ev-key"></i>West Cork event</span><span><i class="cal-hol-key"></i>Bank holiday</span></div>
+      <div class="stay-panel" id="stay-panel">
+        <p class="stay-min" id="stay-min">Minimum stay: 4 nights</p>
+        <p class="stay-hint" id="stay-hint">Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after.</p>
+        <p class="stay-summary" id="stay-summary" aria-live="polite"></p>
+        <p class="stay-note" id="stay-note">Airbnb confirms the final availability and the price. This page does not book the stay or take payment.</p>
+        <a class="btn btn--dark stay-book" id="stay-book" hidden target="_blank" rel="noopener" aria-describedby="stay-note">Book these dates on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      </div>
       <p class="cal-tip" id="cal-tip" aria-live="polite"></p>
       <ul class="cal-evlist" id="cal-evlist"></ul>
       <p class="cal-evlink"><a class="btn btn--line" href="events.html">See all West Cork events &amp; festivals <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a></p>
@@ -70,42 +95,168 @@
   </div>
 </section>
 </main>
+<script src="assets/stay-select.js"></script>
 <script>
-(function(){var booked=[],events=[],hols=[],offset=0,MAX=11,today=new Date();today.setHours(0,0,0,0);
-var names=['January','February','March','April','May','June','July','August','September','October','November','December'];
-var d=document.getElementById('cal-dow');['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(n){var e=document.createElement('div');e.className='cal-dow';e.textContent=n;d.appendChild(e);});
-function key(y,m,day){return y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');}
-function evOn(k){return events.filter(function(e){return k>=e.start&&k<e.end;});}
-function holOn(k){return hols.filter(function(h){return h.date===k;});}
-function isBooked(k){return booked.some(function(r){return k>=r.start&&k<r.end;});}
-function render(){var y=today.getFullYear(),m=today.getMonth()+offset;y+=Math.floor(m/12);m=((m%12)+12)%12;
-document.getElementById('cal-title').textContent=names[m]+' '+y;document.getElementById('cal-prev').disabled=offset<=0;document.getElementById('cal-next').disabled=offset>=MAX;
-var g=document.getElementById('cal-days');g.innerHTML='';var lead=(new Date(y,m,1).getDay()+6)%7,days=new Date(y,m+1,0).getDate();
-for(var i=0;i<lead;i++)g.appendChild(document.createElement('div'));
-for(var day=1;day<=days;day++){var c=document.createElement('div'),dt=new Date(y,m,day),k=key(y,m,day);c.textContent=day;
-c.className='cal-day '+(dt<today?'cal-past':isBooked(k)?'cal-booked':'cal-avail');if(dt.getTime()===today.getTime())c.className+=' cal-today';
-c.title=dt<today?'':(isBooked(k)?'Booked':'Available');
-var ev=dt<today?[]:evOn(k),hl=dt<today?[]:holOn(k);
-if(ev.length||hl.length){var dots=document.createElement('span');dots.className='cal-dots';
-if(ev.length){var dot=document.createElement('span');dot.className='cal-ev';dots.appendChild(dot);}
-if(hl.length){var hd=document.createElement('span');hd.className='cal-hol';dots.appendChild(hd);}
-c.appendChild(dots);var info=hl.map(function(h){return h.name+' (bank holiday)';}).concat(ev.map(function(e){return e.name;}));
-c.title+=(c.title?' · ':'')+info.join(', ');c.className+=' has-info';c.setAttribute('data-info',day+' '+names[m].slice(0,3)+': '+info.join(', '));
-c.onclick=function(){document.getElementById('cal-tip').textContent=this.getAttribute('data-info');};}
-g.appendChild(c);}
-document.getElementById('cal-tip').textContent='';
-var mk=key(y,m,1),me=key(y,m+1,1),list=document.getElementById('cal-evlist');list.innerHTML='';var arr=[],tk=key(today.getFullYear(),today.getMonth(),today.getDate());
-hols.filter(function(h){return h.date>=mk&&h.date<me&&h.date>=tk;}).forEach(function(h){var li=document.createElement('li'),st=h.date.split('-');li.className='cal-hol-li';
-li.appendChild(document.createElement('i'));li.appendChild(document.createTextNode(+st[2]+' '+names[+st[1]-1].slice(0,3)+' · '+h.name+' (bank holiday)'));arr.push([h.date,0,li]);});
-events.filter(function(e){return e.start<me&&e.end>mk&&e.end>key(today.getFullYear(),today.getMonth(),today.getDate());}).forEach(function(e){var li=document.createElement('li'),a=document.createElement(e.url?'a':'span'),st=e.start.split('-');
-a.textContent=e.name;if(e.url){a.href=e.url;a.target='_blank';a.rel='noopener';}li.appendChild(document.createTextNode(+st[2]+' '+names[+st[1]-1].slice(0,3)+' · '));li.appendChild(a);arr.push([e.start>tk?e.start:tk,1,li]);});
-arr.sort(function(p,q){return p[0]<q[0]?-1:p[0]>q[0]?1:p[1]-q[1];}).forEach(function(x){list.appendChild(x[2]);});}
-document.getElementById('cal-prev').onclick=function(){if(offset>0){offset--;render();}};document.getElementById('cal-next').onclick=function(){if(offset<MAX){offset++;render();}};
-render();
-fetch('availability.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){booked=j.booked||[];render();
-if(j.updated)document.getElementById('cal-updated').textContent='Last updated: '+new Date(j.updated).toLocaleString();}).catch(function(){
-document.getElementById('cal-updated').textContent='Availability could not be loaded right now. Please contact us to check dates.';});
-fetch('events.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){events=j.events||[];hols=j.holidays||[];render();}).catch(function(){});})();
+(function () {
+  var booked = [], events = [], hols = [], offset = 0, MAX = 11, feed = 'loading', selection = null, message = '', pendingFocus = null;
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var todayKey = StaySelect.todayISO(today);
+  var names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var d = document.getElementById('cal-dow');
+  ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].forEach(function (n) {
+    var e = document.createElement('div'); e.className = 'cal-dow'; e.textContent = n; d.appendChild(e);
+  });
+  function key(y, m, day) { return StaySelect.addDays(y + '-' + String(m + 1).padStart(2, '0') + '-01', day - 1); }
+  function evOn(k) { return events.filter(function (e) { return k >= e.start && k < e.end; }); }
+  function holOn(k) { return hols.filter(function (h) { return h.date === k; }); }
+  function isBooked(k) { return StaySelect.nightBooked(k, booked); }
+  function paintHint() {
+    var hint = document.getElementById('stay-hint');
+    if (feed === 'ready') hint.textContent = 'Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after.';
+    else if (feed === 'error') hint.textContent = 'Availability is not loaded, so dates can\u2019t be confirmed or selected.';
+    else hint.textContent = 'Availability is loading. Dates can\u2019t be confirmed yet.';
+  }
+  function paintStay() {
+    var buttons = document.querySelectorAll('#cal-days button[data-date]');
+    for (var i = 0; i < buttons.length; i++) {
+      var el = buttons[i], k = el.getAttribute('data-date'), state = el.getAttribute('data-state');
+      var on = selection && selection.ok && selection.nights.indexOf(k) !== -1;
+      el.classList.toggle('cal-stay', !!on);
+      el.classList.toggle('cal-in', !!(on && k === selection.checkIn));
+      el.setAttribute('aria-pressed', on ? 'true' : 'false');
+      var ctx = { feedReady: state !== 'unknown', past: state === 'past', booked: state === 'booked' };
+      if (on) { ctx.role = k === selection.checkIn ? 'checkin' : 'night'; ctx.nightIndex = selection.nights.indexOf(k) + 1; }
+      var label = StaySelect.dayLabel(k, ctx);
+      var info = el.getAttribute('data-info');
+      if (info) label += ' ' + info;
+      el.setAttribute('aria-label', label);
+    }
+    var sum = document.getElementById('stay-summary');
+    var book = document.getElementById('stay-book');
+    if (selection && selection.ok) {
+      sum.textContent = StaySelect.summary(selection);
+      book.href = selection.url;
+      book.setAttribute('aria-label', StaySelect.ctaLabel(selection));
+      book.hidden = false;
+    } else {
+      sum.textContent = message || '';
+      book.hidden = true;
+      book.removeAttribute('href');
+      book.removeAttribute('aria-label');
+    }
+  }
+  function onDate(iso) {
+    var infoEl = document.querySelector('#cal-days button[data-date="' + iso + '"]');
+    var tip = document.getElementById('cal-tip');
+    tip.textContent = infoEl && infoEl.getAttribute('data-info') ? infoEl.getAttribute('data-info') : '';
+    if (feed !== 'ready') { selection = null; message = StaySelect.reasonText({ ok: false, reason: 'feed' }); paintStay(); return; }
+    if (selection && selection.ok && selection.checkIn === iso) { selection = null; message = 'Selection cleared.'; paintStay(); return; }
+    var result = StaySelect.selectStay(iso, { today: todayKey, booked: booked, feedReady: true });
+    if (!result.ok) { selection = null; message = StaySelect.reasonText(result); paintStay(); return; }
+    selection = result;
+    message = '';
+    paintStay();
+  }
+  function render() {
+    if (!pendingFocus && document.activeElement && document.activeElement.closest && document.activeElement.closest('#cal-days')) {
+      pendingFocus = document.activeElement.getAttribute('data-date');
+    }
+    var y = today.getFullYear(), m = today.getMonth() + offset;
+    y += Math.floor(m / 12); m = ((m % 12) + 12) % 12;
+    document.getElementById('cal-title').textContent = names[m] + ' ' + y;
+    document.getElementById('cal-prev').disabled = offset <= 0;
+    document.getElementById('cal-next').disabled = offset >= MAX;
+    var g = document.getElementById('cal-days'); g.innerHTML = '';
+    var lead = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
+    for (var i = 0; i < lead; i++) g.appendChild(document.createElement('div'));
+    var requested = pendingFocus;
+    pendingFocus = null;
+    for (var day = 1; day <= days; day++) {
+      var c = document.createElement('button'), dt = new Date(y, m, day), k = key(y, m, day);
+      c.type = 'button';
+      c.textContent = day;
+      c.setAttribute('data-date', k);
+      var state = feed !== 'ready' ? 'unknown' : (dt < today ? 'past' : (isBooked(k) ? 'booked' : 'avail'));
+      c.setAttribute('data-state', state);
+      c.className = 'cal-day cal-' + state;
+      if (dt.getTime() === today.getTime()) c.className += ' cal-today';
+      if (state === 'past' || state === 'booked' || state === 'unknown') c.setAttribute('aria-disabled', 'true');
+      c.tabIndex = -1;
+      var ev = dt < today ? [] : evOn(k), hl = dt < today ? [] : holOn(k);
+      if (ev.length || hl.length) {
+        var dots = document.createElement('span'); dots.className = 'cal-dots';
+        if (ev.length) { var dot = document.createElement('span'); dot.className = 'cal-ev'; dots.appendChild(dot); }
+        if (hl.length) { var hd = document.createElement('span'); hd.className = 'cal-hol'; dots.appendChild(hd); }
+        c.appendChild(dots);
+        var info = hl.map(function (h) { return h.name + ' (bank holiday)'; }).concat(ev.map(function (e) { return e.name; }));
+        c.className += ' has-info';
+        c.setAttribute('data-info', day + ' ' + names[m].slice(0, 3) + ': ' + info.join(', '));
+      }
+      c.addEventListener('click', function () { onDate(this.getAttribute('data-date')); });
+      c.addEventListener('keydown', function (evnt) {
+        if (evnt.key === 'Enter' || evnt.key === ' ') {
+          evnt.preventDefault();
+          onDate(this.getAttribute('data-date'));
+          return;
+        }
+        var next = StaySelect.moveDate(this.getAttribute('data-date'), evnt.key);
+        if (!next) return;
+        var off = StaySelect.monthOffset(next, todayKey);
+        if (off === null || off < 0 || off > MAX) return;
+        evnt.preventDefault();
+        offset = off;
+        pendingFocus = next;
+        render();
+      });
+      g.appendChild(c);
+    }
+    var focusEl = requested ? g.querySelector('button[data-date="' + requested + '"]') : null;
+    if (!focusEl) {
+      var choices = g.querySelectorAll('button');
+      for (var b = 0; b < choices.length; b++) {
+        if (choices[b].getAttribute('data-state') === 'avail') { focusEl = choices[b]; break; }
+      }
+      if (!focusEl && choices.length) focusEl = choices[0];
+    }
+    if (focusEl) focusEl.tabIndex = 0;
+    if (requested && focusEl) focusEl.focus();
+    document.getElementById('cal-tip').textContent = '';
+    var mk = key(y, m, 1), me = StaySelect.addDays(mk, days), list = document.getElementById('cal-evlist');
+    list.innerHTML = '';
+    var arr = [], tk = todayKey;
+    hols.filter(function (h) { return h.date >= mk && h.date < me && h.date >= tk; }).forEach(function (h) {
+      var li = document.createElement('li'), st = h.date.split('-'); li.className = 'cal-hol-li';
+      li.appendChild(document.createElement('i'));
+      li.appendChild(document.createTextNode(+st[2] + ' ' + names[+st[1] - 1].slice(0, 3) + ' · ' + h.name + ' (bank holiday)'));
+      arr.push([h.date, 0, li]);
+    });
+    events.filter(function (e) { return e.start < me && e.end > mk && e.end > tk; }).forEach(function (e) {
+      var li = document.createElement('li'), a = document.createElement(e.url ? 'a' : 'span'), st = e.start.split('-');
+      a.textContent = e.name;
+      if (e.url) { a.href = e.url; a.target = '_blank'; a.rel = 'noopener'; }
+      li.appendChild(document.createTextNode(+st[2] + ' ' + names[+st[1] - 1].slice(0, 3) + ' · '));
+      li.appendChild(a);
+      arr.push([e.start > tk ? e.start : tk, 1, li]);
+    });
+    arr.sort(function (p, q) { return p[0] < q[0] ? -1 : p[0] > q[0] ? 1 : p[1] - q[1]; }).forEach(function (x) { list.appendChild(x[2]); });
+    paintHint();
+    paintStay();
+  }
+  document.getElementById('cal-prev').onclick = function () { if (offset > 0) { offset--; render(); } };
+  document.getElementById('cal-next').onclick = function () { if (offset < MAX) { offset++; render(); } };
+  document.getElementById('cal-days').setAttribute('role', 'group');
+  document.getElementById('cal-days').setAttribute('aria-label', 'Availability dates');
+  render();
+  fetch('availability.json', { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('bad'); return r.json(); }).then(function (j) {
+    feed = 'ready'; booked = j.booked || []; render();
+    if (j.updated) document.getElementById('cal-updated').textContent = 'Last updated: ' + new Date(j.updated).toLocaleString();
+  }).catch(function () {
+    feed = 'error'; booked = []; selection = null;
+    document.getElementById('cal-updated').textContent = 'Availability could not be loaded right now. Please contact us to check dates.';
+    render();
+  });
+  fetch('events.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) { events = j.events || []; hols = j.holidays || []; render(); }).catch(function () {});
+})();
 </script>
 <footer class="footer">
   <div class="wrap">
