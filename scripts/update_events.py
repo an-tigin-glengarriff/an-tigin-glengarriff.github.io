@@ -33,14 +33,59 @@ UA = "an-tigin-events/1.0 (https://an-tigin.ie; an.tigin.glengarriff@gmail.com)"
 # Rough box around West Cork / South Kerry; results outside it are rejected.
 BOX = (51.25, 52.30, -10.60, -8.20)  # lat min/max, lng min/max
 # Town names used as a fallback when the full location can't be found.
-# The site covers 75 km around An Tigín (assets/events-reach.js), which includes
-# these towns out to Macroom and Kinsale. Nothing is drawn on the map. Macroom
-# is named here so a calendar location in the town geocodes to the town centre.
+# The site covers 75 km around An Tigín (assets/events-reach.js), out to Macroom
+# and Kinsale, with no circle drawn. Village names below are anchors for that area.
 TOWNS = ["Glengarriff", "Bantry", "Ballylickey", "Kenmare", "Kinsale", "Macroom", "Schull", "Skibbereen",
          "Castletownbere", "Eyeries", "Allihies", "Adrigole", "Bere Island", "Durrus", "Ahakista",
          "Ballydehob", "Baltimore", "Clonakilty", "Drimoleague", "Dunmanway", "Rosscarbery",
          "Union Hall", "Castletownshend", "Goleen", "Crookhaven", "Cape Clear", "Sherkin",
-         "Whiddy Island", "Rerrin", "Bandon", "Kilcrohane", "Lauragh", "Ardgroom", "Sneem", "Timoleague", "Courtmacsherry"]
+         "Whiddy Island", "Rerrin", "Bandon", "Kilcrohane", "Lauragh", "Ardgroom", "Sneem", "Timoleague", "Courtmacsherry",
+         # West of Cork city and around Macroom.
+         "Ballyvourney", "Ballymakeera", "Ballymakeery", "Coolea", "Ballingeary", "Inchigeelagh",
+         "Kilnamartyra", "Clondrohid", "Carrigadrohid", "Kilmichael", "Coachford", "Dripsey", "Farran",
+         "Crookstown", "Lissarda", "Farnanes", "Aghabullogue", "Donoughmore", "Rylane", "Innishannon",
+         "Ballinhassig", "Crossbarry", "Belgooly", "Halfway", "Upton", "Enniskeane", "Ballineen",
+         "Coppeen", "Newcestown", "Beal na Blath"]
+# Other spellings of the same village. The value is the canonical TOWNS name.
+TOWN_ALIAS = {
+    "ballymakeery": "Ballymakeera",
+    "béal na bláth": "Beal na Blath",
+    "bealnablath": "Beal na Blath",
+}
+# Bare "Name, Ireland" is wrong for some of these: Kilmichael would land in north
+# Cork, and Halfway, Upton, Farran and Lissarda are easy to confuse. Queries name
+# County Cork, and Kilmichael names Macroom.
+TOWN_QUERY = {
+    "Aghabullogue": "Aghabullogue, County Cork",
+    "Ballineen": "Ballineen, County Cork",
+    "Ballingeary": "Ballingeary, County Cork",
+    "Ballinhassig": "Ballinhassig, County Cork",
+    "Ballymakeera": "Ballymakeera, County Cork",
+    "Ballyvourney": "Ballyvourney, County Cork",
+    "Beal na Blath": "Beal na Blath, County Cork",
+    "Belgooly": "Belgooly, County Cork",
+    "Carrigadrohid": "Carrigadrohid, County Cork",
+    "Clondrohid": "Clondrohid, County Cork",
+    "Coachford": "Coachford, County Cork",
+    "Coolea": "Coolea, County Cork",
+    "Coppeen": "Coppeen, County Cork",
+    "Crookstown": "Crookstown, County Cork",
+    "Crossbarry": "Crossbarry, County Cork",
+    "Donoughmore": "Donoughmore, County Cork",
+    "Dripsey": "Dripsey, County Cork",
+    "Enniskeane": "Enniskeane, County Cork",
+    "Farnanes": "Farnanes, County Cork",
+    "Farran": "Farran, County Cork",
+    "Halfway": "Halfway, County Cork",
+    "Inchigeelagh": "Inchigeelagh, County Cork",
+    "Innishannon": "Innishannon, County Cork",
+    "Kilmichael": "Kilmichael, Macroom, County Cork",
+    "Kilnamartyra": "Kilnamartyra, County Cork",
+    "Lissarda": "Lissarda, County Cork",
+    "Newcestown": "Newcestown, County Cork",
+    "Rylane": "Rylane, County Cork",
+    "Upton": "Upton, County Cork",
+}
 # Locations that span many places are listed as "location not mapped" instead of a misleading pin.
 MULTI = re.compile(r"\b(across|nationwide|various|venues)\b", re.I)
 _last_q = [0.0]
@@ -67,9 +112,28 @@ def _km(a, b):
     dy = (a[0] - b[0]) * 111.2; dx = (a[1] - b[1]) * 111.2 * math.cos(math.radians(a[0]))
     return (dx * dx + dy * dy) ** 0.5
 
+def _canon_town(name):
+    return TOWN_ALIAS.get(name.lower(), name)
+
+def _town_query(town):
+    return TOWN_QUERY.get(town, town + ", Ireland")
+
 def _town_in(loc):
-    hits = [(loc.lower().find(t.lower()), t) for t in TOWNS if t.lower() in loc.lower()]
-    return min(hits)[1] if hits else None
+    """Village named in a location. Word boundaries, so Farran does not match
+    Farranfore. The earliest and then the longest name wins. Aliases collapse
+    to the canonical village."""
+    low = (loc or "").lower()
+    labeled = [(t, _canon_town(t)) for t in TOWNS]
+    for alias, canon in TOWN_ALIAS.items():
+        labeled.append((alias, canon))
+    hits = []
+    for raw, canon in labeled:
+        for m in re.finditer(r'(?<!\w)' + re.escape(raw.lower()) + r'(?!\w)', low):
+            hits.append((m.start(), -(m.end() - m.start()), canon))
+    if not hits:
+        return None
+    hits.sort()
+    return hits[0][2]
 
 def geocode(loc, cache):
     """Return {"lat","lng","precision","matched"} or None. Uses/updates cache."""
@@ -83,13 +147,13 @@ def geocode(loc, cache):
         if town:
             key = "town:" + town
             if key not in cache:
-                c, ok1 = _nominatim(town + ", Ireland")
+                c, ok1 = _nominatim(_town_query(town))
                 if not ok1: return None
                 cache[key] = {"lat": c[0], "lng": c[1], "precision": "town", "matched": town} if c else None
             tpos = cache[key]
         q = re.sub(r"\s*\([^)]*\)", "", loc)
         # "Town" / "Town, Region": use the town's own point (the village centre).
-        if tpos and q.split(",")[0].strip().lower() == town.lower():
+        if tpos and _canon_town(q.split(",")[0].strip()).lower() == town.lower():
             cache[loc] = dict(tpos); return cache[loc]
         c, ok = _nominatim(q)
         if not ok: return None  # network error: don't cache, retry next run
