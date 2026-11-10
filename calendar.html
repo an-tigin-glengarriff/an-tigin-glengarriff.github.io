@@ -37,6 +37,7 @@ button.cal-day.cal-in{box-shadow:inset 0 0 0 2px var(--dark)}
 button.cal-day:focus-visible{outline:2px solid var(--dark);outline-offset:2px}
 button.cal-day[aria-disabled="true"]{cursor:default}
 .legend i.cal-stay{background:var(--spring);box-shadow:none}
+.stay-now{margin-top:16px}
 .stay-panel{margin-top:var(--l);padding-top:var(--l);border-top:1px solid rgba(39,34,32,.1)}
 .stay-min{margin:0 0 8px;font-weight:700;letter-spacing:-.03em;color:var(--black)}
 .stay-hint,.stay-note{margin:0 0 12px;color:#5f5853;font-size:.95rem}
@@ -71,17 +72,19 @@ button.stay-reset{margin-top:4px;font:inherit;cursor:pointer;min-height:44px}
       <div class="cal__head"><button id="cal-prev" aria-label="Previous month">&larr;</button><h3 id="cal-title"></h3><button id="cal-next" aria-label="Next month">&rarr;</button></div>
       <div class="cal-grid" id="cal-dow" style="margin-bottom:6px"></div>
       <div class="cal-grid" id="cal-days"></div>
-      <div class="legend"><span><i class="cal-avail"></i>Available</span><span><i class="cal-booked"></i>Booked</span><span><i class="cal-stay"></i>Selected stay</span><span><i class="cal-ev-key"></i>West Cork event</span><span><i class="cal-hol-key"></i>Bank holiday</span></div>
-      <div class="stay-panel" id="stay-panel">
-        <p class="stay-min" id="stay-min">Minimum stay: 4 nights</p>
-        <p class="stay-hint" id="stay-hint">Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If a booking falls in those nights, the stay moves to the four free nights before it. To stay longer, choose an earlier or later free date. Start a new stay to choose again.</p>
+      <div class="stay-now" id="stay-now">
         <p class="stay-summary" id="stay-summary" aria-live="polite"></p>
         <p class="stay-error" id="stay-error" aria-live="polite"></p>
-        <p class="stay-note" id="stay-note">Airbnb confirms the final availability and the price. This page does not book the stay or take payment.</p>
         <div class="stay-actions">
           <a class="btn btn--dark stay-book" id="stay-book" hidden target="_blank" rel="noopener" aria-describedby="stay-note">Book these dates on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
           <button type="button" class="btn btn--line stay-reset" id="stay-reset" hidden>Start a new stay</button>
         </div>
+      </div>
+      <div class="legend"><span><i class="cal-avail"></i>Available</span><span><i class="cal-booked"></i>Booked</span><span><i class="cal-stay"></i>Selected stay</span><span><i class="cal-ev-key"></i>West Cork event</span><span><i class="cal-hol-key"></i>Bank holiday</span></div>
+      <div class="stay-panel" id="stay-panel">
+        <p class="stay-min" id="stay-min">Minimum stay: 4 nights</p>
+        <p class="stay-hint" id="stay-hint">Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If a booking falls in those nights, the stay moves to the four free nights before it. To stay longer, choose an earlier or later free date. Start a new stay to choose again.</p>
+        <p class="stay-note" id="stay-note">Airbnb confirms the final availability and the price. This page does not book the stay or take payment.</p>
       </div>
       <p class="cal-tip" id="cal-tip" aria-live="polite"></p>
       <ul class="cal-evlist" id="cal-evlist"></ul>
@@ -97,7 +100,7 @@ button.stay-reset{margin-top:4px;font:inherit;cursor:pointer;min-height:44px}
         <a class="btn btn--white" href="mailto:an.tigin.glengarriff@gmail.com" style="justify-content:space-between;border-color:rgba(39,34,32,.2);white-space:normal;word-break:break-all">an.tigin.glengarriff@gmail.com <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
       </div>
       <p class="muted">Or book online via Airbnb.</p>
-      <a class="btn btn--line" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Book on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      <a class="btn btn--line" id="airbnb-book" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Book on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
       <div class="notice" style="margin-top:32px;background:var(--sand)"><div>Adults only: we're unable to accommodate children or pets.</div></div>
     </div>
   </div>
@@ -142,18 +145,23 @@ button.stay-reset{margin-top:4px;font:inherit;cursor:pointer;min-height:44px}
     var sum = document.getElementById('stay-summary');
     var book = document.getElementById('stay-book');
     var reset = document.getElementById('stay-reset');
+    var airbnb = document.getElementById('airbnb-book');
     if (selection && selection.ok) {
       sum.textContent = StaySelect.summary(selection);
       book.href = selection.url;
       book.setAttribute('aria-label', StaySelect.ctaLabel(selection));
       book.hidden = false;
       reset.hidden = false;
+      airbnb.href = selection.url;
+      airbnb.setAttribute('aria-label', 'Book on Airbnb, check-in ' + selection.checkIn + ', check-out ' + selection.checkOut + ', ' + selection.nightCount + ' nights.');
     } else {
       sum.textContent = message || '';
       book.hidden = true;
       book.removeAttribute('href');
       book.removeAttribute('aria-label');
       reset.hidden = true;
+      airbnb.href = StaySelect.LISTING;
+      airbnb.removeAttribute('aria-label');
     }
   }
   function stayOptions() { return { today: todayKey, booked: booked, feedReady: feed === 'ready' }; }
