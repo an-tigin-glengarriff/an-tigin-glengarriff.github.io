@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-09T00:58:40Z",
+  "updated": "2026-11-10T02:14:19Z",
   "note": "end dates are exclusive (checkout day is available)",
   "booked": [
     {
-      "start": "2026-11-07",
+      "start": "2026-11-08",
       "end": "2027-04-01"
     },
     {
