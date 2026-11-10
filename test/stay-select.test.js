@@ -29,8 +29,8 @@ assert.strictEqual(open.checkOut, '2027-04-19');
 assert.strictEqual(open.nightCount, 4);
 assert.strictEqual(open.url, 'https://airbnb.com/h/an-tigin?check_in=2027-04-15&check_out=2027-04-19');
 assert.ok(open.nights.indexOf(open.checkOut) === -1, 'checkout morning is not a stayed night');
-assert.strictEqual(Stay.summary(open), 'Check-in Thursday 15 April 2027. Check-out Monday 19 April 2027. 4 nights.');
-assert.strictEqual(Stay.ctaLabel(open), 'Book these dates on Airbnb, check-in 2027-04-15, check-out 2027-04-19, 4 nights. Opens Airbnb, which confirms availability and price.');
+assert.strictEqual(Stay.summary(open), 'Check-in Thursday 15 April 2027. Check-out at 11am on Monday 19 April 2027. 4 nights.');
+assert.strictEqual(Stay.ctaLabel(open), 'Book these dates on Airbnb, check-in 2027-04-15, check-out at 11am on 2027-04-19, 4 nights. Opens Airbnb, which confirms availability and price.');
 assert.ok(!/\$|€|£/.test(Stay.ctaLabel(open) + Stay.summary(open)), 'no price in the handoff');
 assert.ok(Stay.summary(open).indexOf('two clear days') === -1);
 assert.ok(Stay.summary(open).indexOf('Two clear days') === -1);
@@ -238,7 +238,7 @@ var blockedLater = Stay.extendStay(base, '2027-06-16', opts('2027-06-01', [{ sta
 assert.strictEqual(blockedLater.ok, false);
 assert.strictEqual(blockedLater.reason, 'blocked');
 assert.strictEqual(blockedLater.url, undefined);
-assert.strictEqual(Stay.extendReason(blockedLater), 'A booked night is in the way, so the stay was not extended.');
+assert.strictEqual(Stay.extendReason(blockedLater), 'A booked night is in the way, so those nights were not added. Press Clear selected dates to choose a different stay.');
 assert.strictEqual(base.checkIn, '2027-06-10');
 var blockedEarlier = Stay.extendStay(base, '2027-06-05', opts('2027-06-01', [{ start: '2027-06-07', end: '2027-06-08' }]));
 assert.strictEqual(blockedEarlier.ok, false);
@@ -251,7 +251,7 @@ assert.strictEqual(pastExtend.url, undefined);
 var inside = Stay.extendStay(base, '2027-06-12', opts('2027-06-01'));
 assert.strictEqual(inside.ok, false);
 assert.strictEqual(inside.reason, 'inside');
-assert.ok(Stay.extendReason(inside).indexOf('start a new stay') !== -1);
+assert.ok(Stay.extendReason(inside).indexOf('Clear selected dates') !== -1);
 
 var monthLong = Stay.extendStay(
   Stay.selectStay('2027-04-28', opts('2027-04-01')),
@@ -302,9 +302,35 @@ assert.ok(html.indexOf('Minimum stay: 4 nights') !== -1, 'minimum-stay note is o
 assert.ok(html.indexOf('Two clear days') === -1, 'no two-day gap copy');
 assert.ok(html.indexOf('id="stay-gap"') === -1);
 assert.ok(html.indexOf("evnt.key === 'Enter'") !== -1, 'Enter selects a date');
-assert.ok(html.indexOf('extendStay') !== -1, 'a selected stay can be extended');
 assert.ok(/<button type="button"[^>]*id="stay-reset"/.test(html), 'reset is a keyboard button');
-assert.ok(html.indexOf('Start a new stay') !== -1);
+assert.ok(html.indexOf('>Clear selected dates</button>') !== -1);
+assert.ok(html.indexOf('button.stay-reset{margin-top:4px;background:var(--spring);color:var(--light)') !== -1);
+assert.ok(html.indexOf('Check-out is at 11am on the morning after your last night.') !== -1);
+assert.ok(html.indexOf('chooseDate') !== -1);
+
+var held = Stay.selectStay('2027-06-10', opts('2027-06-01'));
+var added = Stay.chooseDate(held, '2027-06-15', opts('2027-06-01'));
+assert.strictEqual(added.action, 'extend');
+assert.strictEqual(added.stay.checkOut, '2027-06-16');
+assert.strictEqual(added.stay.nightCount, 6);
+var addedEarly = Stay.chooseDate(held, '2027-06-08', opts('2027-06-01'));
+assert.strictEqual(addedEarly.action, 'extend');
+assert.strictEqual(addedEarly.stay.checkIn, '2027-06-08');
+assert.strictEqual(held.checkIn, '2027-06-10');
+var replaced = Stay.chooseDate(held, '2027-06-20', opts('2027-06-01', [{ start: '2027-06-16', end: '2027-06-17' }]));
+assert.strictEqual(replaced.action, 'change');
+assert.strictEqual(replaced.stay.checkIn, '2027-06-20');
+assert.strictEqual(replaced.stay.nightCount, 4);
+assert.strictEqual(held.checkOut, '2027-06-14', 'changing does not edit the previous stay object');
+var keptBooked = Stay.chooseDate(held, '2027-06-16', opts('2027-06-01', [{ start: '2027-06-16', end: '2027-06-17' }]));
+assert.strictEqual(keptBooked.action, 'keep');
+assert.strictEqual(keptBooked.stay, held);
+var keptPast = Stay.chooseDate(held, '2027-06-01', opts('2027-06-10'));
+assert.strictEqual(keptPast.action, 'keep');
+assert.strictEqual(keptPast.stay.checkIn, '2027-06-10');
+var keptInside = Stay.chooseDate(held, '2027-06-12', opts('2027-06-01'));
+assert.strictEqual(keptInside.action, 'keep');
+assert.strictEqual(keptInside.result.reason, 'inside');
 assert.ok(html.indexOf('assets/stay-select.js') !== -1);
 assert.ok(html.indexOf('https://airbnb.com/h/an-tigin') !== -1);
 assert.ok(html.indexOf('938334645264143712') === -1, 'room id is not hardcoded');
