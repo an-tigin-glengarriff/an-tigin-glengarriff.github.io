@@ -37,13 +37,18 @@ button.cal-day.cal-in{box-shadow:inset 0 0 0 2px var(--dark)}
 button.cal-day:focus-visible{outline:2px solid var(--dark);outline-offset:2px}
 button.cal-day[aria-disabled="true"]{cursor:default}
 .legend i.cal-stay{background:var(--spring);box-shadow:none}
+.stay-now{margin-top:16px}
 .stay-panel{margin-top:var(--l);padding-top:var(--l);border-top:1px solid rgba(39,34,32,.1)}
 .stay-min{margin:0 0 8px;font-weight:700;letter-spacing:-.03em;color:var(--black)}
 .stay-hint,.stay-note{margin:0 0 12px;color:#5f5853;font-size:.95rem}
 .stay-summary{margin:0 0 12px;color:var(--black);font-weight:600}
 .stay-summary:empty{margin:0}
+.stay-error{margin:0 0 12px;font-weight:600;color:var(--black)}
+.stay-error:empty{margin:0}
+.stay-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .stay-book{margin-top:4px}
-.stay-book[hidden]{display:none}
+button.stay-reset{margin-top:4px;font:inherit;cursor:pointer;min-height:44px}
+.stay-book[hidden],.stay-reset[hidden]{display:none}
 @media (max-width:520px){.cal-dots{bottom:10%;gap:2px}.cal-dots .cal-ev,.cal-dots .cal-hol{width:5px;height:5px}.stay-book{width:100%;justify-content:space-between;white-space:normal}}
 </style>
 </head>
@@ -67,13 +72,19 @@ button.cal-day[aria-disabled="true"]{cursor:default}
       <div class="cal__head"><button id="cal-prev" aria-label="Previous month">&larr;</button><h3 id="cal-title"></h3><button id="cal-next" aria-label="Next month">&rarr;</button></div>
       <div class="cal-grid" id="cal-dow" style="margin-bottom:6px"></div>
       <div class="cal-grid" id="cal-days"></div>
+      <div class="stay-now" id="stay-now">
+        <p class="stay-summary" id="stay-summary" aria-live="polite"></p>
+        <p class="stay-error" id="stay-error" aria-live="polite"></p>
+        <div class="stay-actions">
+          <a class="btn btn--dark stay-book" id="stay-book" hidden target="_blank" rel="noopener" aria-describedby="stay-note">Book these dates on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+          <button type="button" class="btn btn--line stay-reset" id="stay-reset" hidden>Start a new stay</button>
+        </div>
+      </div>
       <div class="legend"><span><i class="cal-avail"></i>Available</span><span><i class="cal-booked"></i>Booked</span><span><i class="cal-stay"></i>Selected stay</span><span><i class="cal-ev-key"></i>West Cork event</span><span><i class="cal-hol-key"></i>Bank holiday</span></div>
       <div class="stay-panel" id="stay-panel">
         <p class="stay-min" id="stay-min">Minimum stay: 4 nights</p>
-        <p class="stay-hint" id="stay-hint">Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If a booking falls in those nights, the stay moves to the four free nights before it.</p>
-        <p class="stay-summary" id="stay-summary" aria-live="polite"></p>
+        <p class="stay-hint" id="stay-hint">Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If a booking falls in those nights, the stay moves to the four free nights before it. To stay longer, choose an earlier or later free date. Start a new stay to choose again.</p>
         <p class="stay-note" id="stay-note">Airbnb confirms the final availability and the price. This page does not book the stay or take payment.</p>
-        <a class="btn btn--dark stay-book" id="stay-book" hidden target="_blank" rel="noopener" aria-describedby="stay-note">Book these dates on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
       </div>
       <p class="cal-tip" id="cal-tip" aria-live="polite"></p>
       <ul class="cal-evlist" id="cal-evlist"></ul>
@@ -89,7 +100,7 @@ button.cal-day[aria-disabled="true"]{cursor:default}
         <a class="btn btn--white" href="mailto:an.tigin.glengarriff@gmail.com" style="justify-content:space-between;border-color:rgba(39,34,32,.2);white-space:normal;word-break:break-all">an.tigin.glengarriff@gmail.com <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
       </div>
       <p class="muted">Or book online via Airbnb.</p>
-      <a class="btn btn--line" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Book on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      <a class="btn btn--line" id="airbnb-book" href="https://airbnb.com/h/an-tigin" target="_blank" rel="noopener">Book on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
       <div class="notice" style="margin-top:32px;background:var(--sand)"><div>Adults only: we're unable to accommodate children or pets.</div></div>
     </div>
   </div>
@@ -112,7 +123,7 @@ button.cal-day[aria-disabled="true"]{cursor:default}
   function isBooked(k) { return StaySelect.nightBooked(k, booked); }
   function paintHint() {
     var hint = document.getElementById('stay-hint');
-    if (feed === 'ready') hint.textContent = 'Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If a booking falls in those nights, the stay moves to the four free nights before it.';
+    if (feed === 'ready') hint.textContent = 'Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If a booking falls in those nights, the stay moves to the four free nights before it. To stay longer, choose an earlier or later free date. Start a new stay to choose again.';
     else if (feed === 'error') hint.textContent = 'Availability is not loaded, so dates can\u2019t be confirmed or selected.';
     else hint.textContent = 'Availability is loading. Dates can\u2019t be confirmed yet.';
   }
@@ -125,7 +136,7 @@ button.cal-day[aria-disabled="true"]{cursor:default}
       el.classList.toggle('cal-in', !!(on && k === selection.checkIn));
       el.setAttribute('aria-pressed', on ? 'true' : 'false');
       var ctx = { feedReady: state !== 'unknown', past: state === 'past', booked: state === 'booked' };
-      if (on) { ctx.role = k === selection.checkIn ? 'checkin' : 'night'; ctx.nightIndex = selection.nights.indexOf(k) + 1; }
+      if (on) { ctx.role = k === selection.checkIn ? 'checkin' : 'night'; ctx.nightIndex = selection.nights.indexOf(k) + 1; ctx.nightCount = selection.nightCount; }
       var label = StaySelect.dayLabel(k, ctx);
       var info = el.getAttribute('data-info');
       if (info) label += ' ' + info;
@@ -133,28 +144,47 @@ button.cal-day[aria-disabled="true"]{cursor:default}
     }
     var sum = document.getElementById('stay-summary');
     var book = document.getElementById('stay-book');
+    var reset = document.getElementById('stay-reset');
+    var airbnb = document.getElementById('airbnb-book');
     if (selection && selection.ok) {
       sum.textContent = StaySelect.summary(selection);
       book.href = selection.url;
       book.setAttribute('aria-label', StaySelect.ctaLabel(selection));
       book.hidden = false;
+      reset.hidden = false;
+      airbnb.href = selection.url;
+      airbnb.setAttribute('aria-label', 'Book on Airbnb, check-in ' + selection.checkIn + ', check-out ' + selection.checkOut + ', ' + selection.nightCount + ' nights.');
     } else {
       sum.textContent = message || '';
       book.hidden = true;
       book.removeAttribute('href');
       book.removeAttribute('aria-label');
+      reset.hidden = true;
+      airbnb.href = StaySelect.LISTING;
+      airbnb.removeAttribute('aria-label');
     }
   }
+  function stayOptions() { return { today: todayKey, booked: booked, feedReady: feed === 'ready' }; }
   function onDate(iso) {
     var infoEl = document.querySelector('#cal-days button[data-date="' + iso + '"]');
     var tip = document.getElementById('cal-tip');
+    var err = document.getElementById('stay-error');
     tip.textContent = infoEl && infoEl.getAttribute('data-info') ? infoEl.getAttribute('data-info') : '';
-    if (feed !== 'ready') { selection = null; message = StaySelect.reasonText({ ok: false, reason: 'feed' }); paintStay(); return; }
-    if (selection && selection.ok && (selection.clicked === iso || selection.checkIn === iso)) { selection = null; message = 'Selection cleared.'; paintStay(); return; }
-    var result = StaySelect.selectStay(iso, { today: todayKey, booked: booked, feedReady: true });
-    if (!result.ok) { selection = null; message = StaySelect.reasonText(result); paintStay(); return; }
+    if (feed !== 'ready') { selection = null; message = StaySelect.reasonText({ ok: false, reason: 'feed' }); err.textContent = ''; paintStay(); return; }
+    if (selection && selection.ok) {
+      var ext = StaySelect.extendStay(selection, iso, stayOptions());
+      if (!ext.ok) { err.textContent = StaySelect.extendReason(ext); paintStay(); return; }
+      selection = ext;
+      message = '';
+      err.textContent = '';
+      paintStay();
+      return;
+    }
+    var result = StaySelect.selectStay(iso, stayOptions());
+    if (!result.ok) { selection = null; message = StaySelect.reasonText(result); err.textContent = ''; paintStay(); return; }
     selection = result;
     message = '';
+    err.textContent = '';
     paintStay();
   }
   function render() {
@@ -242,6 +272,12 @@ button.cal-day[aria-disabled="true"]{cursor:default}
     paintHint();
     paintStay();
   }
+  document.getElementById('stay-reset').onclick = function () {
+    selection = null;
+    message = '';
+    document.getElementById('stay-error').textContent = '';
+    paintStay();
+  };
   document.getElementById('cal-prev').onclick = function () { if (offset > 0) { offset--; render(); } };
   document.getElementById('cal-next').onclick = function () { if (offset < MAX) { offset++; render(); } };
   document.getElementById('cal-days').setAttribute('role', 'group');

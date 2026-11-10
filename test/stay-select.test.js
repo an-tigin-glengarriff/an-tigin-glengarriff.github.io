@@ -204,13 +204,120 @@ assert.strictEqual(Stay.dayLabel('2027-04-15', { role: 'checkin' }), 'Thursday 1
 assert.strictEqual(Stay.dayLabel('2027-04-17', { role: 'night', nightIndex: 3 }), 'Saturday 17 April 2027. Night 3 of 4.');
 
 var html = fs.readFileSync(path.join(__dirname, '..', 'calendar.html'), 'utf8');
+function opts(today, booked) {
+  return { today: today, booked: booked || [], feedReady: true };
+}
+
+var base = Stay.selectStay('2027-06-10', opts('2027-06-01'));
+assert.strictEqual(base.nightCount, 4);
+assert.strictEqual(base.checkOut, '2027-06-14');
+var later = Stay.extendStay(base, '2027-06-16', opts('2027-06-01'));
+assert.strictEqual(later.ok, true);
+assert.strictEqual(later.direction, 'later');
+assert.strictEqual(later.checkIn, '2027-06-10');
+assert.strictEqual(later.checkOut, '2027-06-17');
+assert.strictEqual(later.nightCount, 7);
+assert.deepStrictEqual(later.nights, ['2027-06-10', '2027-06-11', '2027-06-12', '2027-06-13', '2027-06-14', '2027-06-15', '2027-06-16']);
+assert.strictEqual(later.url, 'https://airbnb.com/h/an-tigin?check_in=2027-06-10&check_out=2027-06-17');
+assert.strictEqual(base.checkOut, '2027-06-14', 'extension does not change the original stay');
+var earlier = Stay.extendStay(base, '2027-06-08', opts('2027-06-01'));
+assert.strictEqual(earlier.ok, true);
+assert.strictEqual(earlier.direction, 'earlier');
+assert.strictEqual(earlier.checkIn, '2027-06-08');
+assert.strictEqual(earlier.checkOut, '2027-06-14');
+assert.strictEqual(earlier.nightCount, 6);
+var both = Stay.extendStay(later, '2027-06-08', opts('2027-06-01'));
+assert.strictEqual(both.ok, true);
+assert.strictEqual(both.checkIn, '2027-06-08');
+assert.strictEqual(both.checkOut, '2027-06-17');
+assert.strictEqual(both.nightCount, 9);
+assert.ok(both.nightCount >= 4);
+assert.strictEqual(both.url, 'https://airbnb.com/h/an-tigin?check_in=2027-06-08&check_out=2027-06-17');
+
+var blockedLater = Stay.extendStay(base, '2027-06-16', opts('2027-06-01', [{ start: '2027-06-15', end: '2027-06-16' }]));
+assert.strictEqual(blockedLater.ok, false);
+assert.strictEqual(blockedLater.reason, 'blocked');
+assert.strictEqual(blockedLater.url, undefined);
+assert.strictEqual(Stay.extendReason(blockedLater), 'A booked night is in the way, so the stay was not extended.');
+assert.strictEqual(base.checkIn, '2027-06-10');
+var blockedEarlier = Stay.extendStay(base, '2027-06-05', opts('2027-06-01', [{ start: '2027-06-07', end: '2027-06-08' }]));
+assert.strictEqual(blockedEarlier.ok, false);
+assert.strictEqual(blockedEarlier.reason, 'blocked');
+assert.strictEqual(blockedEarlier.url, undefined);
+var pastExtend = Stay.extendStay(base, '2027-06-08', opts('2027-06-10'));
+assert.strictEqual(pastExtend.ok, false);
+assert.strictEqual(pastExtend.reason, 'past');
+assert.strictEqual(pastExtend.url, undefined);
+var inside = Stay.extendStay(base, '2027-06-12', opts('2027-06-01'));
+assert.strictEqual(inside.ok, false);
+assert.strictEqual(inside.reason, 'inside');
+assert.ok(Stay.extendReason(inside).indexOf('start a new stay') !== -1);
+
+var monthLong = Stay.extendStay(
+  Stay.selectStay('2027-04-28', opts('2027-04-01')),
+  '2027-05-03',
+  opts('2027-04-01')
+);
+assert.strictEqual(monthLong.ok, true);
+assert.deepStrictEqual(monthLong.nights.slice(0, 4), ['2027-04-28', '2027-04-29', '2027-04-30', '2027-05-01']);
+assert.strictEqual(monthLong.checkOut, '2027-05-04');
+assert.strictEqual(monthLong.nightCount, 6);
+
+var yearLong = Stay.extendStay(
+  Stay.selectStay('2026-12-30', opts('2026-12-01')),
+  '2027-01-04',
+  opts('2026-12-01')
+);
+assert.strictEqual(yearLong.ok, true);
+assert.strictEqual(yearLong.checkIn, '2026-12-30');
+assert.strictEqual(yearLong.checkOut, '2027-01-05');
+assert.ok(yearLong.nights.indexOf('2026-12-31') !== -1);
+assert.ok(yearLong.nights.indexOf('2027-01-01') !== -1);
+assert.strictEqual(yearLong.nightCount, 6);
+
+var leapBase = Stay.selectStay('2028-02-27', opts('2028-02-01'));
+assert.ok(leapBase.nights.indexOf('2028-02-29') !== -1);
+var leapLong = Stay.extendStay(leapBase, '2028-02-25', opts('2028-02-01'));
+assert.strictEqual(leapLong.ok, true);
+assert.strictEqual(leapLong.checkIn, '2028-02-25');
+assert.strictEqual(leapLong.checkOut, '2028-03-02');
+assert.ok(leapLong.nights.indexOf('2028-02-29') !== -1);
+assert.strictEqual(leapLong.nightCount, 6);
+
+var dstBase = Stay.selectStay('2026-03-27', opts('2026-03-01'));
+var dstLong = Stay.extendStay(dstBase, '2026-03-31', opts('2026-03-01'));
+assert.strictEqual(dstLong.ok, true);
+assert.deepStrictEqual(dstLong.nights, ['2026-03-27', '2026-03-28', '2026-03-29', '2026-03-30', '2026-03-31']);
+assert.strictEqual(dstLong.checkOut, '2026-04-01');
+
+var fresh = Stay.selectStay('2027-04-12', { today: '2027-04-01', booked: BOOKED, feedReady: true });
+assert.strictEqual(fresh.shifted, true);
+assert.strictEqual(fresh.checkOut, '2027-04-14');
+var noFeed = Stay.extendStay(fresh, '2027-04-16', { today: '2027-04-01', booked: BOOKED, feedReady: false });
+assert.strictEqual(noFeed.ok, false);
+assert.strictEqual(noFeed.reason, 'feed');
+assert.strictEqual(noFeed.url, undefined);
+
 assert.ok(html.indexOf('Minimum stay: 4 nights') !== -1, 'minimum-stay note is on the page');
 assert.ok(html.indexOf('Two clear days') === -1, 'no two-day gap copy');
 assert.ok(html.indexOf('id="stay-gap"') === -1);
 assert.ok(html.indexOf("evnt.key === 'Enter'") !== -1, 'Enter selects a date');
+assert.ok(html.indexOf('extendStay') !== -1, 'a selected stay can be extended');
+assert.ok(/<button type="button"[^>]*id="stay-reset"/.test(html), 'reset is a keyboard button');
+assert.ok(html.indexOf('Start a new stay') !== -1);
 assert.ok(html.indexOf('assets/stay-select.js') !== -1);
 assert.ok(html.indexOf('https://airbnb.com/h/an-tigin') !== -1);
 assert.ok(html.indexOf('938334645264143712') === -1, 'room id is not hardcoded');
+var daysAt = html.indexOf('id="cal-days"');
+var summaryAt = html.indexOf('id="stay-summary"');
+var bookAt = html.indexOf('id="stay-book"');
+var legendAt = html.indexOf('class="legend"');
+var eventsAt = html.indexOf('id="cal-evlist"');
+assert.ok(daysAt !== -1 && daysAt < summaryAt && summaryAt < bookAt && bookAt < legendAt, 'dated booking button sits under the month grid');
+assert.ok(bookAt < eventsAt, 'dated booking button is above the events list');
+assert.ok(html.indexOf('id="airbnb-book"') !== -1);
+assert.ok(html.indexOf('airbnb.href = selection.url') !== -1);
+assert.ok(html.indexOf('airbnb.href = StaySelect.LISTING') !== -1);
 assert.ok(/<a\b[^>]*id="stay-book"[^>]*>/.test(html), 'booking handoff is a link');
 assert.ok(/id="stay-book"[^>]*target="_blank"/.test(html));
 assert.ok(/id="stay-book"[^>]*rel="noopener"/.test(html));
