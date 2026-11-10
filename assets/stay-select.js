@@ -1,8 +1,13 @@
 /* Four-night stay selection for the accommodation calendar.
-   A clicked date is the check-in. Nights are check-in + 0..3.
+   A clicked available date starts as the check-in. Nights are check-in + 0..3.
    Check-out is check-in + 4 and is not a stayed night (exclusive end).
-   Dates are civil YYYY-MM-DD values. Adding days uses the UTC calendar,
-   so a leap day or a daylight-saving change cannot skip or repeat a date. */
+   Busy nights come only from the calendar feed. The night before a booking
+   and the checkout morning after one can both be stayed. If one of the next
+   three nights is booked, the stay moves to the four free nights immediately
+   before that booked night, and check-out is that morning, when those nights
+   are free and not past. Dates are civil YYYY-MM-DD values. Adding days uses
+   the UTC calendar, so a leap day or a daylight-saving change cannot skip
+   or repeat a date. */
 (function (root, factory) {
   var api = factory();
   if (typeof module === 'object' && module.exports) module.exports = api;
@@ -64,28 +69,60 @@
   function selectStay(checkIn, options) {
     options = options || {};
     var nights = options.nights == null ? NIGHTS : options.nights;
+    var today = options.today || null;
+    var booked = options.booked || [];
     if (options.feedReady === false) return { ok: false, reason: 'feed', nightCount: nights };
     if (!parseISO(checkIn) || nights < 1) return { ok: false, reason: 'invalid', nightCount: nights };
-    if (options.today && checkIn < options.today) {
-      return { ok: false, reason: 'past', checkIn: checkIn, nightCount: nights };
-    }
+    if (today && checkIn < today) return { ok: false, reason: 'past', clicked: checkIn, nightCount: nights };
     var span = [];
     for (var i = 0; i < nights; i++) span.push(addDays(checkIn, i));
     var checkOut = addDays(checkIn, nights);
-    var booked = options.booked || [];
+    if (nightBooked(checkIn, booked)) {
+      return { ok: false, reason: 'blocked', clicked: checkIn, checkIn: checkIn, blockedNight: checkIn, nights: span, nightCount: nights };
+    }
+    var firstBlocked = null;
+    var firstOffset = -1;
     for (var j = 0; j < span.length; j++) {
-      if (nightBooked(span[j], booked)) {
-        return { ok: false, reason: 'blocked', checkIn: checkIn, checkOut: checkOut, nights: span, nightCount: nights };
+      if (nightBooked(span[j], booked)) { firstBlocked = span[j]; firstOffset = j; break; }
+    }
+    if (!firstBlocked) {
+      return {
+        ok: true,
+        reason: 'ok',
+        shifted: false,
+        clicked: checkIn,
+        checkIn: checkIn,
+        checkOut: checkOut,
+        nights: span,
+        nightCount: nights,
+        url: airbnbUrl(checkIn, checkOut)
+      };
+    }
+    if (nights !== NIGHTS || firstOffset < 1 || firstOffset > 3) {
+      return { ok: false, reason: 'blocked', clicked: checkIn, checkIn: checkIn, blockedNight: firstBlocked, nights: span, nightCount: nights };
+    }
+    var slotIn = addDays(firstBlocked, -NIGHTS);
+    var shiftedNights = [];
+    for (var s = 0; s < NIGHTS; s++) shiftedNights.push(addDays(slotIn, s));
+    for (var k = 0; k < shiftedNights.length; k++) {
+      if (today && shiftedNights[k] < today) {
+        return { ok: false, reason: 'shift-past', clicked: checkIn, blockedNight: firstBlocked, nightCount: nights };
+      }
+      if (nightBooked(shiftedNights[k], booked)) {
+        return { ok: false, reason: 'shift-blocked', clicked: checkIn, blockedNight: firstBlocked, nightCount: nights };
       }
     }
     return {
       ok: true,
-      reason: 'ok',
-      checkIn: checkIn,
-      checkOut: checkOut,
-      nights: span,
-      nightCount: nights,
-      url: airbnbUrl(checkIn, checkOut)
+      reason: 'shifted',
+      shifted: true,
+      clicked: checkIn,
+      checkIn: slotIn,
+      checkOut: firstBlocked,
+      nights: shiftedNights,
+      nightCount: NIGHTS,
+      blockedNight: firstBlocked,
+      url: airbnbUrl(slotIn, firstBlocked)
     };
   }
 
@@ -103,14 +140,19 @@
 
   function summary(stay) {
     if (!stay || !stay.ok) return '';
-    return 'Check-in ' + longDate(stay.checkIn) + '. Check-out ' + longDate(stay.checkOut) + '. ' + stay.nightCount + ' nights.';
+    var line = 'Check-in ' + longDate(stay.checkIn) + '. Check-out ' + longDate(stay.checkOut) + '. ' + stay.nightCount + ' nights.';
+    if (stay.shifted) return 'This stay moved to the four nights before the booked date. ' + line;
+    return line;
   }
 
   function reasonText(stay) {
     if (!stay || stay.ok) return '';
     var n = stay.nightCount || NIGHTS;
     if (stay.reason === 'past') return 'That date has already passed.';
+    if (stay.reason === 'blocked' && stay.blockedNight && stay.blockedNight === stay.checkIn) return 'That night is already booked.';
     if (stay.reason === 'blocked') return 'A booked night falls in those ' + n + ' nights, so this check-in can\u2019t be used.';
+    if (stay.reason === 'shift-past') return 'The four nights before that booked date include a past date, so this check-in can\u2019t be used.';
+    if (stay.reason === 'shift-blocked') return 'The four nights before that booked date aren\u2019t all available, so this check-in can\u2019t be used.';
     if (stay.reason === 'feed') return 'Availability is not loaded, so these dates can\u2019t be confirmed here.';
     return 'That date can\u2019t be selected.';
   }
