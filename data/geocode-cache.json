@@ -1,4 +1,10 @@
 {
+  "Actons Hotel, Pier Road, Kinsale, County Cork, P17 PX80": {
+    "lat": 51.703314,
+    "lng": -8.520559,
+    "matched": "Actons Hotel, Kinsale",
+    "precision": "place"
+  },
   "Ballydehob Community Hall & village pubs, Ballydehob, Co. Cork": {
     "lat": 51.562193,
     "lng": -9.460739,
@@ -15,6 +21,18 @@
     "lat": 51.936037,
     "lng": -9.145626,
     "matched": "Ballymakeera",
+    "precision": "town"
+  },
+  "Bandon GAA Club, New Road, Bandon, County Cork": {
+    "lat": 51.746171,
+    "lng": -8.73693,
+    "matched": "Bandon",
+    "precision": "town"
+  },
+  "Bandon Library, South Main Street, Bandon, County Cork": {
+    "lat": 51.746171,
+    "lng": -8.73693,
+    "matched": "Bandon",
     "precision": "town"
   },
   "Bantry": {
@@ -72,16 +90,40 @@
     "matched": "Castletownbere",
     "precision": "town"
   },
+  "Celtic Ross Hotel, Rosscarbery, County Cork, P85 WF86": {
+    "lat": 51.576019,
+    "lng": -9.028768,
+    "matched": "Celtic Ross Hotel, Rosscarbery",
+    "precision": "place"
+  },
   "Church of Christ Our Light, Ballincollig, Co. Cork": {
     "lat": 51.88962,
     "lng": -8.60588,
     "matched": "Church of Christ Our Light, Ballincollig",
     "precision": "place"
   },
+  "Clonakilty Community College, McCurtain Hill, Clonakilty, County Cork, P85 E099": {
+    "lat": 51.625183,
+    "lng": -8.885788,
+    "matched": "Clonakilty Community College",
+    "precision": "place"
+  },
+  "Clonakilty Library, Kent Street, Clonakilty, County Cork": {
+    "lat": 51.622479,
+    "lng": -8.889563,
+    "matched": "Clonakilty Library",
+    "precision": "place"
+  },
   "Community Hall, Baltimore": {
     "lat": 51.483321,
     "lng": -9.373205,
     "matched": "Baltimore",
+    "precision": "town"
+  },
+  "Connolly's of Leap, Main Street, Kilmacabea, Leap, County Cork, P81 AK20": {
+    "lat": 51.581063,
+    "lng": -9.143339,
+    "matched": "Leap",
     "precision": "town"
   },
   "Cúil Aodha and Baile Mhúirne, Gaeltacht Mhúscraí, Co. Cork": {
@@ -209,6 +251,18 @@
     "lng": -9.266211,
     "matched": "Skibbereen",
     "precision": "town"
+  },
+  "St Catherine's Cultural Centre, Kinsale, County Cork": {
+    "lat": 51.705737,
+    "lng": -8.522982,
+    "matched": "Kinsale",
+    "precision": "town"
+  },
+  "St Mary's Church, Dunmanway, County Cork, P47 Y997": {
+    "lat": 51.722184,
+    "lng": -9.110367,
+    "matched": "St Mary's Church, Dunmanway",
+    "precision": "place"
   },
   "The Fairfield, Bridge Street, Skibbereen": {
     "lat": 51.549199,
@@ -503,6 +557,12 @@
     "lat": 51.705737,
     "lng": -8.522982,
     "matched": "Kinsale",
+    "precision": "town"
+  },
+  "town:Leap": {
+    "lat": 51.581063,
+    "lng": -9.143339,
+    "matched": "Leap",
     "precision": "town"
   },
   "town:Lissarda": {

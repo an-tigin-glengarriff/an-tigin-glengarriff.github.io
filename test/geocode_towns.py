@@ -39,6 +39,13 @@ class TownAnchors(unittest.TestCase):
             ("Ballingeary", "Ballingeary"),
             ("Innishannon", "Innishannon"),
             ("Belgooly", "Belgooly"),
+            ("Connolly's of Leap, Main Street, Kilmacabea, Leap, County Cork, P81 AK20", "Leap"),
+            ("Kilmacabea", "Leap"),
+            ("St Catherine's Cultural Centre, Kinsale, County Cork", "Kinsale"),
+            ("Bandon GAA Club, New Road, Bandon, County Cork", "Bandon"),
+            ("St Mary's Church, Dunmanway, County Cork, P47 Y997", "Dunmanway"),
+            ("Clonakilty Library, Kent Street, Clonakilty, County Cork", "Clonakilty"),
+            ("Celtic Ross Hotel, Rosscarbery, County Cork, P85 WF86", "Rosscarbery"),
         ]
         for loc, town in cases:
             self.assertEqual(geo._town_in(loc), town, loc)
@@ -55,7 +62,8 @@ class TownAnchors(unittest.TestCase):
             "Dripsey", "Farran", "Crookstown", "Lissarda", "Farnanes", "Aghabullogue",
             "Donoughmore", "Rylane", "Innishannon", "Ballinhassig", "Crossbarry",
             "Belgooly", "Halfway", "Upton", "Enniskeane", "Ballineen", "Coppeen",
-            "Newcestown", "Beal na Blath", "Macroom", "Kinsale", "Bandon",
+            "Newcestown", "Beal na Blath", "Macroom", "Kinsale", "Bandon", "Leap",
+            "Kilmurry", "Ballincollig",
         ]
         macroom = self.cache["town:Macroom"]
         for name in representative:
@@ -119,6 +127,13 @@ class CalendarLocations(unittest.TestCase):
             anchor = self.cache["town:" + town]
             self.assertAlmostEqual(got["lat"], anchor["lat"], places=5, msg=spelling)
             self.assertAlmostEqual(got["lng"], anchor["lng"], places=5, msg=spelling)
+        connolly = "Connolly's of Leap, Main Street, Kilmacabea, Leap, County Cork, P81 AK20"
+        leap = geo.geocode(connolly, dict(self.cache))
+        self.assertLess(km((leap["lat"], leap["lng"]), (self.cache["town:Leap"]["lat"], self.cache["town:Leap"]["lng"])), 1)
+        # A bare "Bandon GAA Club" search can return Kilbrittain. The real address must stay in Bandon.
+        bandon = geo.geocode("Bandon GAA Club, New Road, Bandon, County Cork", dict(self.cache))
+        self.assertLess(km((bandon["lat"], bandon["lng"]), (51.746171, -8.73693)), 15)
+        self.assertGreater(km((bandon["lat"], bandon["lng"]), (51.676345, -8.684420)), 5)
 
     def test_calendar_locations_are_inside_75km_of_an_tigin(self):
         for loc, town in CALENDAR.items():
