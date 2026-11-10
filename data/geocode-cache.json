@@ -11,6 +11,12 @@
     "matched": "Ballydehob",
     "precision": "town"
   },
+  "Ballyvourney Library, Baile Mhic Íre / Ballymakeera, Co. Cork": {
+    "lat": 51.936037,
+    "lng": -9.145626,
+    "matched": "Ballymakeera",
+    "precision": "town"
+  },
   "Bantry": {
     "lat": 51.67977,
     "lng": -9.45236,
@@ -66,10 +72,22 @@
     "matched": "Castletownbere",
     "precision": "town"
   },
+  "Church of Christ Our Light, Ballincollig, Co. Cork": {
+    "lat": 51.88962,
+    "lng": -8.60588,
+    "matched": "Church of Christ Our Light, Ballincollig",
+    "precision": "place"
+  },
   "Community Hall, Baltimore": {
     "lat": 51.483321,
     "lng": -9.373205,
     "matched": "Baltimore",
+    "precision": "town"
+  },
+  "Cúil Aodha and Baile Mhúirne, Gaeltacht Mhúscraí, Co. Cork": {
+    "lat": 51.92817,
+    "lng": -9.21821,
+    "matched": "Coolea",
     "precision": "town"
   },
   "Eccles Hotel, Glengarriff": {
@@ -101,6 +119,18 @@
     "lng": -9.566904,
     "matched": "parkrun.ie start",
     "precision": "place"
+  },
+  "Independence Museum Kilmurry, Co. Cork, P14 R940": {
+    "lat": 51.842398,
+    "lng": -8.881828,
+    "matched": "Independence Museum Kilmurry",
+    "precision": "place"
+  },
+  "Ionad Cultúrtha an Dochtúir Ó Loingsigh, Baile Mhúirne, Co. Cork, P12 X239": {
+    "lat": 51.94558,
+    "lng": -9.17066,
+    "matched": "Ballyvourney",
+    "precision": "town"
   },
   "Kenmare town centre, Co. Kerry": {
     "lat": 51.879101,
@@ -137,6 +167,12 @@
     "lng": -8.73693,
     "matched": "Bandon",
     "precision": "town"
+  },
+  "Paddy Mac's, Main Street, Coachford, Co. Cork, P12 T448": {
+    "lat": 51.909189,
+    "lng": -8.787247,
+    "matched": "Paddy Mac's, Coachford",
+    "precision": "place"
   },
   "Pier Road Car Park, Schull": {
     "lat": 51.527103,
@@ -211,6 +247,12 @@
     "precision": "place"
   },
   "Venues across West Cork (incl. Glengarriff hall, Whiddy Island)": null,
+  "West Square, Macroom, Co. Cork": {
+    "lat": 51.9047,
+    "lng": -8.959946,
+    "matched": "West Square, Macroom",
+    "precision": "place"
+  },
   "Westlodge Hotel, Bantry": {
     "lat": 51.672228,
     "lng": -9.474958,
@@ -229,10 +271,52 @@
     "matched": "Wolfe Tone Square, Bantry",
     "precision": "place"
   },
+  "town:Aghabullogue": {
+    "lat": 51.94489,
+    "lng": -8.80768,
+    "matched": "Aghabullogue",
+    "precision": "town"
+  },
+  "town:Ballincollig": {
+    "lat": 51.888264,
+    "lng": -8.591841,
+    "matched": "Ballincollig",
+    "precision": "town"
+  },
+  "town:Ballineen": {
+    "lat": 51.7356,
+    "lng": -8.95087,
+    "matched": "Ballineen",
+    "precision": "town"
+  },
+  "town:Ballingeary": {
+    "lat": 51.85045,
+    "lng": -9.23303,
+    "matched": "Ballingeary",
+    "precision": "town"
+  },
+  "town:Ballinhassig": {
+    "lat": 51.81219,
+    "lng": -8.5286,
+    "matched": "Ballinhassig",
+    "precision": "town"
+  },
   "town:Ballydehob": {
     "lat": 51.562193,
     "lng": -9.460739,
     "matched": "Ballydehob",
+    "precision": "town"
+  },
+  "town:Ballymakeera": {
+    "lat": 51.936037,
+    "lng": -9.145626,
+    "matched": "Ballymakeera",
+    "precision": "town"
+  },
+  "town:Ballyvourney": {
+    "lat": 51.94558,
+    "lng": -9.17066,
+    "matched": "Ballyvourney",
     "precision": "town"
   },
   "town:Baltimore": {
@@ -253,10 +337,28 @@
     "matched": "Bantry",
     "precision": "town"
   },
+  "town:Beal na Blath": {
+    "lat": 51.8217,
+    "lng": -8.85602,
+    "matched": "Beal na Blath",
+    "precision": "town"
+  },
+  "town:Belgooly": {
+    "lat": 51.73743,
+    "lng": -8.48398,
+    "matched": "Belgooly",
+    "precision": "town"
+  },
   "town:Bere Island": {
     "lat": 51.628547,
     "lng": -9.86691,
     "matched": "Bere Island",
+    "precision": "town"
+  },
+  "town:Carrigadrohid": {
+    "lat": 51.90561,
+    "lng": -8.85703,
+    "matched": "Carrigadrohid",
     "precision": "town"
   },
   "town:Castletownbere": {
@@ -271,10 +373,64 @@
     "matched": "Clonakilty",
     "precision": "town"
   },
+  "town:Clondrohid": {
+    "lat": 51.93023,
+    "lng": -9.02309,
+    "matched": "Clondrohid",
+    "precision": "town"
+  },
+  "town:Coachford": {
+    "lat": 51.90932,
+    "lng": -8.78811,
+    "matched": "Coachford",
+    "precision": "town"
+  },
+  "town:Coolea": {
+    "lat": 51.92817,
+    "lng": -9.21821,
+    "matched": "Coolea",
+    "precision": "town"
+  },
+  "town:Coppeen": {
+    "lat": 51.79476,
+    "lng": -8.9918,
+    "matched": "Coppeen",
+    "precision": "town"
+  },
+  "town:Crookstown": {
+    "lat": 51.84137,
+    "lng": -8.83103,
+    "matched": "Crookstown",
+    "precision": "town"
+  },
+  "town:Crossbarry": {
+    "lat": 51.80199,
+    "lng": -8.64577,
+    "matched": "Crossbarry",
+    "precision": "town"
+  },
+  "town:Donoughmore": {
+    "lat": 51.98907,
+    "lng": -8.7453,
+    "matched": "Donoughmore",
+    "precision": "town"
+  },
+  "town:Dripsey": {
+    "lat": 51.93809,
+    "lng": -8.70418,
+    "matched": "Dripsey",
+    "precision": "town"
+  },
   "town:Dunmanway": {
     "lat": 51.7202,
     "lng": -9.11269,
     "matched": "Dunmanway",
+    "precision": "town"
+  },
+  "town:Enniskeane": {
+    "lat": 51.737072,
+    "lng": -8.861584,
+    "matched": "Enniskeane",
     "precision": "town"
   },
   "town:Eyeries": {
@@ -283,10 +439,40 @@
     "matched": "Eyeries",
     "precision": "town"
   },
+  "town:Farnanes": {
+    "lat": 51.86513,
+    "lng": -8.81433,
+    "matched": "Farnanes",
+    "precision": "town"
+  },
+  "town:Farran": {
+    "lat": 51.87363,
+    "lng": -8.73626,
+    "matched": "Farran",
+    "precision": "town"
+  },
   "town:Glengarriff": {
     "lat": 51.750197,
     "lng": -9.549976,
     "matched": "Glengarriff",
+    "precision": "town"
+  },
+  "town:Halfway": {
+    "lat": 51.80442,
+    "lng": -8.57038,
+    "matched": "Halfway",
+    "precision": "town"
+  },
+  "town:Inchigeelagh": {
+    "lat": 51.86066,
+    "lng": -9.08291,
+    "matched": "Inchigeelagh",
+    "precision": "town"
+  },
+  "town:Innishannon": {
+    "lat": 51.76542,
+    "lng": -8.65785,
+    "matched": "Innishannon",
     "precision": "town"
   },
   "town:Kenmare": {
@@ -295,10 +481,46 @@
     "matched": "Kenmare",
     "precision": "town"
   },
+  "town:Kilmichael": {
+    "lat": 51.834978,
+    "lng": -9.038305,
+    "matched": "Kilmichael",
+    "precision": "town"
+  },
+  "town:Kilmurry": {
+    "lat": 51.842271,
+    "lng": -8.881404,
+    "matched": "Kilmurry",
+    "precision": "town"
+  },
+  "town:Kilnamartyra": {
+    "lat": 51.899079,
+    "lng": -9.085279,
+    "matched": "Kilnamartyra",
+    "precision": "town"
+  },
   "town:Kinsale": {
     "lat": 51.705737,
     "lng": -8.522982,
     "matched": "Kinsale",
+    "precision": "town"
+  },
+  "town:Lissarda": {
+    "lat": 51.851923,
+    "lng": -8.866948,
+    "matched": "Lissarda",
+    "precision": "town"
+  },
+  "town:Macroom": {
+    "lat": 51.904971,
+    "lng": -8.95992,
+    "matched": "Macroom",
+    "precision": "town"
+  },
+  "town:Newcestown": {
+    "lat": 51.78207,
+    "lng": -8.86955,
+    "matched": "Newcestown",
     "precision": "town"
   },
   "town:Rerrin": {
@@ -311,6 +533,12 @@
     "lat": 51.584193,
     "lng": -9.045038,
     "matched": "Rosscarbery",
+    "precision": "town"
+  },
+  "town:Rylane": {
+    "lat": 51.97631,
+    "lng": -8.8017,
+    "matched": "Rylane",
     "precision": "town"
   },
   "town:Schull": {
@@ -330,5 +558,11 @@
     "lng": -9.402837,
     "matched": "Jolly Roger, Sherkin Island",
     "precision": "place"
+  },
+  "town:Upton": {
+    "lat": 51.78845,
+    "lng": -8.67389,
+    "matched": "Upton",
+    "precision": "town"
   }
 }

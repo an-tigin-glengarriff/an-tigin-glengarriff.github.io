@@ -95,7 +95,7 @@
     <div class="intro" style="margin-bottom:var(--xl)"><h2>Calendar &amp; map.</h2><p class="muted" style="margin:0">Pick a month to see what's on and where. Click a pin, a day or an event for details. Updated automatically from our West Cork Events calendar.</p></div>
     <link rel="stylesheet" href="assets/leaflet/leaflet.css">
     <div class="ev-chips" id="ev-chips" role="group" aria-label="Show events for"></div>
-    <div class="walks-map reveal" id="ev-map" role="region" aria-label="Map of West Cork events"></div>
+    <div class="walks-map reveal" id="ev-map" role="region" aria-label="Map of events within 75 km of An Tigín, including Macroom and Kinsale"></div>
     <p class="muted ev-legend" id="ev-legend"><span><i style="background:#bf7737"></i>Dated event</span><span><i style="background:#7b4bb3"></i>Every year</span><span><i class="tbc"></i>Dates TBC (shown at their usual time of year)</span><span><i style="background:#2f6fb5"></i>Monthly</span><span><i style="background:#2e8b57"></i>Weekly</span><span><i class="rings"></i>One ring per event at that place (number = total)</span><span><i class="home"></i>An Tigín</span></p>
     <div class="ev-explore">
       <div class="cal ev-cal">
@@ -139,7 +139,7 @@
     <div class="ev-groups">
     <div class="ev-group reveal">
       <h3>West Cork</h3>
-      <p class="muted">Bantry, Sheep's Head, Mizen, Skibbereen, Baltimore, Clonakilty &amp; Kinsale</p>
+      <p class="muted">Bantry, Sheep's Head, Mizen, Skibbereen, Baltimore, Clonakilty, Kinsale &amp; Macroom</p>
       <ul class="ev-dir">
         <li><a href="https://www.bantry.ie/whats-on/" target="_blank" rel="noopener">Bantry Goes Green – St Patrick&#x27;s Festival</a><span class="ev-meta">Bantry · usually March · <b>in calendar</b></span></li>
         <li><a href="https://www.bantry.ie/whats-on/" target="_blank" rel="noopener">Bantry St Patrick&#x27;s Day Parade</a><span class="ev-meta">Bantry · usually 17 March · <b>in calendar</b></span></li>
@@ -311,6 +311,7 @@
   </div>
 </section>
 </main>
+<script src="assets/events-reach.js"></script>
 <script>
 (function(){
 var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -323,7 +324,7 @@ function town(l){var parts=(l||'').split(',').map(function(x){return x.trim();})
 var ul=document.getElementById('ev-upcoming');
 fetch('events.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
  var today=new Date();today.setHours(0,0,0,0);
- var ev=(j.events||[]).filter(function(e){return p(e.end)>today;});ul.innerHTML='';
+ var ev=(j.events||[]).filter(function(e){return p(e.end)>today&&!(window.EventsReach&&EventsReach.outside(e));});ul.innerHTML='';
  if(!ev.length){ul.innerHTML='<li class="muted">No upcoming events listed right now.</li>';return;}
  ev.forEach(function(e){var li=document.createElement('li'),d=document.createElement('span'),b=document.createElement('div'),a=document.createElement(e.url?'a':'span'),m=document.createElement('span');
   d.className='ev-date';d.textContent=range(e.start,e.end);a.textContent=e.name;if(e.url){a.href=e.url;a.target='_blank';a.rel='noopener';}
@@ -345,7 +346,7 @@ function range(s,e){var a=p(s),b=p(e);b.setDate(b.getDate()-1);if(b<=a)return fm
 function esc(t){var d=document.createElement('div');d.textContent=t==null?'':t;return d.innerHTML;}
 function mkey(y,m){return y+'-'+String(m+1).padStart(2,'0');}
 var today=new Date();today.setHours(0,0,0,0);var tk=key(today);
-var events=[],regular=[],tbc=[],hols=[],months=[],sel='all',calY=today.getFullYear(),calM=today.getMonth(),selDay=null,map=null,layer=null,groups={},HOME=[51.7283264,-9.5554595];
+var events=[],regular=[],tbc=[],hols=[],months=[],sel='all',calY=today.getFullYear(),calM=today.getMonth(),selDay=null,map=null,layer=null,groups={},HOME=EventsReach.HOME;
 function overlaps(e,y,m){var a=mkey(y,m)+'-01',b=key(new Date(y,m+1,1));return e.start<b&&e.end>a;}
 /* A yearly event can have two occurrences inside the window (e.g. 17 Mar 2027 and 2028). Under "All"
    show each series once, at its next date; a month view only ever holds one occurrence. The calendar
@@ -355,7 +356,8 @@ function oncePerSeries(list){var seen={};return list.filter(function(e){var k=sK
 /* Undated events (events-tbc.json): next dates not published yet. They behave as "yearly" for colour and
    rings, are marked "dates TBC", and show in All and in their usual months after the current one. */
 function selYM(){if(sel==='all')return null;if(sel==='none')return [calY,calM];var a=sel.split('-');return [+a[0],+a[1]-1];}
-function tbcIn(){var ym=selYM();if(!ym)return tbc;if(ym[0]*12+ym[1]<=today.getFullYear()*12+today.getMonth())return [];return tbc.filter(function(e){return (e.months||[]).indexOf(ym[1]+1)>=0;});}
+function covered(list){return list.filter(function(e){return !EventsReach.outside(e);});}
+function tbcIn(){var ym=selYM(),list;if(!ym)list=tbc;else if(ym[0]*12+ym[1]<=today.getFullYear()*12+today.getMonth())list=[];else list=tbc.filter(function(e){return (e.months||[]).indexOf(ym[1]+1)>=0;});return covered(list);}
 function tbcWhen(e){return e.label||('Dates TBC – usually '+e.usual+(e.last?' ('+e.last+')':''));}
 function norm(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'');}
 function inMonthList(){return sel==='all'?oncePerSeries(events):events.filter(function(e){var a=sel.split('-');return overlaps(e,+a[0],+a[1]-1);});}
@@ -364,7 +366,7 @@ function inMonthList(){return sel==='all'?oncePerSeries(events):events.filter(fu
    events so a place keeps the same marker whichever month is selected. */
 var NEAR_KM=0.4,clusters=[];
 function km(a,b){var r=Math.PI/180,dl=(b[1]-a[1])*r,dp=(b[0]-a[0])*r,x=Math.sin(dp/2)*Math.sin(dp/2)+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dl/2)*Math.sin(dl/2);return 12742*Math.asin(Math.sqrt(x));}
-function buildClusters(all){clusters=[];all.forEach(function(e){if(e.lat==null)return;var ll=[e.lat,e.lng],c=null;
+function buildClusters(all){clusters=[];all.forEach(function(e){if(!EventsReach.inReach(e))return;var ll=[e.lat,e.lng],c=null;
  for(var i=0;i<clusters.length;i++)if(km(clusters[i].ll,ll)<=NEAR_KM){c=clusters[i];break;}
  if(!c){c={id:clusters.length,ll:ll,place:town(e.location)};clusters.push(c);}e._cid=c.id;});}
 function town(l){var parts=(l||'').split(',').map(function(x){return x.trim();}).filter(function(x){return x&&!/^Co\./.test(x)&&!/^Beara$/.test(x);});return parts.length?parts[parts.length-1]:'';}
@@ -386,29 +388,31 @@ function ringIcon(evs){var rt=ringTypes(evs),n=rt.length,R0=6,STEP=4,R=R0+(n-1)*
  var badge=evs.length>1?'<span class="ev-ring__n">'+evs.length+'</span>':'';
  return L.divIcon({className:'ev-ring',html:'<svg width="'+S+'" height="'+S+'" viewBox="0 0 '+S+' '+S+'" aria-hidden="true">'+svg+'</svg>'+badge,iconSize:[S,S],iconAnchor:[c,c],popupAnchor:[0,-c+2]});}
 function selMonth(){return sel==='all'?0:sel==='none'?calM+1:+sel.split('-')[1];}
-function regIn(){var m=selMonth();return m?regular.filter(function(r){return (r.months||[]).indexOf(m)>=0;}):regular;}
+function regIn(){var m=selMonth();return covered(m?regular.filter(function(r){return (r.months||[]).indexOf(m)>=0;}):regular);}
 function regWhen(r){return r.rule.charAt(0).toUpperCase()+r.rule.slice(1)+(r.times?' · '+r.times:'');}
 /* ---- map ---- */
 function initMap(){var el=document.getElementById('ev-map');if(!el||!window.L)return;
  map=L.map(el,{scrollWheelZoom:false});
  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
  L.marker(HOME,{zIndexOffset:1000,title:'An Tigín',icon:L.divIcon({className:'ev-home',html:'<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="2" y="2" width="26" height="26" rx="7" fill="#272220" stroke="#fff" stroke-width="2.5"/><path d="M8 15.5 15 9l7 6.5M10.5 14v7h9v-7" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>',iconSize:[30,30],iconAnchor:[15,15],popupAnchor:[0,-13]})}).addTo(map).bindPopup('<b>An Tigín</b><br>Glengarriff, Co. Cork');
- layer=L.layerGroup().addTo(map);}
+ layer=L.layerGroup().addTo(map);
+ fitReach();}
+function fitReach(){var b=EventsReach.bounds();map.fitBounds([[b.south,b.west],[b.north,b.east]],{padding:[18,18]});}
 function itemHtml(e,hl){var when=e.tbc?tbcWhen(e):e.rule?regWhen(e):range(e.start,e.end)+(e.type==='yearly'?' · every year':'');
  return '<li class="ev-pop__it'+(hl?' hl':'')+(e.tbc?' tbc':'')+'"><i '+(e.tbc?'class="tbc"':'style="background:'+tcol(e)+'"')+'></i><div><b>'+esc(e.name)+'</b><small>'+(e.tbc?'<b>'+esc(when)+'</b>':esc(when))+'</small>'+(e.location?'<small class="loc">'+esc(e.location)+'</small>':'')+(e.url?'<a href="'+esc(e.url)+'" target="_blank" rel="noopener">'+(e.rule?'Website':'Event website')+' ↗</a>':'')+'</div></li>';}
 function popHtml(g){var n=g.ev.length;
  return '<div class="ev-pop">'+(n>1?'<h4>'+esc(g.place||'This place')+' · '+n+' events'+(sel==='all'?'':' this month')+'</h4><p class="ev-pop__mix">'+(function(){var c=typeCounts(g.ev.filter(function(x){return !x.tbc;})),nt=g.ev.length-g.ev.filter(function(x){return !x.tbc;}).length;return TORDER.filter(function(t){return c[t];}).map(function(t){return '<span><i style="background:'+TYPES[t][0]+'"></i>'+c[t]+' '+TWORD[t]+'</span>';}).join('')+(nt?'<span><i class="tbc"></i>'+nt+' dates TBC</span>':'');})()+'</p>':'')+'<ul>'+g.ev.map(function(x){return itemHtml(x,x===g.hl);}).join('')+'</ul><a class="dir" href="https://www.google.com/maps/dir/?api=1&destination='+g.ll[0]+','+g.ll[1]+'" target="_blank" rel="noopener">Directions ↗</a></div>';}
 function sk(e){return e.start||e.next||(e.tbc?'9'+String((e.months||[0])[0]).padStart(2,'0'):'');}
 function sortEv(a,b){var t=TORDER.indexOf(etype(a))-TORDER.indexOf(etype(b));if(t)return t;return sk(a)<sk(b)?-1:1;}
-function drawMap(){if(!map)return;layer.clearLayers();groups={};var pts=[HOME];
- inMonthList().concat(regIn()).concat(tbcIn()).forEach(function(e){if(e._cid==null)return;var c=clusters[e._cid];(groups[c.id]=groups[c.id]||{ll:c.ll,place:c.place,ev:[]}).ev.push(e);});
- Object.keys(groups).sort(function(x,y){return groups[y].ev.length-groups[x].ev.length;}).forEach(function(k){var g=groups[k];g.ev.sort(sortEv);pts.push(g.ll);
+function drawMap(){if(!map)return;layer.clearLayers();groups={};
+ inMonthList().concat(regIn()).concat(tbcIn()).forEach(function(e){if(e._cid==null||!EventsReach.inReach(e))return;var c=clusters[e._cid];(groups[c.id]=groups[c.id]||{ll:c.ll,place:c.place,ev:[]}).ev.push(e);});
+ Object.keys(groups).sort(function(x,y){return groups[y].ev.length-groups[x].ev.length;}).forEach(function(k){var g=groups[k];g.ev.sort(sortEv);
   g.marker=L.marker(g.ll,{icon:ringIcon(g.ev),title:g.ev.length>1?(g.place?g.place+': ':'')+g.ev.length+' events':g.ev[0].name,zIndexOffset:g.ev.length*10}).addTo(layer)
    .bindPopup(function(){return popHtml(g);},{maxWidth:290,maxHeight:320,autoPanPaddingTopLeft:[10,60]});
   g.marker.on('popupopen',function(){markActive(g.hl?[g.hl]:g.ev);var h=document.querySelector('.ev-pop__it.hl');if(h&&h.scrollIntoView)h.scrollIntoView({block:'nearest'});});
   g.marker.on('popupclose',function(){g.hl=null;});
   g.marker.on('click',function(){g.hl=null;g.marker.setPopupContent(popHtml(g));});});
- map.fitBounds(pts,{padding:[30,30],maxZoom:11});}
+ fitReach();}
 function openOnMap(e){if(!map||e._cid==null)return;var g=groups[e._cid];if(!g)return;
  document.getElementById('ev-map').scrollIntoView({behavior:'smooth',block:'center'});
  map.setView(g.ll,Math.max(map.getZoom(),13),{animate:false});g.marker.closePopup();g.hl=e;g.marker.setPopupContent(popHtml(g));g.marker.openPopup();}
@@ -419,7 +423,7 @@ function drawList(){var ul=document.getElementById('ev-mlist'),un=document.getEl
  var a=sel.split('-');document.getElementById('ev-mlist-title').textContent=sel==='all'?'All upcoming events':'Events in '+FULL[+a[1]-1]+' '+a[0];
  var list=inMonthList(),nUn=0;
  if(!list.length)ul.innerHTML='<li class="muted">No events listed for this month.</li>';
- list.forEach(function(e){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.textContent=e.name;
+ list.forEach(function(e){if(EventsReach.outside(e))return;var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.textContent=e.name;
   var sm=document.createElement('small');sm.textContent=range(e.start,e.end)+' · '+(e.location||'');li.appendChild(b);li.appendChild(sm);
   if(e.url){var w=document.createElement('a');w.href=e.url;w.target='_blank';w.rel='noopener';w.textContent='Event website ↗';w.style.fontSize='.85rem';li.appendChild(w);}
   if(e.lat!=null){b.title='Show on map';b.onclick=function(){showTbc(e);};ul.appendChild(li);}
@@ -457,7 +461,7 @@ function drawChips(){var c=document.getElementById('ev-chips');c.innerHTML='';
 function setMonth(m,moveCal){sel=m;[].forEach.call(document.querySelectorAll('#ev-chips button'),function(b){b.setAttribute('aria-pressed',b.dataset.m===sel);if(b.dataset.m===sel&&b.scrollIntoView&&b.parentNode.scrollWidth>b.parentNode.clientWidth)b.parentNode.scrollLeft=b.offsetLeft-b.parentNode.offsetLeft-12;});
  if(moveCal&&m!=='all'){var a=m.split('-');calY=+a[0];calM=+a[1]-1;selDay=null;}drawCal();drawList();drawMap();}
 /* ---- calendar ---- */
-function evOn(k){return events.filter(function(e){return k>=e.start&&k<e.end;});}
+function evOn(k){return events.filter(function(e){return k>=e.start&&k<e.end&&!EventsReach.outside(e);});}
 function holOn(k){return hols.filter(function(h){return h.date===k;});}
 var minM=today.getFullYear()*12+today.getMonth(),maxM=minM+11;
 function drawCal(){var y=calY,m=calM,cur=y*12+m;
@@ -494,7 +498,7 @@ Promise.all([fetch('events.json',{cache:'no-store'}).then(function(r){return r.j
  var have=events.concat(regular).map(function(e){return norm(e.name);});
  tbc=(tj.events||[]).filter(function(t){var n=norm(t.name);return !have.some(function(h){return h.indexOf(n)>=0||n.indexOf(h)>=0;});}).map(function(t){t.type='yearly';t.tbc=true;return t;});
  buildClusters(events.concat(regular).concat(tbc));
- var set={};events.forEach(function(e){for(var c=minM;c<=maxM;c++){var y=Math.floor(c/12),m=c%12;if(overlaps(e,y,m))set[mkey(y,m)]=1;}});
+ var set={};events.forEach(function(e){if(EventsReach.outside(e))return;for(var c=minM;c<=maxM;c++){var y=Math.floor(c/12),m=c%12;if(overlaps(e,y,m))set[mkey(y,m)]=1;}});
  months=Object.keys(set).sort();drawChips();
  /* start on the calendar's current month in sync with the chips */
  if(months.indexOf(mkey(calY,calM))>=0)setMonth(mkey(calY,calM),false);else setMonth('all',false);
