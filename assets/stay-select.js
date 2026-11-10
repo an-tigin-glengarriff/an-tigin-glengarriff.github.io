@@ -176,11 +176,31 @@
     };
   }
 
+  /* With a stay already chosen, a free date that joins it without crossing a
+     booked night adds those nights. A free date that cannot be added, but can
+     start its own stay, replaces the selection. A past or booked date leaves
+     the current stay in place. */
+  function chooseDate(current, date, options) {
+    if (!current || !current.ok) {
+      var created = selectStay(date, options);
+      return { action: created.ok ? 'new' : 'reject', stay: created.ok ? created : null, result: created };
+    }
+    if (date >= current.checkIn && date < current.checkOut) {
+      return { action: 'keep', stay: current, result: { ok: false, reason: 'inside', nightCount: current.nightCount } };
+    }
+    var ext = extendStay(current, date, options);
+    if (ext.ok) return { action: 'extend', stay: ext, result: ext };
+    if (ext.reason === 'past' || ext.reason === 'feed') return { action: 'keep', stay: current, result: ext };
+    var next = selectStay(date, options);
+    if (next.ok) return { action: 'change', stay: next, result: next };
+    return { action: 'keep', stay: current, result: ext.reason === 'blocked' ? ext : next };
+  }
+
   function extendReason(result) {
     if (!result || result.ok) return '';
     if (result.reason === 'past') return 'That date has already passed. The selected stay is unchanged.';
-    if (result.reason === 'blocked') return 'A booked night is in the way, so the stay was not extended.';
-    if (result.reason === 'inside') return 'Those nights are already in this stay. Choose an earlier or later free date, or start a new stay.';
+    if (result.reason === 'blocked') return 'A booked night is in the way, so those nights were not added. Press Change dates to choose a different stay.';
+    if (result.reason === 'inside') return 'Those nights are already in this stay. Choose a free date before or after them to add nights, or press Change dates.';
     if (result.reason === 'feed') return 'Availability is not loaded, so the stay was not extended.';
     if (result.reason === 'short') return 'A stay has to be at least 4 nights. The selected stay is unchanged.';
     return 'That date can\u2019t be added. The selected stay is unchanged.';
@@ -200,7 +220,7 @@
 
   function summary(stay) {
     if (!stay || !stay.ok) return '';
-    var line = 'Check-in ' + longDate(stay.checkIn) + '. Check-out ' + longDate(stay.checkOut) + '. ' + stay.nightCount + ' nights.';
+    var line = 'Check-in ' + longDate(stay.checkIn) + '. Check-out at 11am on ' + longDate(stay.checkOut) + '. ' + stay.nightCount + ' nights.';
     if (stay.shifted) return 'This stay moved to the four nights before the booked date. ' + line;
     return line;
   }
@@ -233,7 +253,7 @@
 
   function ctaLabel(stay) {
     if (!stay || !stay.ok) return '';
-    return 'Book these dates on Airbnb, check-in ' + stay.checkIn + ', check-out ' + stay.checkOut + ', ' + stay.nightCount + ' nights. Opens Airbnb, which confirms availability and price.';
+    return 'Book these dates on Airbnb, check-in ' + stay.checkIn + ', check-out at 11am on ' + stay.checkOut + ', ' + stay.nightCount + ' nights. Opens Airbnb, which confirms availability and price.';
   }
 
   function moveDate(iso, key) {
@@ -257,6 +277,7 @@
     selectStay: selectStay,
     extendStay: extendStay,
     extendReason: extendReason,
+    chooseDate: chooseDate,
     longDate: longDate,
     summary: summary,
     reasonText: reasonText,

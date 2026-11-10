@@ -47,9 +47,9 @@ button.cal-day[aria-disabled="true"]{cursor:default}
 .stay-error:empty{margin:0}
 .stay-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .stay-book{margin-top:4px}
-button.stay-reset{margin-top:4px;font:inherit;cursor:pointer;min-height:44px}
+button.stay-reset{margin-top:4px;background:#fffefb;color:var(--black);border:1px solid rgba(39,34,32,.35);border-radius:4px;padding:12px 18px;min-height:44px;font:inherit;font-weight:600;cursor:pointer}
 .stay-book[hidden],.stay-reset[hidden]{display:none}
-@media (max-width:520px){.cal-dots{bottom:10%;gap:2px}.cal-dots .cal-ev,.cal-dots .cal-hol{width:5px;height:5px}.stay-book{width:100%;justify-content:space-between;white-space:normal}}
+@media (max-width:520px){.cal-dots{bottom:10%;gap:2px}.cal-dots .cal-ev,.cal-dots .cal-hol{width:5px;height:5px}.stay-actions{display:grid}.stay-book,.stay-reset{width:100%;justify-content:space-between;white-space:normal}}
 </style>
 </head>
 <body>
@@ -77,13 +77,13 @@ button.stay-reset{margin-top:4px;font:inherit;cursor:pointer;min-height:44px}
         <p class="stay-error" id="stay-error" aria-live="polite"></p>
         <div class="stay-actions">
           <a class="btn btn--dark stay-book" id="stay-book" hidden target="_blank" rel="noopener" aria-describedby="stay-note">Book these dates on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
-          <button type="button" class="btn btn--line stay-reset" id="stay-reset" hidden>Start a new stay</button>
+          <button type="button" class="stay-reset" id="stay-reset" hidden>Change dates</button>
         </div>
       </div>
       <div class="legend"><span><i class="cal-avail"></i>Available</span><span><i class="cal-booked"></i>Booked</span><span><i class="cal-stay"></i>Selected stay</span><span><i class="cal-ev-key"></i>West Cork event</span><span><i class="cal-hol-key"></i>Bank holiday</span></div>
       <div class="stay-panel" id="stay-panel">
         <p class="stay-min" id="stay-min">Minimum stay: 4 nights</p>
-        <p class="stay-hint" id="stay-hint">Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If a booking falls in those nights, the stay moves to the four free nights before it. To stay longer, choose an earlier or later free date. Start a new stay to choose again.</p>
+        <p class="stay-hint" id="stay-hint">Choose an available check-in date. That night and the next three are highlighted. Check-out is at 11am on the morning after your last night. To stay longer, choose a free date before or after the highlighted nights. To pick different dates, press Change dates.</p>
         <p class="stay-note" id="stay-note">Airbnb confirms the final availability and the price. This page does not book the stay or take payment.</p>
       </div>
       <p class="cal-tip" id="cal-tip" aria-live="polite"></p>
@@ -123,7 +123,7 @@ button.stay-reset{margin-top:4px;font:inherit;cursor:pointer;min-height:44px}
   function isBooked(k) { return StaySelect.nightBooked(k, booked); }
   function paintHint() {
     var hint = document.getElementById('stay-hint');
-    if (feed === 'ready') hint.textContent = 'Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If a booking falls in those nights, the stay moves to the four free nights before it. To stay longer, choose an earlier or later free date. Start a new stay to choose again.';
+    if (feed === 'ready') hint.textContent = 'Choose an available check-in date. That night and the next three are highlighted. Check-out is at 11am on the morning after your last night. To stay longer, choose a free date before or after the highlighted nights. To pick different dates, press Change dates.';
     else if (feed === 'error') hint.textContent = 'Availability is not loaded, so dates can\u2019t be confirmed or selected.';
     else hint.textContent = 'Availability is loading. Dates can\u2019t be confirmed yet.';
   }
@@ -172,9 +172,9 @@ button.stay-reset{margin-top:4px;font:inherit;cursor:pointer;min-height:44px}
     tip.textContent = infoEl && infoEl.getAttribute('data-info') ? infoEl.getAttribute('data-info') : '';
     if (feed !== 'ready') { selection = null; message = StaySelect.reasonText({ ok: false, reason: 'feed' }); err.textContent = ''; paintStay(); return; }
     if (selection && selection.ok) {
-      var ext = StaySelect.extendStay(selection, iso, stayOptions());
-      if (!ext.ok) { err.textContent = StaySelect.extendReason(ext); paintStay(); return; }
-      selection = ext;
+      var choice = StaySelect.chooseDate(selection, iso, stayOptions());
+      if (choice.action === 'keep') { err.textContent = StaySelect.extendReason(choice.result); paintStay(); return; }
+      selection = choice.stay;
       message = '';
       err.textContent = '';
       paintStay();
@@ -274,7 +274,7 @@ button.stay-reset{margin-top:4px;font:inherit;cursor:pointer;min-height:44px}
   }
   document.getElementById('stay-reset').onclick = function () {
     selection = null;
-    message = '';
+    message = 'Choose a new check-in date.';
     document.getElementById('stay-error').textContent = '';
     paintStay();
   };
