@@ -69,7 +69,6 @@
 .ev-legend span{display:inline-flex;align-items:center;gap:6px}.ev-legend i{display:inline-block;width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.2)}
 .ev-legend .rings{width:22px;height:22px;border:0;box-shadow:none;background:radial-gradient(circle,#bf7737 0 4px,#fff 4px 5px,#7b4bb3 5px 7.5px,#fff 7.5px 8.5px,#2e8b57 8.5px 11px,transparent 11px)}
 .ev-legend .home{width:16px;height:16px;border-radius:5px;background:#272220}
-.ev-legend .reach{width:18px;height:18px;border-radius:50%;background:rgba(9,71,48,.12);border:2px solid rgba(9,71,48,.75);box-shadow:none}
 
 #ev-reg li small b{font-weight:600;color:#094730}
 .ev-mlist small{color:var(--grey)}
@@ -97,7 +96,7 @@
     <link rel="stylesheet" href="assets/leaflet/leaflet.css">
     <div class="ev-chips" id="ev-chips" role="group" aria-label="Show events for"></div>
     <div class="walks-map reveal" id="ev-map" role="region" aria-label="Map of events within 75 km of An Tigín, including Macroom and Kinsale"></div>
-    <p class="muted ev-legend" id="ev-legend"><span><i class="reach"></i>Within 75 km of An Tigín — Macroom, Kinsale and the towns between</span><span><i style="background:#bf7737"></i>Dated event</span><span><i style="background:#7b4bb3"></i>Every year</span><span><i class="tbc"></i>Dates TBC (shown at their usual time of year)</span><span><i style="background:#2f6fb5"></i>Monthly</span><span><i style="background:#2e8b57"></i>Weekly</span><span><i class="rings"></i>One ring per event at that place (number = total)</span><span><i class="home"></i>An Tigín</span></p>
+    <p class="muted ev-legend" id="ev-legend"><span><i style="background:#bf7737"></i>Dated event</span><span><i style="background:#7b4bb3"></i>Every year</span><span><i class="tbc"></i>Dates TBC (shown at their usual time of year)</span><span><i style="background:#2f6fb5"></i>Monthly</span><span><i style="background:#2e8b57"></i>Weekly</span><span><i class="rings"></i>One ring per event at that place (number = total)</span><span><i class="home"></i>An Tigín</span></p>
     <div class="ev-explore">
       <div class="cal ev-cal">
         <div class="cal__head"><button id="evc-prev" aria-label="Previous month">&larr;</button><h3 id="evc-title"></h3><button id="evc-next" aria-label="Next month">&rarr;</button></div>
@@ -347,7 +346,7 @@ function range(s,e){var a=p(s),b=p(e);b.setDate(b.getDate()-1);if(b<=a)return fm
 function esc(t){var d=document.createElement('div');d.textContent=t==null?'':t;return d.innerHTML;}
 function mkey(y,m){return y+'-'+String(m+1).padStart(2,'0');}
 var today=new Date();today.setHours(0,0,0,0);var tk=key(today);
-var events=[],regular=[],tbc=[],hols=[],months=[],sel='all',calY=today.getFullYear(),calM=today.getMonth(),selDay=null,map=null,layer=null,groups={},reachCircle=null,HOME=EventsReach.HOME;
+var events=[],regular=[],tbc=[],hols=[],months=[],sel='all',calY=today.getFullYear(),calM=today.getMonth(),selDay=null,map=null,layer=null,groups={},HOME=EventsReach.HOME;
 function overlaps(e,y,m){var a=mkey(y,m)+'-01',b=key(new Date(y,m+1,1));return e.start<b&&e.end>a;}
 /* A yearly event can have two occurrences inside the window (e.g. 17 Mar 2027 and 2028). Under "All"
    show each series once, at its next date; a month view only ever holds one occurrence. The calendar
@@ -395,11 +394,10 @@ function regWhen(r){return r.rule.charAt(0).toUpperCase()+r.rule.slice(1)+(r.tim
 function initMap(){var el=document.getElementById('ev-map');if(!el||!window.L)return;
  map=L.map(el,{scrollWheelZoom:false});
  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
- reachCircle=L.circle(HOME,{radius:EventsReach.REACH_KM*1000,className:'ev-reach',color:'#094730',weight:2,fillColor:'#094730',fillOpacity:0.06,opacity:0.7,interactive:false}).addTo(map);
  L.marker(HOME,{zIndexOffset:1000,title:'An Tigín',icon:L.divIcon({className:'ev-home',html:'<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="2" y="2" width="26" height="26" rx="7" fill="#272220" stroke="#fff" stroke-width="2.5"/><path d="M8 15.5 15 9l7 6.5M10.5 14v7h9v-7" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>',iconSize:[30,30],iconAnchor:[15,15],popupAnchor:[0,-13]})}).addTo(map).bindPopup('<b>An Tigín</b><br>Glengarriff, Co. Cork');
  layer=L.layerGroup().addTo(map);
- map.setView(HOME,8);
- map.fitBounds(reachCircle.getBounds(),{padding:[18,18]});}
+ fitReach();}
+function fitReach(){var b=EventsReach.bounds();map.fitBounds([[b.south,b.west],[b.north,b.east]],{padding:[18,18]});}
 function itemHtml(e,hl){var when=e.tbc?tbcWhen(e):e.rule?regWhen(e):range(e.start,e.end)+(e.type==='yearly'?' · every year':'');
  return '<li class="ev-pop__it'+(hl?' hl':'')+(e.tbc?' tbc':'')+'"><i '+(e.tbc?'class="tbc"':'style="background:'+tcol(e)+'"')+'></i><div><b>'+esc(e.name)+'</b><small>'+(e.tbc?'<b>'+esc(when)+'</b>':esc(when))+'</small>'+(e.location?'<small class="loc">'+esc(e.location)+'</small>':'')+(e.url?'<a href="'+esc(e.url)+'" target="_blank" rel="noopener">'+(e.rule?'Website':'Event website')+' ↗</a>':'')+'</div></li>';}
 function popHtml(g){var n=g.ev.length;
@@ -414,7 +412,7 @@ function drawMap(){if(!map)return;layer.clearLayers();groups={};
   g.marker.on('popupopen',function(){markActive(g.hl?[g.hl]:g.ev);var h=document.querySelector('.ev-pop__it.hl');if(h&&h.scrollIntoView)h.scrollIntoView({block:'nearest'});});
   g.marker.on('popupclose',function(){g.hl=null;});
   g.marker.on('click',function(){g.hl=null;g.marker.setPopupContent(popHtml(g));});});
- if(reachCircle)map.fitBounds(reachCircle.getBounds(),{padding:[18,18]});}
+ fitReach();}
 function openOnMap(e){if(!map||e._cid==null)return;var g=groups[e._cid];if(!g)return;
  document.getElementById('ev-map').scrollIntoView({behavior:'smooth',block:'center'});
  map.setView(g.ll,Math.max(map.getZoom(),13),{animate:false});g.marker.closePopup();g.hl=e;g.marker.setPopupContent(popHtml(g));g.marker.openPopup();}

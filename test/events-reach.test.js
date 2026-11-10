@@ -30,7 +30,12 @@ Object.keys(towns).forEach(function (name) {
 });
 
 assert.ok(km(51.904971, -8.95992) < km(51.705737, -8.522982), 'Macroom is nearer than Kinsale, so the radius is set by Kinsale');
-assert.ok(km(51.8985, -8.4756) > REACH, 'Cork city centre stays outside the circle');
+assert.ok(km(51.8985, -8.4756) > REACH, 'Cork city centre stays outside the coverage distance');
+var box = EventsReach.bounds();
+['Macroom', 'Kinsale', 'Bantry', 'Kenmare', 'Bandon', 'Clonakilty'].forEach(function (name) {
+  var p = towns[name];
+  assert.ok(p[0] >= box.south && p[0] <= box.north && p[1] >= box.west && p[1] <= box.east, name + ' is outside the map frame');
+});
 
 function eachLocated(file, list) {
   list.forEach(function (e) {
@@ -50,8 +55,9 @@ assert.strictEqual(EventsReach.inReach({ lat: 51.8985, lng: -8.4756 }), false);
 
 var html = fs.readFileSync(path.join(__dirname, '../events.html'), 'utf8');
 assert.ok(html.indexOf('assets/events-reach.js') >= 0);
-assert.ok(html.indexOf('ev-reach') >= 0);
-assert.ok(html.indexOf('EventsReach.REACH_KM*1000') >= 0);
+assert.ok(html.indexOf('ev-reach') < 0, 'the coverage circle should not be drawn');
+assert.ok(html.indexOf('L.circle(') < 0, 'the coverage circle should not be drawn');
+assert.ok(html.indexOf('EventsReach.bounds()') >= 0);
 assert.ok(html.indexOf('EventsReach.inReach') >= 0);
 assert.ok(html.indexOf('EventsReach.outside') >= 0);
 assert.ok(html.indexOf('Macroom') >= 0 && html.indexOf('Kinsale') >= 0);
