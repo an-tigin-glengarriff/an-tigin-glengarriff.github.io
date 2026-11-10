@@ -17,67 +17,57 @@ function stay(checkIn, extra) {
 }
 
 assert.strictEqual(Stay.NIGHTS, 4);
-assert.strictEqual(Stay.GAP, 2);
+assert.strictEqual(Stay.GAP, undefined);
 assert.strictEqual(Stay.LISTING, 'https://airbnb.com/h/an-tigin');
 assert.strictEqual(Stay.MIN_COPY, 'Minimum stay: 4 nights');
 
-var open = stay('2027-04-17');
+var open = stay('2027-04-15');
 assert.strictEqual(open.ok, true);
 assert.strictEqual(open.shifted, false);
-assert.deepStrictEqual(open.nights, ['2027-04-17', '2027-04-18', '2027-04-19', '2027-04-20']);
-assert.strictEqual(open.checkOut, '2027-04-21');
+assert.deepStrictEqual(open.nights, ['2027-04-15', '2027-04-16', '2027-04-17', '2027-04-18']);
+assert.strictEqual(open.checkOut, '2027-04-19');
 assert.strictEqual(open.nightCount, 4);
-assert.strictEqual(open.url, 'https://airbnb.com/h/an-tigin?check_in=2027-04-17&check_out=2027-04-21');
+assert.strictEqual(open.url, 'https://airbnb.com/h/an-tigin?check_in=2027-04-15&check_out=2027-04-19');
 assert.ok(open.nights.indexOf(open.checkOut) === -1, 'checkout morning is not a stayed night');
-assert.strictEqual(Stay.summary(open), 'Check-in Saturday 17 April 2027. Check-out Wednesday 21 April 2027. 4 nights.');
-assert.strictEqual(Stay.ctaLabel(open), 'Book these dates on Airbnb, check-in 2027-04-17, check-out 2027-04-21, 4 nights. Opens Airbnb, which confirms availability and price.');
+assert.strictEqual(Stay.summary(open), 'Check-in Thursday 15 April 2027. Check-out Monday 19 April 2027. 4 nights.');
+assert.strictEqual(Stay.ctaLabel(open), 'Book these dates on Airbnb, check-in 2027-04-15, check-out 2027-04-19, 4 nights. Opens Airbnb, which confirms availability and price.');
 assert.ok(!/\$|€|£/.test(Stay.ctaLabel(open) + Stay.summary(open)), 'no price in the handoff');
+assert.ok(Stay.summary(open).indexOf('two clear days') === -1);
+assert.ok(Stay.summary(open).indexOf('Two clear days') === -1);
 
 assert.strictEqual(Stay.nightBooked('2027-04-14', BOOKED), true);
 assert.strictEqual(Stay.nightBooked('2027-04-15', BOOKED), false, 'checkout morning of a booking is free');
 
 function assertShiftedBefore(result, bookedNight) {
-  var checkIn = Stay.addDays(bookedNight, -6);
-  var checkOut = Stay.addDays(bookedNight, -2);
+  var checkIn = Stay.addDays(bookedNight, -4);
   assert.strictEqual(result.ok, true);
   assert.strictEqual(result.shifted, true);
   assert.strictEqual(result.blockedNight, bookedNight);
   assert.strictEqual(result.checkIn, checkIn);
-  assert.strictEqual(result.checkOut, checkOut, 'checkout is two days before the next check-in');
+  assert.strictEqual(result.checkOut, bookedNight, 'checkout is the booked date');
   assert.deepStrictEqual(result.nights, [0, 1, 2, 3].map(function (n) { return Stay.addDays(checkIn, n); }));
   assert.ok(result.nights.indexOf(bookedNight) === -1, 'booked night is not stayed');
-  assert.ok(result.nights.indexOf(checkOut) === -1, 'checkout morning is not a stayed night');
-  assert.strictEqual(result.url, 'https://airbnb.com/h/an-tigin?check_in=' + checkIn + '&check_out=' + checkOut);
-  assert.ok(Stay.summary(result).indexOf('This stay moved so two clear days remain before the next booking.') === 0);
-  assert.ok(Stay.summary(result).indexOf(Stay.longDate(result.checkIn)) !== -1);
-  assert.ok(Stay.summary(result).indexOf(Stay.longDate(result.checkOut)) !== -1);
+  assert.strictEqual(result.url, 'https://airbnb.com/h/an-tigin?check_in=' + checkIn + '&check_out=' + bookedNight);
+  assert.ok(Stay.summary(result).indexOf('This stay moved to the four nights before the booked date.') === 0);
+  assert.ok(Stay.summary(result).indexOf('two clear days') === -1);
 }
 
 assertShiftedBefore(stay('2027-04-13'), '2027-04-14');
 assertShiftedBefore(stay('2027-04-12'), '2027-04-14');
 assertShiftedBefore(stay('2027-04-11'), '2027-04-14');
-assertShiftedBefore(stay('2027-04-10'), '2027-04-14');
-assertShiftedBefore(stay('2027-04-09'), '2027-04-14');
 assert.strictEqual(stay('2027-04-12').clicked, '2027-04-12');
-assert.strictEqual(stay('2027-04-09').checkOut, '2027-04-12');
-assert.notStrictEqual(stay('2027-04-09').checkOut, '2027-04-13');
 
-var exactBefore = stay('2027-04-08');
-assert.strictEqual(exactBefore.ok, true);
-assert.strictEqual(exactBefore.shifted, false);
-assert.deepStrictEqual(exactBefore.nights, ['2027-04-08', '2027-04-09', '2027-04-10', '2027-04-11']);
-assert.strictEqual(exactBefore.checkOut, '2027-04-12');
+var nightBefore = stay('2027-04-10');
+assert.strictEqual(nightBefore.ok, true);
+assert.strictEqual(nightBefore.shifted, false);
+assert.deepStrictEqual(nightBefore.nights, ['2027-04-10', '2027-04-11', '2027-04-12', '2027-04-13']);
+assert.strictEqual(nightBefore.checkOut, '2027-04-14');
+assert.strictEqual(nightBefore.url, 'https://airbnb.com/h/an-tigin?check_in=2027-04-10&check_out=2027-04-14');
 
-var exactAfter = stay('2027-04-17');
-assert.strictEqual(exactAfter.ok, true);
-assert.strictEqual(exactAfter.shifted, false);
-assert.strictEqual(exactAfter.checkIn, '2027-04-17');
-
-var oneDayAfter = stay('2027-04-16');
-assert.strictEqual(oneDayAfter.ok, false);
-assert.strictEqual(oneDayAfter.reason, 'gap-after');
-assert.strictEqual(oneDayAfter.url, undefined);
-assert.strictEqual(Stay.reasonText(oneDayAfter), 'Two clear days are needed after the previous stay, so this check-in can\u2019t be used.');
+var dayAfter = stay('2027-04-15');
+assert.strictEqual(dayAfter.ok, true);
+assert.strictEqual(dayAfter.shifted, false);
+assert.strictEqual(dayAfter.checkIn, '2027-04-15');
 
 var bookedClick = stay('2027-04-14');
 assert.strictEqual(bookedClick.ok, false);
@@ -91,22 +81,18 @@ var longBlockEdge = stay('2027-03-31', { today: '2027-03-01' });
 assert.strictEqual(longBlockEdge.ok, false);
 assert.strictEqual(longBlockEdge.reason, 'blocked');
 assert.strictEqual(longBlockEdge.url, undefined);
-var dayAfterLong = stay('2027-04-01');
-assert.strictEqual(dayAfterLong.ok, false);
-assert.strictEqual(dayAfterLong.reason, 'gap-after');
-assert.strictEqual(dayAfterLong.url, undefined);
-var firstFree = stay('2027-04-03');
+var firstFree = stay('2027-04-01');
 assert.strictEqual(firstFree.ok, true);
 assert.strictEqual(firstFree.shifted, false);
-assert.deepStrictEqual(firstFree.nights, ['2027-04-03', '2027-04-04', '2027-04-05', '2027-04-06']);
-assert.strictEqual(firstFree.checkOut, '2027-04-07');
+assert.deepStrictEqual(firstFree.nights, ['2027-04-01', '2027-04-02', '2027-04-03', '2027-04-04']);
+assert.strictEqual(firstFree.checkOut, '2027-04-05');
 
 var past = stay('2027-04-14', { today: '2027-04-15' });
 assert.strictEqual(past.ok, false);
 assert.strictEqual(past.reason, 'past');
 assert.strictEqual(past.url, undefined);
 assert.strictEqual(Stay.reasonText(past), 'That date has already passed.');
-var todayOk = stay('2027-04-17', { today: '2027-04-17' });
+var todayOk = stay('2027-04-15', { today: '2027-04-15' });
 assert.strictEqual(todayOk.ok, true);
 
 var monthEdge = Stay.selectStay('2027-04-30', { today: '2027-04-01', booked: [], feedReady: true });
@@ -126,7 +112,7 @@ var precedingBlocked = Stay.selectStay('2027-04-12', {
 assert.strictEqual(precedingBlocked.ok, false);
 assert.strictEqual(precedingBlocked.reason, 'shift-blocked');
 assert.strictEqual(precedingBlocked.url, undefined);
-assert.strictEqual(Stay.reasonText(precedingBlocked), 'The four nights that leave two clear days before that booking aren\u2019t all available, so this check-in can\u2019t be used.');
+assert.strictEqual(Stay.reasonText(precedingBlocked), 'The four nights before that booked date aren\u2019t all available, so this check-in can\u2019t be used.');
 
 var precedingPast = Stay.selectStay('2027-04-13', {
   today: '2027-04-12',
@@ -136,7 +122,7 @@ var precedingPast = Stay.selectStay('2027-04-13', {
 assert.strictEqual(precedingPast.ok, false);
 assert.strictEqual(precedingPast.reason, 'shift-past');
 assert.strictEqual(precedingPast.url, undefined);
-assert.strictEqual(Stay.reasonText(precedingPast), 'The four nights that leave two clear days before that booking include a past date, so this check-in can\u2019t be used.');
+assert.strictEqual(Stay.reasonText(precedingPast), 'The four nights before that booked date include a past date, so this check-in can\u2019t be used.');
 
 var yearShift = Stay.selectStay('2026-12-31', {
   today: '2026-12-01',
@@ -144,9 +130,9 @@ var yearShift = Stay.selectStay('2026-12-31', {
   booked: [{ start: '2027-01-02', end: '2027-01-03' }]
 });
 assertShiftedBefore(yearShift, '2027-01-02');
-assert.deepStrictEqual(yearShift.nights, ['2026-12-27', '2026-12-28', '2026-12-29', '2026-12-30']);
-assert.strictEqual(yearShift.checkOut, '2026-12-31');
-assert.strictEqual(yearShift.url, 'https://airbnb.com/h/an-tigin?check_in=2026-12-27&check_out=2026-12-31');
+assert.deepStrictEqual(yearShift.nights, ['2026-12-29', '2026-12-30', '2026-12-31', '2027-01-01']);
+assert.strictEqual(yearShift.checkOut, '2027-01-02');
+assert.strictEqual(yearShift.url, 'https://airbnb.com/h/an-tigin?check_in=2026-12-29&check_out=2027-01-02');
 
 var monthShift = Stay.selectStay('2027-04-30', {
   today: '2027-04-01',
@@ -154,40 +140,27 @@ var monthShift = Stay.selectStay('2027-04-30', {
   booked: [{ start: '2027-05-02', end: '2027-05-03' }]
 });
 assertShiftedBefore(monthShift, '2027-05-02');
-assert.deepStrictEqual(monthShift.nights, ['2027-04-26', '2027-04-27', '2027-04-28', '2027-04-29']);
-assert.strictEqual(monthShift.checkOut, '2027-04-30');
+assert.deepStrictEqual(monthShift.nights, ['2027-04-28', '2027-04-29', '2027-04-30', '2027-05-01']);
+assert.strictEqual(monthShift.checkOut, '2027-05-02');
 
-var both = [
+var adjacent = [
   { start: '2027-04-01', end: '2027-04-05' },
   { start: '2027-04-20', end: '2027-04-21' }
 ];
-var bothOpts = { today: '2027-03-01', booked: both, feedReady: true };
-var afterPrev = Stay.selectStay('2027-04-07', bothOpts);
-assert.strictEqual(afterPrev.ok, true);
-assert.strictEqual(afterPrev.shifted, false);
-assert.strictEqual(afterPrev.checkIn, '2027-04-07');
-var tooSoon = Stay.selectStay('2027-04-06', bothOpts);
-assert.strictEqual(tooSoon.ok, false);
-assert.strictEqual(tooSoon.reason, 'gap-after');
-assert.strictEqual(tooSoon.url, undefined);
-var beforeNext = Stay.selectStay('2027-04-14', bothOpts);
-assert.strictEqual(beforeNext.ok, true);
-assert.strictEqual(beforeNext.shifted, false);
-assert.strictEqual(beforeNext.checkOut, '2027-04-18');
-var crowdNext = Stay.selectStay('2027-04-15', bothOpts);
-assertShiftedBefore(crowdNext, '2027-04-20');
-assert.strictEqual(crowdNext.url, 'https://airbnb.com/h/an-tigin?check_in=2027-04-14&check_out=2027-04-18');
-var blockedShift = Stay.selectStay('2027-04-15', {
-  today: '2027-03-01',
-  feedReady: true,
-  booked: [
-    { start: '2027-04-01', end: '2027-04-13' },
-    { start: '2027-04-20', end: '2027-04-21' }
-  ]
-});
-assert.strictEqual(blockedShift.ok, false);
-assert.strictEqual(blockedShift.reason, 'shift-blocked');
-assert.strictEqual(blockedShift.url, undefined);
+var adjacentOpts = { today: '2027-03-01', booked: adjacent, feedReady: true };
+var dayAfterBusy = Stay.selectStay('2027-04-05', adjacentOpts);
+assert.strictEqual(dayAfterBusy.ok, true);
+assert.strictEqual(dayAfterBusy.shifted, false);
+assert.strictEqual(dayAfterBusy.checkIn, '2027-04-05');
+assert.deepStrictEqual(dayAfterBusy.nights, ['2027-04-05', '2027-04-06', '2027-04-07', '2027-04-08']);
+var touchingNext = Stay.selectStay('2027-04-16', adjacentOpts);
+assert.strictEqual(touchingNext.ok, true);
+assert.strictEqual(touchingNext.shifted, false);
+assert.strictEqual(touchingNext.checkOut, '2027-04-20');
+assert.deepStrictEqual(touchingNext.nights, ['2027-04-16', '2027-04-17', '2027-04-18', '2027-04-19']);
+var intoNext = Stay.selectStay('2027-04-18', adjacentOpts);
+assertShiftedBefore(intoNext, '2027-04-20');
+assert.strictEqual(intoNext.url, 'https://airbnb.com/h/an-tigin?check_in=2027-04-16&check_out=2027-04-20');
 
 var yearEdge = Stay.selectStay('2026-12-30', { today: '2026-12-01', booked: [], feedReady: true });
 assert.strictEqual(yearEdge.ok, true);
@@ -232,7 +205,9 @@ assert.strictEqual(Stay.dayLabel('2027-04-17', { role: 'night', nightIndex: 3 })
 
 var html = fs.readFileSync(path.join(__dirname, '..', 'calendar.html'), 'utf8');
 assert.ok(html.indexOf('Minimum stay: 4 nights') !== -1, 'minimum-stay note is on the page');
-assert.ok(html.indexOf('Two clear days between stays.') !== -1, 'gap note is on the page');
+assert.ok(html.indexOf('Two clear days') === -1, 'no two-day gap copy');
+assert.ok(html.indexOf('id="stay-gap"') === -1);
+assert.ok(html.indexOf("evnt.key === 'Enter'") !== -1, 'Enter selects a date');
 assert.ok(html.indexOf('assets/stay-select.js') !== -1);
 assert.ok(html.indexOf('https://airbnb.com/h/an-tigin') !== -1);
 assert.ok(html.indexOf('938334645264143712') === -1, 'room id is not hardcoded');

@@ -70,8 +70,7 @@ button.cal-day[aria-disabled="true"]{cursor:default}
       <div class="legend"><span><i class="cal-avail"></i>Available</span><span><i class="cal-booked"></i>Booked</span><span><i class="cal-stay"></i>Selected stay</span><span><i class="cal-ev-key"></i>West Cork event</span><span><i class="cal-hol-key"></i>Bank holiday</span></div>
       <div class="stay-panel" id="stay-panel">
         <p class="stay-min" id="stay-min">Minimum stay: 4 nights</p>
-        <p class="stay-min" id="stay-gap">Two clear days between stays.</p>
-        <p class="stay-hint" id="stay-hint">Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If that would leave fewer than two clear days before another stay, the selection moves to the four nights that finish two days earlier.</p>
+        <p class="stay-hint" id="stay-hint">Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If a booking falls in those nights, the stay moves to the four free nights before it.</p>
         <p class="stay-summary" id="stay-summary" aria-live="polite"></p>
         <p class="stay-note" id="stay-note">Airbnb confirms the final availability and the price. This page does not book the stay or take payment.</p>
         <a class="btn btn--dark stay-book" id="stay-book" hidden target="_blank" rel="noopener" aria-describedby="stay-note">Book these dates on Airbnb <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
@@ -113,7 +112,7 @@ button.cal-day[aria-disabled="true"]{cursor:default}
   function isBooked(k) { return StaySelect.nightBooked(k, booked); }
   function paintHint() {
     var hint = document.getElementById('stay-hint');
-    if (feed === 'ready') hint.textContent = 'Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If that would leave fewer than two clear days before another stay, the selection moves to the four nights that finish two days earlier.';
+    if (feed === 'ready') hint.textContent = 'Choose an available check-in date. That night and the next three are highlighted. Check-out is the morning after. If a booking falls in those nights, the stay moves to the four free nights before it.';
     else if (feed === 'error') hint.textContent = 'Availability is not loaded, so dates can\u2019t be confirmed or selected.';
     else hint.textContent = 'Availability is loading. Dates can\u2019t be confirmed yet.';
   }
