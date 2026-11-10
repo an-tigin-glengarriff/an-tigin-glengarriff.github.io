@@ -274,6 +274,20 @@
    "lng": -9.143339
   },
   {
+   "name": "Leap Scarecrow Festival",
+   "place": "Leap",
+   "location": "Leap Village, County Cork",
+   "url": "https://www.leapscarecrowfestival.com/",
+   "months": [
+    10,
+    11
+   ],
+   "usual": "late October – 1 November",
+   "last": "2026: 19 October – 1 November",
+   "lat": 51.581063,
+   "lng": -9.143339
+  },
+  {
    "name": "Schull Fastnet Triathlon",
    "place": "Schull",
    "location": "Schull",
