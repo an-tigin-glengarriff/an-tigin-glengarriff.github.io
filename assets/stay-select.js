@@ -126,6 +126,66 @@
     };
   }
 
+  /* Grow an existing stay earlier or later. Every night from the new
+     check-in up to, but not including, the new checkout must be free.
+     A failed extension does not replace the stay. */
+  function extendStay(current, date, options) {
+    options = options || {};
+    var nights = current && current.nights ? current.nights.slice() : [];
+    if (!current || !current.ok || !current.checkIn || !current.checkOut) {
+      return { ok: false, reason: 'invalid', nightCount: nights.length };
+    }
+    if (options.feedReady === false) return { ok: false, reason: 'feed', nightCount: current.nightCount };
+    if (!parseISO(date)) return { ok: false, reason: 'invalid', nightCount: current.nightCount };
+    var today = options.today || null;
+    var booked = options.booked || [];
+    if (today && date < today) return { ok: false, reason: 'past', nightCount: current.nightCount };
+    if (date >= current.checkIn && date < current.checkOut) {
+      return { ok: false, reason: 'inside', nightCount: current.nightCount };
+    }
+    var newIn = current.checkIn;
+    var newOut = current.checkOut;
+    var direction = 'later';
+    if (date < current.checkIn) {
+      newIn = date;
+      direction = 'earlier';
+    } else {
+      newOut = addDays(date, 1);
+    }
+    if (!newIn || !newOut || newOut <= newIn) return { ok: false, reason: 'invalid', nightCount: current.nightCount };
+    var span = [];
+    for (var cursor = newIn; cursor < newOut; cursor = addDays(cursor, 1)) {
+      if (!cursor || span.length > 370) return { ok: false, reason: 'invalid', nightCount: current.nightCount };
+      if (today && cursor < today) return { ok: false, reason: 'past', nightCount: current.nightCount };
+      if (nightBooked(cursor, booked)) return { ok: false, reason: 'blocked', nightCount: current.nightCount };
+      span.push(cursor);
+    }
+    if (span.length < NIGHTS) return { ok: false, reason: 'short', nightCount: current.nightCount };
+    return {
+      ok: true,
+      reason: 'extended',
+      shifted: false,
+      extended: true,
+      direction: direction,
+      clicked: current.clicked || current.checkIn,
+      checkIn: newIn,
+      checkOut: newOut,
+      nights: span,
+      nightCount: span.length,
+      url: airbnbUrl(newIn, newOut)
+    };
+  }
+
+  function extendReason(result) {
+    if (!result || result.ok) return '';
+    if (result.reason === 'past') return 'That date has already passed. The selected stay is unchanged.';
+    if (result.reason === 'blocked') return 'A booked night is in the way, so the stay was not extended.';
+    if (result.reason === 'inside') return 'Those nights are already in this stay. Choose an earlier or later free date, or start a new stay.';
+    if (result.reason === 'feed') return 'Availability is not loaded, so the stay was not extended.';
+    if (result.reason === 'short') return 'A stay has to be at least 4 nights. The selected stay is unchanged.';
+    return 'That date can\u2019t be added. The selected stay is unchanged.';
+  }
+
   function weekdayIndex(iso) {
     var p = parseISO(iso);
     if (!p) return null;
@@ -165,8 +225,9 @@
     if (ctx.feedReady === false) return text + ' Availability not loaded.';
     if (ctx.past) return text + ' Past.';
     if (ctx.booked) return text + ' Booked.';
-    if (ctx.role === 'checkin') return text + ' Check-in, night 1 of 4.';
-    if (ctx.role === 'night') return text + ' Night ' + ctx.nightIndex + ' of 4.';
+    var total = ctx.nightCount || 4;
+    if (ctx.role === 'checkin') return text + ' Check-in, night 1 of ' + total + '.';
+    if (ctx.role === 'night') return text + ' Night ' + ctx.nightIndex + ' of ' + total + '.';
     return text + ' Available. Selects 4 nights from this check-in.';
   }
 
@@ -194,6 +255,8 @@
     nightBooked: nightBooked,
     airbnbUrl: airbnbUrl,
     selectStay: selectStay,
+    extendStay: extendStay,
+    extendReason: extendReason,
     longDate: longDate,
     summary: summary,
     reasonText: reasonText,
