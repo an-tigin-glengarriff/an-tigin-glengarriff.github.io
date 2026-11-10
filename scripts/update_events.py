@@ -47,7 +47,7 @@ TOWNS = ["Glengarriff", "Bantry", "Ballylickey", "Kenmare", "Kinsale", "Macroom"
          "Ballinhassig", "Crossbarry", "Belgooly", "Halfway", "Upton", "Enniskeane", "Ballineen",
          "Coppeen", "Newcestown", "Beal na Blath",
          # On the 75 km line west of Cork city. Included on purpose; Cork city is not.
-         "Kilmurry", "Ballincollig"]
+         "Kilmurry", "Ballincollig", "Leap"]
 # Other spellings of the same village. The value is the canonical TOWNS name.
 # Baile Mhúirne and Baile Bhuirne are Ballyvourney; Cúil Aodha is Coolea;
 # Baile Mhic Íre is Ballymakeera. Cill Muire is the Kilmurry by Lissarda.
@@ -61,6 +61,7 @@ TOWN_ALIAS = {
     "baile mhic íre": "Ballymakeera",
     "baile mhic ire": "Ballymakeera",
     "cill muire": "Kilmurry",
+    "kilmacabea": "Leap",
     "béal na bláth": "Beal na Blath",
     "bealnablath": "Beal na Blath",
 }
@@ -95,6 +96,7 @@ TOWN_QUERY = {
     "Kilmichael": "Kilmichael, Macroom, County Cork",
     "Kilmurry": "Kilmurry, County Cork",
     "Ballincollig": "Ballincollig, County Cork",
+    "Leap": "Leap, County Cork",
     "Kilnamartyra": "Kilnamartyra, County Cork",
     "Lissarda": "Lissarda, County Cork",
     "Newcestown": "Newcestown, County Cork",
