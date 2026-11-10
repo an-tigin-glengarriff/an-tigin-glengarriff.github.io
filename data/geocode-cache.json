@@ -301,6 +301,12 @@
     "matched": "Kinsale",
     "precision": "town"
   },
+  "town:Macroom": {
+    "lat": 51.904971,
+    "lng": -8.95992,
+    "matched": "Macroom",
+    "precision": "town"
+  },
   "town:Rerrin": {
     "lat": 51.635305,
     "lng": -9.816507,

@@ -33,7 +33,10 @@ UA = "an-tigin-events/1.0 (https://an-tigin.ie; an.tigin.glengarriff@gmail.com)"
 # Rough box around West Cork / South Kerry; results outside it are rejected.
 BOX = (51.25, 52.30, -10.60, -8.20)  # lat min/max, lng min/max
 # Town names used as a fallback when the full location can't be found.
-TOWNS = ["Glengarriff", "Bantry", "Ballylickey", "Kenmare", "Kinsale", "Schull", "Skibbereen",
+# The public map draws a 75 km circle around An Tigín (assets/events-reach.js)
+# that includes these towns. Macroom is inside that circle; name it here so a
+# calendar location in the town geocodes to the town centre.
+TOWNS = ["Glengarriff", "Bantry", "Ballylickey", "Kenmare", "Kinsale", "Macroom", "Schull", "Skibbereen",
          "Castletownbere", "Eyeries", "Allihies", "Adrigole", "Bere Island", "Durrus", "Ahakista",
          "Ballydehob", "Baltimore", "Clonakilty", "Drimoleague", "Dunmanway", "Rosscarbery",
          "Union Hall", "Castletownshend", "Goleen", "Crookhaven", "Cape Clear", "Sherkin",
