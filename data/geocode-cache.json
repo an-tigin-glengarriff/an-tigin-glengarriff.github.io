@@ -11,6 +11,12 @@
     "matched": "Ballydehob",
     "precision": "town"
   },
+  "Ballyvourney Library, Baile Mhic Íre / Ballymakeera, Co. Cork": {
+    "lat": 51.936037,
+    "lng": -9.145626,
+    "matched": "Ballymakeera",
+    "precision": "town"
+  },
   "Bantry": {
     "lat": 51.67977,
     "lng": -9.45236,
@@ -66,10 +72,22 @@
     "matched": "Castletownbere",
     "precision": "town"
   },
+  "Church of Christ Our Light, Ballincollig, Co. Cork": {
+    "lat": 51.88962,
+    "lng": -8.60588,
+    "matched": "Church of Christ Our Light, Ballincollig",
+    "precision": "place"
+  },
   "Community Hall, Baltimore": {
     "lat": 51.483321,
     "lng": -9.373205,
     "matched": "Baltimore",
+    "precision": "town"
+  },
+  "Cúil Aodha and Baile Mhúirne, Gaeltacht Mhúscraí, Co. Cork": {
+    "lat": 51.92817,
+    "lng": -9.21821,
+    "matched": "Coolea",
     "precision": "town"
   },
   "Eccles Hotel, Glengarriff": {
@@ -101,6 +119,18 @@
     "lng": -9.566904,
     "matched": "parkrun.ie start",
     "precision": "place"
+  },
+  "Independence Museum Kilmurry, Co. Cork, P14 R940": {
+    "lat": 51.842398,
+    "lng": -8.881828,
+    "matched": "Independence Museum Kilmurry",
+    "precision": "place"
+  },
+  "Ionad Cultúrtha an Dochtúir Ó Loingsigh, Baile Mhúirne, Co. Cork, P12 X239": {
+    "lat": 51.94558,
+    "lng": -9.17066,
+    "matched": "Ballyvourney",
+    "precision": "town"
   },
   "Kenmare town centre, Co. Kerry": {
     "lat": 51.879101,
@@ -137,6 +167,12 @@
     "lng": -8.73693,
     "matched": "Bandon",
     "precision": "town"
+  },
+  "Paddy Mac's, Main Street, Coachford, Co. Cork, P12 T448": {
+    "lat": 51.909189,
+    "lng": -8.787247,
+    "matched": "Paddy Mac's, Coachford",
+    "precision": "place"
   },
   "Pier Road Car Park, Schull": {
     "lat": 51.527103,
@@ -211,6 +247,12 @@
     "precision": "place"
   },
   "Venues across West Cork (incl. Glengarriff hall, Whiddy Island)": null,
+  "West Square, Macroom, Co. Cork": {
+    "lat": 51.9047,
+    "lng": -8.959946,
+    "matched": "West Square, Macroom",
+    "precision": "place"
+  },
   "Westlodge Hotel, Bantry": {
     "lat": 51.672228,
     "lng": -9.474958,
@@ -233,6 +275,12 @@
     "lat": 51.94489,
     "lng": -8.80768,
     "matched": "Aghabullogue",
+    "precision": "town"
+  },
+  "town:Ballincollig": {
+    "lat": 51.888264,
+    "lng": -8.591841,
+    "matched": "Ballincollig",
     "precision": "town"
   },
   "town:Ballineen": {
@@ -437,6 +485,12 @@
     "lat": 51.834978,
     "lng": -9.038305,
     "matched": "Kilmichael",
+    "precision": "town"
+  },
+  "town:Kilmurry": {
+    "lat": 51.842271,
+    "lng": -8.881404,
+    "matched": "Kilmurry",
     "precision": "town"
   },
   "town:Kilnamartyra": {

@@ -45,16 +45,29 @@ TOWNS = ["Glengarriff", "Bantry", "Ballylickey", "Kenmare", "Kinsale", "Macroom"
          "Kilnamartyra", "Clondrohid", "Carrigadrohid", "Kilmichael", "Coachford", "Dripsey", "Farran",
          "Crookstown", "Lissarda", "Farnanes", "Aghabullogue", "Donoughmore", "Rylane", "Innishannon",
          "Ballinhassig", "Crossbarry", "Belgooly", "Halfway", "Upton", "Enniskeane", "Ballineen",
-         "Coppeen", "Newcestown", "Beal na Blath"]
+         "Coppeen", "Newcestown", "Beal na Blath",
+         # On the 75 km line west of Cork city. Included on purpose; Cork city is not.
+         "Kilmurry", "Ballincollig"]
 # Other spellings of the same village. The value is the canonical TOWNS name.
+# Baile Mhúirne and Baile Bhuirne are Ballyvourney; Cúil Aodha is Coolea;
+# Baile Mhic Íre is Ballymakeera. Cill Muire is the Kilmurry by Lissarda.
 TOWN_ALIAS = {
     "ballymakeery": "Ballymakeera",
+    "baile mhúirne": "Ballyvourney",
+    "baile mhuirne": "Ballyvourney",
+    "baile bhuirne": "Ballyvourney",
+    "cúil aodha": "Coolea",
+    "cuil aodha": "Coolea",
+    "baile mhic íre": "Ballymakeera",
+    "baile mhic ire": "Ballymakeera",
+    "cill muire": "Kilmurry",
     "béal na bláth": "Beal na Blath",
     "bealnablath": "Beal na Blath",
 }
 # Bare "Name, Ireland" is wrong for some of these: Kilmichael would land in north
 # Cork, and Halfway, Upton, Farran and Lissarda are easy to confuse. Queries name
-# County Cork, and Kilmichael names Macroom.
+# County Cork. Kilmichael names Macroom. Kilmurry is the Lissarda / Independence
+# Museum village, not a different Kilmurry.
 TOWN_QUERY = {
     "Aghabullogue": "Aghabullogue, County Cork",
     "Ballineen": "Ballineen, County Cork",
@@ -80,6 +93,8 @@ TOWN_QUERY = {
     "Inchigeelagh": "Inchigeelagh, County Cork",
     "Innishannon": "Innishannon, County Cork",
     "Kilmichael": "Kilmichael, Macroom, County Cork",
+    "Kilmurry": "Kilmurry, County Cork",
+    "Ballincollig": "Ballincollig, County Cork",
     "Kilnamartyra": "Kilnamartyra, County Cork",
     "Lissarda": "Lissarda, County Cork",
     "Newcestown": "Newcestown, County Cork",
@@ -120,8 +135,12 @@ def _town_query(town):
 
 def _town_in(loc):
     """Village named in a location. Word boundaries, so Farran does not match
-    Farranfore. The earliest and then the longest name wins. Aliases collapse
-    to the canonical village."""
+    Farranfore. Aliases collapse to the canonical village.
+
+    The earliest name wins, unless the venue title only begins with a village
+    and the address names a different one ("Ballyvourney Library, … Ballymakeera").
+    "A and B" keeps the first name, so the Éigse in Cúil Aodha and Baile Mhúirne
+    is anchored at Cúil Aodha (Coolea)."""
     low = (loc or "").lower()
     labeled = [(t, _canon_town(t)) for t in TOWNS]
     for alias, canon in TOWN_ALIAS.items():
@@ -129,10 +148,22 @@ def _town_in(loc):
     hits = []
     for raw, canon in labeled:
         for m in re.finditer(r'(?<!\w)' + re.escape(raw.lower()) + r'(?!\w)', low):
-            hits.append((m.start(), -(m.end() - m.start()), canon))
+            hits.append((m.start(), m.end(), canon))
     if not hits:
         return None
-    hits.sort()
+    head_end = len((loc or "").split(",")[0])
+    in_head = [h for h in hits if h[1] <= head_end]
+    if re.search(r"\band\b", (loc or "").split(",")[0], re.I) and len({h[2] for h in in_head}) >= 2:
+        in_head.sort(key=lambda h: (h[0], -(h[1] - h[0])))
+        return in_head[0][2]
+    after = [h for h in hits if h[0] > head_end]
+    first = min(hits, key=lambda h: (h[0], -(h[1] - h[0])))
+    if after and first[1] < head_end:
+        later = [h for h in after if h[2] != first[2]]
+        if later:
+            later.sort(key=lambda h: (h[0], -(h[1] - h[0])))
+            return later[-1][2]
+    hits.sort(key=lambda h: (h[0], -(h[1] - h[0])))
     return hits[0][2]
 
 def geocode(loc, cache):

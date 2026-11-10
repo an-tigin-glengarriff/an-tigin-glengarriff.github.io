@@ -23,6 +23,7 @@ class TownAnchors(unittest.TestCase):
     def test_names_resolve(self):
         cases = [
             ("Wolfe Tone Square, Bantry", "Bantry"),
+            ("Bantry & Ballylickey, around Bantry Bay", "Bantry"),
             ("Black's Brewery & Distillery, Kinsale", "Kinsale"),
             ("Main Street, Ballydehob, Co. Cork", "Ballydehob"),
             ("Macroom", "Macroom"),
@@ -74,6 +75,79 @@ class TownAnchors(unittest.TestCase):
         self.assertAlmostEqual(alias["lat"], self.cache["town:Ballymakeera"]["lat"], places=5)
         blath = geo.geocode("Béal na Bláth", dict(self.cache))
         self.assertAlmostEqual(blath["lat"], self.cache["town:Beal na Blath"]["lat"], places=5)
+
+# Location strings copied from the public West Cork Events calendar.
+CALENDAR = {
+    "Paddy Mac's, Main Street, Coachford, Co. Cork, P12 T448": "Coachford",
+    "Independence Museum Kilmurry, Co. Cork, P14 R940": "Kilmurry",
+    "Church of Christ Our Light, Ballincollig, Co. Cork": "Ballincollig",
+    "West Square, Macroom, Co. Cork": "Macroom",
+    "Ionad Cultúrtha an Dochtúir Ó Loingsigh, Baile Mhúirne, Co. Cork, P12 X239": "Ballyvourney",
+    "Ballyvourney Library, Baile Mhic Íre / Ballymakeera, Co. Cork": "Ballymakeera",
+    # Two villages. The pin is Cúil Aodha (Coolea), named first and the festival's home place.
+    "Cúil Aodha and Baile Mhúirne, Gaeltacht Mhúscraí, Co. Cork": "Coolea",
+}
+
+class CalendarLocations(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        with open(geo.CACHE) as f:
+            cls.cache = json.load(f)
+
+    def test_irish_spellings_and_real_locations_name_the_village(self):
+        names = {
+            "Baile Mhúirne": "Ballyvourney",
+            "Baile Mhuirne": "Ballyvourney",
+            "Baile Bhuirne": "Ballyvourney",
+            "Cúil Aodha": "Coolea",
+            "Cuil Aodha": "Coolea",
+            "Baile Mhic Íre": "Ballymakeera",
+            "Baile Mhic Ire": "Ballymakeera",
+            "Cill Muire": "Kilmurry",
+            "Kilmurry": "Kilmurry",
+            "Ballincollig": "Ballincollig",
+        }
+        names.update(CALENDAR)
+        for loc, town in names.items():
+            self.assertEqual(geo._town_in(loc), town, loc)
+        for spelling, town in (
+            ("Baile Mhúirne", "Ballyvourney"), ("Baile Bhuirne", "Ballyvourney"),
+            ("Cúil Aodha", "Coolea"), ("Cuil Aodha", "Coolea"),
+            ("Baile Mhic Íre", "Ballymakeera"), ("Cill Muire", "Kilmurry"),
+        ):
+            got = geo.geocode(spelling, dict(self.cache))
+            anchor = self.cache["town:" + town]
+            self.assertAlmostEqual(got["lat"], anchor["lat"], places=5, msg=spelling)
+            self.assertAlmostEqual(got["lng"], anchor["lng"], places=5, msg=spelling)
+
+    def test_calendar_locations_are_inside_75km_of_an_tigin(self):
+        for loc, town in CALENDAR.items():
+            got = geo.geocode(loc, dict(self.cache))
+            self.assertIsNotNone(got, loc)
+            d = km(HOME, (got["lat"], got["lng"]))
+            self.assertLessEqual(d, 75, "%s is %.1f km" % (loc, d))
+            anchor = self.cache["town:" + town]
+            self.assertLess(km((got["lat"], got["lng"]), (anchor["lat"], anchor["lng"])), 15, loc)
+        # Kilmurry is the Lissarda village, and Ballincollig is west of Cork but inside the limit.
+        for town in ("Kilmurry", "Ballincollig"):
+            pos = self.cache["town:" + town]
+            self.assertLessEqual(km(HOME, (pos["lat"], pos["lng"])), 75, town)
+
+    def test_venue_fallback_uses_the_village_when_the_building_is_not_found(self):
+        def missing(q):
+            return None, True
+        orig = geo._nominatim
+        geo._nominatim = missing
+        try:
+            for loc, town in CALENDAR.items():
+                cache = dict(self.cache)
+                cache.pop(loc, None)
+                got = geo.geocode(loc, cache)
+                anchor = self.cache["town:" + town]
+                self.assertAlmostEqual(got["lat"], anchor["lat"], places=5, msg=loc)
+                self.assertAlmostEqual(got["lng"], anchor["lng"], places=5, msg=loc)
+        finally:
+            geo._nominatim = orig
 
 if __name__ == "__main__":
     unittest.main()
