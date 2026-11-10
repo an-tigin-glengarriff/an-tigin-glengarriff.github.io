@@ -199,8 +199,8 @@
   function extendReason(result) {
     if (!result || result.ok) return '';
     if (result.reason === 'past') return 'That date has already passed. The selected stay is unchanged.';
-    if (result.reason === 'blocked') return 'A booked night is in the way, so those nights were not added. Press Change dates to choose a different stay.';
-    if (result.reason === 'inside') return 'Those nights are already in this stay. Choose a free date before or after them to add nights, or press Change dates.';
+    if (result.reason === 'blocked') return 'A booked night is in the way, so those nights were not added. Press Clear selected dates to choose a different stay.';
+    if (result.reason === 'inside') return 'Those nights are already in this stay. Choose a free date before or after them to add nights, or press Clear selected dates.';
     if (result.reason === 'feed') return 'Availability is not loaded, so the stay was not extended.';
     if (result.reason === 'short') return 'A stay has to be at least 4 nights. The selected stay is unchanged.';
     return 'That date can\u2019t be added. The selected stay is unchanged.';

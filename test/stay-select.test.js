@@ -238,7 +238,7 @@ var blockedLater = Stay.extendStay(base, '2027-06-16', opts('2027-06-01', [{ sta
 assert.strictEqual(blockedLater.ok, false);
 assert.strictEqual(blockedLater.reason, 'blocked');
 assert.strictEqual(blockedLater.url, undefined);
-assert.strictEqual(Stay.extendReason(blockedLater), 'A booked night is in the way, so those nights were not added. Press Change dates to choose a different stay.');
+assert.strictEqual(Stay.extendReason(blockedLater), 'A booked night is in the way, so those nights were not added. Press Clear selected dates to choose a different stay.');
 assert.strictEqual(base.checkIn, '2027-06-10');
 var blockedEarlier = Stay.extendStay(base, '2027-06-05', opts('2027-06-01', [{ start: '2027-06-07', end: '2027-06-08' }]));
 assert.strictEqual(blockedEarlier.ok, false);
@@ -251,7 +251,7 @@ assert.strictEqual(pastExtend.url, undefined);
 var inside = Stay.extendStay(base, '2027-06-12', opts('2027-06-01'));
 assert.strictEqual(inside.ok, false);
 assert.strictEqual(inside.reason, 'inside');
-assert.ok(Stay.extendReason(inside).indexOf('Change dates') !== -1);
+assert.ok(Stay.extendReason(inside).indexOf('Clear selected dates') !== -1);
 
 var monthLong = Stay.extendStay(
   Stay.selectStay('2027-04-28', opts('2027-04-01')),
@@ -303,7 +303,8 @@ assert.ok(html.indexOf('Two clear days') === -1, 'no two-day gap copy');
 assert.ok(html.indexOf('id="stay-gap"') === -1);
 assert.ok(html.indexOf("evnt.key === 'Enter'") !== -1, 'Enter selects a date');
 assert.ok(/<button type="button"[^>]*id="stay-reset"/.test(html), 'reset is a keyboard button');
-assert.ok(html.indexOf('Change dates') !== -1);
+assert.ok(html.indexOf('>Clear selected dates</button>') !== -1);
+assert.ok(html.indexOf('button.stay-reset{margin-top:4px;background:var(--spring);color:var(--light)') !== -1);
 assert.ok(html.indexOf('Check-out is at 11am on the morning after your last night.') !== -1);
 assert.ok(html.indexOf('chooseDate') !== -1);
 
