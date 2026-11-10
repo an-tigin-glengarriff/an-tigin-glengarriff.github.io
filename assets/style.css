@@ -255,8 +255,29 @@ h1,h2,h3,.footer__big{text-shadow:0 1px 1px rgba(39,34,32,.12),0 2px 8px rgba(39
 .walks-map__key{font-size:.85rem;margin:0 0 var(--xl);display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .key{display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.2)}
 .key--walk{background:#094730}.key--home{background:#bf7737;margin-left:12px}
+.key--count{width:22px;height:22px;background:#094730;color:#fff;font-weight:700;font-size:11px;line-height:18px;text-align:center}
 .leaflet-popup-content{font-family:"Rethink Sans",sans-serif;font-size:.9rem;line-height:1.45}
 .leaflet-popup-content a{text-decoration:underline}
+/* Eat map: numbered dot for places that overlap at the current zoom.
+   Outer radii (15px, 17px for 10+) are shared with assets/eat-overlap.js. */
+.eat-cluster.leaflet-div-icon{background:transparent;border:none;pointer-events:none;user-select:none}
+.eat-cluster svg{display:block;pointer-events:auto;cursor:pointer}
+.eat-cluster.leaflet-marker-icon:focus-visible{border-radius:50%;outline:none;box-shadow:0 0 0 3px #f5f4ef,0 0 0 6px #094730}
+.eat-home.leaflet-div-icon{background:transparent;border:none}
+.eat-home svg{display:block}
+.eat-home.leaflet-marker-icon:focus-visible{border-radius:50%;outline:none;box-shadow:0 0 0 3px #f5f4ef,0 0 0 6px #bf7737}
+.eat-pop h4{margin:0 0 6px;font-size:1rem;letter-spacing:-.03em;line-height:1.2;text-shadow:none}
+.eat-pop__note{margin:0 0 8px;color:#6b635c;font-size:.8rem}
+.eat-pop__list{list-style:none;margin:0;padding:0;max-height:min(46vh,280px);overflow:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:640px){.eat-pop__list{max-height:min(34vh,220px)}}
+.eat-pop__place{display:flex;flex-direction:column;gap:2px;padding:8px 0;border-top:1px solid rgba(39,34,32,.12)}
+.eat-pop__place:first-child{border-top:0;padding-top:0}
+.eat-pop__place b{font-size:.95rem}
+.eat-pop__place small{color:#6b635c;font-size:.8rem}
+.eat-pop__links{display:flex;flex-wrap:wrap;gap:4px 12px}
+.eat-pop__zoom{display:block;width:100%;box-sizing:border-box;margin-top:10px;font:inherit;font-weight:600;font-size:.9rem;line-height:1.25;white-space:normal;text-align:center;background:#094730;color:#fff;border:0;border-radius:4px;padding:12px 14px;min-height:44px;cursor:pointer}
+.eat-pop__zoom:hover{background:#073a27}
+.eat-pop__zoom:focus-visible{outline:2px solid #272220;outline-offset:2px}
 /* contact hero: keep the sunburst and horizon in frame */
 .hero__img--contact{object-position:62% 58%}
 @media (max-width:640px){.hero__img--contact{object-position:86% 30%}}
