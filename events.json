@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-14T06:39:33Z",
+  "updated": "2026-11-15T02:47:10Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
   "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
@@ -14,30 +14,6 @@
       "type": "oneoff",
       "lat": 51.879101,
       "lng": -9.583952,
-      "geo_precision": "town"
-    },
-    {
-      "name": "Comedy 4 Coachford N.S. fundraiser",
-      "start": "2026-11-14",
-      "end": "2026-11-15",
-      "location": "Paddy Mac's, Main Street, Coachford, Co. Cork, P12 T448",
-      "description": "Saturday 14 November 2026 at Paddy Mac's, Coachford. Comedy fundraiser for a new classroom at Coachford National School, hosted by Ross Browne with support from Sinéad Quinlan and Paul Crowley. Tickets €30. Start time is not stated on the official venue or ticket pages.",
-      "url": "https://paddymacslive.ie/tickets-and-events",
-      "type": "oneoff",
-      "lat": 51.909189,
-      "lng": -8.787247,
-      "geo_precision": "place"
-    },
-    {
-      "name": "Seoladh Leabhair Dónal Ó Liatháin",
-      "start": "2026-11-14",
-      "end": "2026-11-15",
-      "location": "Ionad Cultúrtha an Dochtúir Ó Loingsigh, Baile Mhúirne, Co. Cork, P12 X239",
-      "description": "Saturday 14 November 2026, 6:00pm, at Ionad Cultúrtha an Dochtúir Ó Loingsigh, Baile Mhúirne. Free launch of the collected work of Dónal Ó Liatháin. End time is not stated. Details are in the venue's official Autumn 2026 brochure; no dedicated event page was published.",
-      "url": "https://www.ionadculturtha.ie/wp-content/uploads/2026/08/2026_Autumn_Brochure.pdf",
-      "type": "oneoff",
-      "lat": 51.94558,
-      "lng": -9.17066,
       "geo_precision": "town"
     },
     {
@@ -696,7 +672,7 @@
       "name": "Bandon Farmers Market",
       "rule": "every Saturday",
       "times": "9:30am–1:30pm",
-      "next": "2026-11-14",
+      "next": "2026-11-21",
       "months": [
         1,
         2,
@@ -752,7 +728,7 @@
       "name": "Bere Island parkrun",
       "rule": "every Saturday",
       "times": "9:30am–10:30am",
-      "next": "2026-11-14",
+      "next": "2026-11-21",
       "months": [
         1,
         2,
@@ -780,7 +756,7 @@
       "name": "Castlehaven parkrun",
       "rule": "every Saturday",
       "times": "9:30am–10:30am",
-      "next": "2026-11-14",
+      "next": "2026-11-21",
       "months": [
         1,
         2,
@@ -864,7 +840,7 @@
       "name": "Clonakilty parkrun",
       "rule": "every Saturday",
       "times": "9:30am–10:30am",
-      "next": "2026-11-14",
+      "next": "2026-11-21",
       "months": [
         1,
         2,
@@ -920,7 +896,7 @@
       "name": "Glengarriff parkrun",
       "rule": "every Saturday",
       "times": "9:30am–10:30am",
-      "next": "2026-11-14",
+      "next": "2026-11-21",
       "months": [
         1,
         2,
@@ -1004,7 +980,7 @@
       "name": "Rosscarbery Farmers Market",
       "rule": "every Saturday",
       "times": "9:30am–1:30pm",
-      "next": "2026-11-14",
+      "next": "2026-11-21",
       "months": [
         1,
         2,
@@ -1054,7 +1030,7 @@
       "name": "Skibbereen Farmers Market",
       "rule": "every Saturday",
       "times": "9:30am–1:30pm",
-      "next": "2026-11-14",
+      "next": "2026-11-21",
       "months": [
         1,
         2,
