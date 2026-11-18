@@ -22,6 +22,7 @@
 .ev-chips button{font:inherit;font-size:.85rem;font-weight:500;padding:7px 14px;border-radius:999px;border:1px solid rgba(39,34,32,.25);background:#fffefb;color:inherit;cursor:pointer}
 .ev-chips button[aria-pressed="true"]{background:#094730;border-color:#094730;color:#fff}
 .ev-chips__sep{flex:none;width:1px;align-self:stretch;background:rgba(39,34,32,.2);margin:0 2px}
+.ev-chips__dates,.ev-chips__months{display:contents}
 .ev-cal .cal-day.in-filter{background:#e7efe9;box-shadow:inset 0 0 0 2px rgba(9,71,48,.45)}
 .ev-sub{font-size:.95rem;margin:var(--l) 0 6px}
 .ev-tbc{margin-top:var(--xl)}
@@ -75,7 +76,7 @@
 #ev-reg li small b{font-weight:600;color:#094730}
 .ev-mlist small{color:var(--grey)}
 .ev-pop b{display:block;margin-bottom:2px}
-@media (max-width:520px){.cal-dots{bottom:10%;gap:2px}.cal-dots .cal-ev,.cal-dots .cal-hol{width:5px;height:5px}.ev-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}.ev-chips button{flex:none}}
+@media (max-width:520px){.cal-dots{bottom:10%;gap:2px}.cal-dots .cal-ev,.cal-dots .cal-hol{width:5px;height:5px}.ev-chips{flex-wrap:wrap;overflow:visible;padding-bottom:0}.ev-chips__dates{display:flex;flex:1 0 100%;flex-wrap:nowrap;align-items:center;gap:6px;min-width:0}.ev-chips__dates button{flex:none;white-space:nowrap;font-size:12px;padding:6px}.ev-chips__sep{display:none}.ev-chips__months{display:flex;flex:1 0 100%;flex-wrap:wrap;gap:8px;min-width:0}.ev-chips__months button{flex:none}}
 </style>
 </head>
 <body>
@@ -487,10 +488,13 @@ function addChip(c,id,label,canToggle){
  var b=document.createElement('button');b.type='button';b.textContent=label;b.setAttribute('aria-pressed',id===sel);b.dataset.m=id;
  b.onclick=function(){if(canToggle&&id===sel)setMonth('all',true);else setMonth(id,true);};c.appendChild(b);}
 function drawChips(){var c=document.getElementById('ev-chips');c.innerHTML='';
- [['all','All events'],['today','Today'],['weekend','This weekend'],['next-weekend','Next weekend']].forEach(function(x){addChip(c,x[0],x[1],x[0]!=='all');});
- if(months.length){var sep=document.createElement('span');sep.className='ev-chips__sep';sep.setAttribute('aria-hidden','true');c.appendChild(sep);}
- months.forEach(function(k){var a=k.split('-');addChip(c,k,MONTHS[+a[1]-1]+' '+a[0],false);});}
-function setMonth(m,moveCal){sel=m;[].forEach.call(document.querySelectorAll('#ev-chips button'),function(b){b.setAttribute('aria-pressed',b.dataset.m===sel);if(b.dataset.m===sel&&b.scrollIntoView&&b.parentNode.scrollWidth>b.parentNode.clientWidth)b.parentNode.scrollLeft=b.offsetLeft-b.parentNode.offsetLeft-12;});
+ var dates=document.createElement('div');dates.className='ev-chips__dates';
+ [['all','All events'],['today','Today'],['weekend','This weekend'],['next-weekend','Next weekend']].forEach(function(x){addChip(dates,x[0],x[1],x[0]!=='all');});
+ c.appendChild(dates);
+ if(months.length){var sep=document.createElement('span');sep.className='ev-chips__sep';sep.setAttribute('aria-hidden','true');c.appendChild(sep);
+  var mon=document.createElement('div');mon.className='ev-chips__months';
+  months.forEach(function(k){var a=k.split('-');addChip(mon,k,MONTHS[+a[1]-1]+' '+a[0],false);});c.appendChild(mon);}}
+function setMonth(m,moveCal){sel=m;[].forEach.call(document.querySelectorAll('#ev-chips button'),function(b){b.setAttribute('aria-pressed',b.dataset.m===sel);if(b.dataset.m===sel){var box=b.parentNode;if(box&&window.getComputedStyle(box).display==='contents')box=box.parentNode;if(box&&box.scrollWidth>box.clientWidth)box.scrollLeft=b.offsetLeft-box.offsetLeft-12;}});
  if(moveCal){if(m==='today'){calY=today.getFullYear();calM=today.getMonth();selDay=tk;}
   else if(m==='weekend'||m==='next-weekend'){var w=m==='weekend'?thisWeekend():nextWeekend();calY=w.start.getFullYear();calM=w.start.getMonth();selDay=null;}
   else if(m!=='all'){var a=m.split('-');calY=+a[0];calM=+a[1]-1;selDay=null;}}
