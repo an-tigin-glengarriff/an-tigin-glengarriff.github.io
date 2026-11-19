@@ -364,6 +364,7 @@ h1,h2,h3,.footer__big{text-shadow:0 1px 1px rgba(39,34,32,.12),0 2px 8px rgba(39
 .page-search__clear:focus-visible{outline:2px solid var(--summer);outline-offset:2px}
 .page-search__status{margin:8px 0 0;font-size:.85rem;color:var(--grey);min-height:1.2em}
 @media (max-width:640px){.page-search{max-width:none}.page-search input[type="search"]{font-size:1rem;padding:14px 48px 14px 16px}}
+.walks li[hidden],.walks > div[hidden],.ev-list li[hidden],.ev-dir li[hidden],.ev-group[hidden]{display:none !important}
 
 /* Site by rehost.expert — same branded credit as Casey's */
 footer .site-credit{margin:1.05rem 0 0;text-align:center}
