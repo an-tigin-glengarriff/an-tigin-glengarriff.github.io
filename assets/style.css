@@ -347,3 +347,18 @@ h1,h2,h3,.footer__big{text-shadow:0 1px 1px rgba(39,34,32,.12),0 2px 8px rgba(39
 .subtabs a[aria-current="page"]{background:var(--summer);color:var(--white)}
 .subtabs a:focus-visible{outline:2px solid var(--summer);outline-offset:2px}
 @media (max-width:600px){.subtabs{display:flex}.subtabs a{flex:1;text-align:center;padding:12px 10px}}
+
+/* Site by rehost.expert — same branded credit as Casey's */
+footer .site-credit{margin:1.05rem 0 0;text-align:center}
+footer .site-credit a{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .85rem .35rem .35rem;position:relative;overflow:hidden;isolation:isolate;background:#fffdf9;color:#55626d;text-decoration:none;border-radius:999px;border:1px solid #e7e0d4;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:.78rem;font-weight:600;letter-spacing:-.01em;line-height:1;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+footer .site-credit a::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 25%,rgba(255,255,255,.75) 46%,rgba(20,184,166,.28) 50%,rgba(255,255,255,.75) 54%,transparent 75%);transform:translateX(-130%);animation:site-credit-shimmer 5.5s ease-in-out infinite;pointer-events:none;z-index:1}
+footer .site-credit a > *{position:relative;z-index:2}
+footer .site-credit a:hover{color:#55626d;transform:translateY(-2px);box-shadow:0 6px 14px rgba(15,95,115,.22);border-color:#c9e8e4}
+footer .site-credit a:hover img{animation:site-credit-spin .8s ease-in-out}
+footer .site-credit img{width:20px;height:20px;display:block;border-radius:5px;flex:none;transform-origin:center;animation:site-credit-mark 5.5s ease-in-out infinite}
+footer .site-credit b{color:#0e1b26;font-weight:800;letter-spacing:-.04em}
+footer .site-credit b span{color:#0f766e}
+@keyframes site-credit-shimmer{0%,58%{transform:translateX(-130%)}78%,100%{transform:translateX(130%)}}
+@keyframes site-credit-mark{0%,58%,100%{transform:translateY(0) rotate(0)}65%{transform:translateY(-1px) rotate(-8deg)}73%{transform:translateY(0) rotate(5deg)}82%{transform:translateY(-.5px) rotate(-2deg)}90%{transform:translateY(0) rotate(0)}}
+@keyframes site-credit-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){footer .site-credit a,footer .site-credit a:hover{transition:none;transform:none}footer .site-credit a::after,footer .site-credit img,footer .site-credit a:hover img{animation:none}footer .site-credit a::after{content:none}}
