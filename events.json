@@ -1,21 +1,9 @@
 {
-  "updated": "2026-11-19T03:38:25Z",
+  "updated": "2026-11-20T03:32:49Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
   "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
   "events": [
-    {
-      "name": "The Lives, Memoirs and Gentry Houses of the Reeves Family of Cork",
-      "start": "2026-11-19",
-      "end": "2026-11-20",
-      "location": "Celtic Ross Hotel, Rosscarbery, County Cork, P85 WF86",
-      "description": "Thursday 19 November 2026, 8:00pm, at the Celtic Ross Hotel, Rosscarbery. A lecture by Dr Rachel Finnegan, presented by Rosscarbery & District History & Heritage Society. Admission €5. All welcome. End time is not stated.",
-      "url": "https://rosscarberyheritage.heritagecork.org/topics/november-lecture-dr-rachel-finnegan",
-      "type": "oneoff",
-      "lat": 51.576019,
-      "lng": -9.028768,
-      "geo_precision": "place"
-    },
     {
       "name": "Dunmanway Candlelight Concert",
       "start": "2026-11-20",
@@ -856,7 +844,7 @@
       "name": "Dunmanway Farmers Market",
       "rule": "every Thursday",
       "times": "10am–2pm",
-      "next": "2026-11-19",
+      "next": "2026-11-26",
       "months": [
         1,
         2,
