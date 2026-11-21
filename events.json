@@ -1,33 +1,9 @@
 {
-  "updated": "2026-11-20T03:32:49Z",
+  "updated": "2026-11-21T02:31:09Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
   "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
   "events": [
-    {
-      "name": "Dunmanway Candlelight Concert",
-      "start": "2026-11-20",
-      "end": "2026-11-21",
-      "location": "St Mary's Church, Dunmanway, County Cork, P47 Y997",
-      "description": "Friday 20 November 2026, 7:30pm, at St Mary's Church, Dunmanway. Presented by the Dunmanway Historical Association, with Castletown Choir, Dunmanway Community Choir, the Men's Shed Choir, the Valley Voices, Newcestown Comhaltas Group, and solo artist Aoife O'Connell. Admission €15. End time is not stated on the official organiser page.",
-      "url": "https://dunmanwayhistoricalassociation.ie/events/",
-      "type": "oneoff",
-      "lat": 51.722184,
-      "lng": -9.110367,
-      "geo_precision": "place"
-    },
-    {
-      "name": "Rory O’Connor – A Lecture by Historian Gerard Shannon",
-      "start": "2026-11-20",
-      "end": "2026-11-21",
-      "location": "Independence Museum Kilmurry, Co. Cork, P14 R940",
-      "description": "Friday 20 November 2026, 8:00pm–9:30pm, at Independence Museum Kilmurry. A lecture by historian Gerard Shannon, author of Rory O’Connor: To Defend the Republic. Admission is not stated on the event page.",
-      "url": "https://kilmurrymuseum.ie/event/rory-oconnor-a-lecture-by-historian-gerard-shannon/",
-      "type": "oneoff",
-      "lat": 51.842398,
-      "lng": -8.881828,
-      "geo_precision": "place"
-    },
     {
       "name": "Christmas Craft and Gift Fair",
       "start": "2026-11-22",
@@ -676,7 +652,7 @@
       "name": "Bantry Market",
       "rule": "every Friday",
       "times": "9:30am–3pm",
-      "next": "2026-11-20",
+      "next": "2026-11-27",
       "months": [
         1,
         2,
@@ -788,7 +764,7 @@
       "name": "Clonakilty Farmers Market",
       "rule": "every Friday",
       "times": "9am–2pm",
-      "next": "2026-11-20",
+      "next": "2026-11-27",
       "months": [
         1,
         2,
