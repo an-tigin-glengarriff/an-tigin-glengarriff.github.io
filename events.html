@@ -22,6 +22,7 @@
 .ev-chips button{font:inherit;font-size:.85rem;font-weight:500;padding:7px 14px;border-radius:999px;border:1px solid rgba(39,34,32,.25);background:#fffefb;color:inherit;cursor:pointer}
 .ev-chips button[aria-pressed="true"]{background:#094730;border-color:#094730;color:#fff}
 .ev-chips__sep{flex:none;width:1px;align-self:stretch;background:rgba(39,34,32,.2);margin:0 2px}
+.ev-chips__break{flex-basis:100%;width:100%;height:0;margin:0;padding:0;border:0;overflow:hidden}
 .ev-chips__dates,.ev-chips__months{display:contents}
 .ev-cal .cal-day.in-filter{background:#e7efe9;box-shadow:inset 0 0 0 2px rgba(9,71,48,.45)}
 .ev-sub{font-size:.95rem;margin:var(--l) 0 6px}
@@ -509,7 +510,7 @@ function addChip(c,id,label,canToggle){
  b.onclick=function(){if(canToggle&&id===sel)setMonth('all',true);else setMonth(id,true);};c.appendChild(b);}
 function drawChips(){var c=document.getElementById('ev-chips');c.innerHTML='';
  var dates=document.createElement('div');dates.className='ev-chips__dates';
- [['today','Today'],['weekend','This weekend'],['next-weekend','Next weekend'],['week','This week'],['next-week','Next week'],['all','All events']].forEach(function(x){addChip(dates,x[0],x[1],x[0]!=='all');});
+ [['today','Today'],['weekend','This weekend'],['next-weekend','Next weekend'],['week','This week'],['next-week','Next week'],['all','All events']].forEach(function(x){addChip(dates,x[0],x[1],x[0]!=='all');if(x[0]==='next-weekend'){var br=document.createElement('span');br.className='ev-chips__break';br.setAttribute('aria-hidden','true');dates.appendChild(br);}});
  c.appendChild(dates);
  if(months.length){var sep=document.createElement('span');sep.className='ev-chips__sep';sep.setAttribute('aria-hidden','true');c.appendChild(sep);
   var mon=document.createElement('div');mon.className='ev-chips__months';
