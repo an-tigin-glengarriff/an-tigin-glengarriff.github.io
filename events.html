@@ -76,7 +76,7 @@
 #ev-reg li small b{font-weight:600;color:#094730}
 .ev-mlist small{color:var(--grey)}
 .ev-pop b{display:block;margin-bottom:2px}
-@media (max-width:520px){.cal-dots{bottom:10%;gap:2px}.cal-dots .cal-ev,.cal-dots .cal-hol{width:5px;height:5px}.ev-chips{flex-wrap:wrap;overflow:visible;padding-bottom:0}.ev-chips__dates{display:flex;flex:1 0 100%;flex-wrap:nowrap;align-items:center;gap:6px;min-width:0}.ev-chips__dates button{flex:none;white-space:nowrap;font-size:12px;padding:6px}.ev-chips__sep{display:none}.ev-chips__months{display:flex;flex:1 0 100%;flex-wrap:wrap;gap:8px;min-width:0}.ev-chips__months button{flex:none}}
+@media (max-width:520px){.cal-dots{bottom:10%;gap:2px}.cal-dots .cal-ev,.cal-dots .cal-hol{width:5px;height:5px}.ev-chips{flex-wrap:wrap;overflow:visible;padding-bottom:0}.ev-chips__dates{display:flex;flex:1 0 100%;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}.ev-chips__dates button{flex:none;white-space:nowrap;font-size:12px;padding:6px}.ev-chips__sep{display:none}.ev-chips__months{display:flex;flex:1 0 100%;flex-wrap:wrap;gap:8px;min-width:0}.ev-chips__months button{flex:none}}
 </style>
 </head>
 <body>
@@ -369,15 +369,19 @@ var events=[],regular=[],tbc=[],hols=[],months=[],sel='all',calY=today.getFullYe
 var query='';
 function fold(s){return String(s||'').toLowerCase().replace(/[\u2018\u2019]/g,"'").replace(/\s+/g,' ').trim();}
 function evMatch(e){if(!query)return true;var q=fold(query);if(!q)return true;var when=e.tbc?tbcWhen(e):e.rule?regWhen(e):e.start?range(e.start,e.end):'';var hay=fold([e.name,e.location,e.place,e.description,when,e.usual,e.last,e.label,e.times,e.type,e.rule].join(' '));return q.split(' ').every(function(w){return hay.indexOf(w)>=0;});}
-function isDateSel(){return sel==='today'||sel==='weekend'||sel==='next-weekend';}
+function isDateSel(){return sel==='today'||sel==='week'||sel==='next-week'||sel==='weekend'||sel==='next-weekend';}
 function thisWeekend(){var dow=today.getDay(),sat,sun;
  if(dow===0){sat=addDays(today,-1);sun=today;}
  else if(dow===6){sat=today;sun=addDays(today,1);}
  else{sat=addDays(today,6-dow);sun=addDays(today,7-dow);}
  return {start:sat,end:addDays(sun,1),friday:addDays(sat,-1)};}
 function nextWeekend(){var w=thisWeekend();return {start:addDays(w.start,7),end:addDays(w.end,7),friday:addDays(w.friday,7)};}
+function thisWeek(){var dow=today.getDay(),mon=addDays(today,dow===0?-6:1-dow);return {start:mon,end:addDays(mon,7)};}
+function nextWeek(){var w=thisWeek();return {start:addDays(w.start,7),end:addDays(w.end,7)};}
 function dateSelRange(){
  if(sel==='today')return {start:tk,end:key(addDays(today,1)),friday:null};
+ if(sel==='week'){var w=thisWeek();return {start:key(w.start),end:key(w.end),friday:null};}
+ if(sel==='next-week'){var w=nextWeek();return {start:key(w.start),end:key(w.end),friday:null};}
  if(sel==='weekend'){var w=thisWeekend();return {start:key(w.start),end:key(w.end),friday:key(w.friday)};}
  if(sel==='next-weekend'){var w=nextWeekend();return {start:key(w.start),end:key(w.end),friday:key(w.friday)};}
  return null;}
@@ -390,8 +394,8 @@ function occursOn(r,k){var dt=p(k);if((r.months||[]).length&&(r.months||[]).inde
 function regInSel(r){var x=dateSelRange();if(!x)return true;var d=p(x.start);while(key(d)<x.end){if(occursOn(r,key(d)))return true;d.setDate(d.getDate()+1);}return !!(x.friday&&occursOn(r,x.friday)&&eveningTimes(r.times));}
 function eventInSel(e){if(sel==='all')return true;if(isDateSel())return datedInSel(e);if(sel==='none')return overlaps(e,calY,calM);var a=sel.split('-');return overlaps(e,+a[0],+a[1]-1);}
 function dayInSel(k){var r=dateSelRange();return !!(r&&k>=r.start&&k<r.end);}
-function periodLabel(){return sel==='today'?'today':sel==='weekend'?'this weekend':sel==='next-weekend'?'next weekend':'this month';}
-function emptyMsg(){return sel==='today'?'No events today.':sel==='weekend'?'No events this weekend.':sel==='next-weekend'?'No events next weekend.':'No events listed for this month.';}
+function periodLabel(){return sel==='today'?'today':sel==='week'?'this week':sel==='next-week'?'next week':sel==='weekend'?'this weekend':sel==='next-weekend'?'next weekend':'this month';}
+function emptyMsg(){return sel==='today'?'No events today.':sel==='week'?'No events this week.':sel==='next-week'?'No events next week.':sel==='weekend'?'No events this weekend.':sel==='next-weekend'?'No events next weekend.':'No events listed for this month.';}
 function overlaps(e,y,m){var a=mkey(y,m)+'-01',b=key(new Date(y,m+1,1));return e.start<b&&e.end>a;}
 /* A yearly event can have two occurrences inside the window (e.g. 17 Mar 2027 and 2028). Under "All"
    show each series once, at its next date; a month view only ever holds one occurrence. The calendar
@@ -465,7 +469,7 @@ function openOnMap(e){if(!map||e._cid==null)return;var g=groups[e._cid];if(!g)re
 var liByEv=[];
 function markActive(evs){liByEv.forEach(function(x){x[1].classList.toggle('active',evs.indexOf(x[0])>=0);});}
 function drawList(){var ul=document.getElementById('ev-mlist'),un=document.getElementById('ev-unmapped');ul.innerHTML='';un.innerHTML='';liByEv=[];
- document.getElementById('ev-mlist-title').textContent=sel==='all'?'All upcoming events':sel==='today'?'Events today':sel==='weekend'?'Events this weekend':sel==='next-weekend'?'Events next weekend':'Events in '+FULL[+(sel.split('-')[1]||0)-1]+' '+sel.split('-')[0];
+ document.getElementById('ev-mlist-title').textContent=sel==='all'?'All upcoming events':sel==='today'?'Events today':sel==='week'?'Events this week':sel==='next-week'?'Events next week':sel==='weekend'?'Events this weekend':sel==='next-weekend'?'Events next weekend':'Events in '+FULL[+(sel.split('-')[1]||0)-1]+' '+sel.split('-')[0];
  var list=inMonthList(),nUn=0,rgEarly=regIn(),tbcEarly=tbcIn();
  if(!list.length&&!isDateSel()&&!(query&&(rgEarly.length||tbcEarly.length)))ul.innerHTML='<li class="muted">'+(query?'No matches.':'No events listed for this month.')+'</li>';
  list.forEach(function(e){if(EventsReach.outside(e))return;var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.textContent=e.name;
@@ -505,14 +509,14 @@ function addChip(c,id,label,canToggle){
  b.onclick=function(){if(canToggle&&id===sel)setMonth('all',true);else setMonth(id,true);};c.appendChild(b);}
 function drawChips(){var c=document.getElementById('ev-chips');c.innerHTML='';
  var dates=document.createElement('div');dates.className='ev-chips__dates';
- [['all','All events'],['today','Today'],['weekend','This weekend'],['next-weekend','Next weekend']].forEach(function(x){addChip(dates,x[0],x[1],x[0]!=='all');});
+ [['all','All events'],['today','Today'],['week','This week'],['next-week','Next week'],['weekend','This weekend'],['next-weekend','Next weekend']].forEach(function(x){addChip(dates,x[0],x[1],x[0]!=='all');});
  c.appendChild(dates);
  if(months.length){var sep=document.createElement('span');sep.className='ev-chips__sep';sep.setAttribute('aria-hidden','true');c.appendChild(sep);
   var mon=document.createElement('div');mon.className='ev-chips__months';
   months.forEach(function(k){var a=k.split('-');addChip(mon,k,MONTHS[+a[1]-1]+' '+a[0],false);});c.appendChild(mon);}}
 function setMonth(m,moveCal){sel=m;[].forEach.call(document.querySelectorAll('#ev-chips button'),function(b){b.setAttribute('aria-pressed',b.dataset.m===sel);if(b.dataset.m===sel){var box=b.parentNode;if(box&&window.getComputedStyle(box).display==='contents')box=box.parentNode;if(box&&box.scrollWidth>box.clientWidth)box.scrollLeft=b.offsetLeft-box.offsetLeft-12;}});
  if(moveCal){if(m==='today'){calY=today.getFullYear();calM=today.getMonth();selDay=tk;}
-  else if(m==='weekend'||m==='next-weekend'){var w=m==='weekend'?thisWeekend():nextWeekend();calY=w.start.getFullYear();calM=w.start.getMonth();selDay=null;}
+  else if(m==='week'||m==='next-week'||m==='weekend'||m==='next-weekend'){var w=m==='week'?thisWeek():m==='next-week'?nextWeek():m==='weekend'?thisWeekend():nextWeekend();calY=w.start.getFullYear();calM=w.start.getMonth();selDay=null;}
   else if(m!=='all'){var a=m.split('-');calY=+a[0];calM=+a[1]-1;selDay=null;}}
  drawCal();if(moveCal&&m==='today')showDay(tk);drawList();drawMap();updateSearchUI();}
 /* ---- calendar ---- */
