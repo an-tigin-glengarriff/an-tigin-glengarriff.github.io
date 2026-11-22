@@ -509,7 +509,7 @@ function addChip(c,id,label,canToggle){
  b.onclick=function(){if(canToggle&&id===sel)setMonth('all',true);else setMonth(id,true);};c.appendChild(b);}
 function drawChips(){var c=document.getElementById('ev-chips');c.innerHTML='';
  var dates=document.createElement('div');dates.className='ev-chips__dates';
- [['all','All events'],['today','Today'],['week','This week'],['next-week','Next week'],['weekend','This weekend'],['next-weekend','Next weekend']].forEach(function(x){addChip(dates,x[0],x[1],x[0]!=='all');});
+ [['today','Today'],['weekend','This weekend'],['next-weekend','Next weekend'],['week','This week'],['next-week','Next week'],['all','All events']].forEach(function(x){addChip(dates,x[0],x[1],x[0]!=='all');});
  c.appendChild(dates);
  if(months.length){var sep=document.createElement('span');sep.className='ev-chips__sep';sep.setAttribute('aria-hidden','true');c.appendChild(sep);
   var mon=document.createElement('div');mon.className='ev-chips__months';
