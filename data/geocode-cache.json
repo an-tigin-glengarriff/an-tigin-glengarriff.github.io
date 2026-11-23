@@ -174,6 +174,12 @@
     "matched": "Ballyvourney",
     "precision": "town"
   },
+  "Jolly Roger, Sherkin Island, Co. Cork": {
+    "lat": 51.478514,
+    "lng": -9.402837,
+    "matched": "Jolly Roger, Sherkin Island",
+    "precision": "place"
+  },
   "Kenmare town centre, Co. Kerry": {
     "lat": 51.879101,
     "lng": -9.583952,
@@ -198,6 +204,12 @@
     "matched": "Main Street, Ballydehob, Co. Cork",
     "precision": "place"
   },
+  "Marino Church, Wolfe Tone Square, Bantry, Co. Cork": {
+    "lat": 51.67977,
+    "lng": -9.45236,
+    "matched": "Bantry",
+    "precision": "town"
+  },
   "Market Square, Dunmanway": {
     "lat": 51.721503,
     "lng": -9.114266,
@@ -214,6 +226,12 @@
     "lat": 51.909189,
     "lng": -8.787247,
     "matched": "Paddy Mac's, Coachford",
+    "precision": "place"
+  },
+  "Park Hotel Kenmare, Shelbourne Street, Kenmare, Co. Kerry": {
+    "lat": 51.877817,
+    "lng": -9.58048,
+    "matched": "Park Hotel Kenmare, Shelbourne Street, Kenmare, Co. Kerry",
     "precision": "place"
   },
   "Pier Road Car Park, Schull": {
@@ -252,6 +270,12 @@
     "matched": "Skibbereen",
     "precision": "town"
   },
+  "Skibbereen Town Hall, Skibbereen, Co. Cork": {
+    "lat": 51.5493,
+    "lng": -9.265804,
+    "matched": "Skibbereen Town Hall, Skibbereen, Co. Cork",
+    "precision": "place"
+  },
   "St Catherine's Cultural Centre, Kinsale, County Cork": {
     "lat": 51.705737,
     "lng": -8.522982,
@@ -274,6 +298,12 @@
     "lat": 51.879053,
     "lng": -9.581521,
     "matched": "The Lansdowne, Kenmare",
+    "precision": "place"
+  },
+  "The Maritime Hotel, The Quay, Bantry, Co. Cork": {
+    "lat": 51.680082,
+    "lng": -9.45724,
+    "matched": "The Maritime Hotel, The Quay, Bantry, Co. Cork",
     "precision": "place"
   },
   "The Show Grounds, Park Road (N71), Clonakilty, Co. Cork": {
@@ -306,6 +336,12 @@
     "lng": -8.959946,
     "matched": "West Square, Macroom",
     "precision": "place"
+  },
+  "Westlodge Hotel & Pondlodge Cottages, Bantry, Co. Cork": {
+    "lat": 51.67977,
+    "lng": -9.45236,
+    "matched": "Bantry",
+    "precision": "town"
   },
   "Westlodge Hotel, Bantry": {
     "lat": 51.672228,
@@ -612,12 +648,6 @@
     "lng": -9.266211,
     "matched": "Skibbereen",
     "precision": "town"
-  },
-  "Jolly Roger, Sherkin Island, Co. Cork": {
-    "lat": 51.478514,
-    "lng": -9.402837,
-    "matched": "Jolly Roger, Sherkin Island",
-    "precision": "place"
   },
   "town:Upton": {
     "lat": 51.78845,
