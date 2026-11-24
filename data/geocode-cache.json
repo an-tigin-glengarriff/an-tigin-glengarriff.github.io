@@ -5,6 +5,12 @@
     "matched": "Actons Hotel, Kinsale",
     "precision": "place"
   },
+  "An Sanctoir, Bawnaknockane, Ballydehob": {
+    "lat": 51.562193,
+    "lng": -9.460739,
+    "matched": "Ballydehob",
+    "precision": "town"
+  },
   "Ballydehob Community Hall & village pubs, Ballydehob, Co. Cork": {
     "lat": 51.562193,
     "lng": -9.460739,
@@ -89,6 +95,12 @@
     "lng": -9.910493,
     "matched": "Castletownbere",
     "precision": "town"
+  },
+  "Celtic Ross Hotel, Rosscarbery": {
+    "lat": 51.576019,
+    "lng": -9.028768,
+    "matched": "Celtic Ross Hotel, Rosscarbery",
+    "precision": "place"
   },
   "Celtic Ross Hotel, Rosscarbery, County Cork, P85 WF86": {
     "lat": 51.576019,
@@ -216,6 +228,12 @@
     "matched": "Market Square, Dunmanway",
     "precision": "place"
   },
+  "O'Donovan's Hotel, Clonakilty": {
+    "lat": 51.623045,
+    "lng": -8.889839,
+    "matched": "O'Donovan's Hotel, Clonakilty",
+    "precision": "place"
+  },
   "Old Market Garden, Bandon": {
     "lat": 51.746171,
     "lng": -8.73693,
@@ -286,6 +304,12 @@
     "lat": 51.722184,
     "lng": -9.110367,
     "matched": "St Mary's Church, Dunmanway",
+    "precision": "place"
+  },
+  "St Patrick's Cathedral, North Street, Skibbereen": {
+    "lat": 51.552035,
+    "lng": -9.263679,
+    "matched": "St Patrick's Cathedral, North Street, Skibbereen",
     "precision": "place"
   },
   "The Fairfield, Bridge Street, Skibbereen": {

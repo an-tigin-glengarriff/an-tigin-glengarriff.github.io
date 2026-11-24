@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-23T06:13:37Z",
+  "updated": "2026-11-24T06:23:02Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
   "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
@@ -125,6 +125,18 @@
       "geo_precision": "place"
     },
     {
+      "name": "An Evening with Spirit: Rose O'Driscoll",
+      "start": "2026-11-29",
+      "end": "2026-11-29",
+      "location": "O'Donovan's Hotel, Clonakilty",
+      "description": "Source:",
+      "url": "https://www.eventbrite.ie/e/an-evening-with-spirit-rose-odriscoll-rose-odriscoll-tickets-2003160255247",
+      "type": "oneoff",
+      "lat": 51.623045,
+      "lng": -8.889839,
+      "geo_precision": "place"
+    },
+    {
       "name": "GTG Aladdin (Glengarriff Theatre Group panto)",
       "start": "2026-11-29",
       "end": "2026-11-29",
@@ -146,6 +158,18 @@
       "type": "oneoff",
       "lat": 51.9047,
       "lng": -8.959946,
+      "geo_precision": "place"
+    },
+    {
+      "name": "Michael English Christmas Concert",
+      "start": "2026-12-03",
+      "end": "2026-12-03",
+      "location": "St Patrick's Cathedral, North Street, Skibbereen",
+      "description": "Source:",
+      "url": "https://www.eventbrite.ie/e/michael-english-christmas-concert-tickets-2000737326201",
+      "type": "oneoff",
+      "lat": 51.552035,
+      "lng": -9.263679,
       "geo_precision": "place"
     },
     {
@@ -173,6 +197,18 @@
       "geo_precision": "place"
     },
     {
+      "name": "Deep Peace: Restorative Yoga and Yoga Nidra",
+      "start": "2026-12-06",
+      "end": "2026-12-06",
+      "location": "An Sanctoir, Bawnaknockane, Ballydehob",
+      "description": "Source:",
+      "url": "https://www.eventbrite.ie/e/deep-peace-restorative-yoga-and-yoga-nidra-tickets-2004942267293",
+      "type": "oneoff",
+      "lat": 51.562193,
+      "lng": -9.460739,
+      "geo_precision": "town"
+    },
+    {
       "name": "Liam Ó Maonlaí",
       "start": "2026-12-06",
       "end": "2026-12-07",
@@ -194,6 +230,18 @@
       "type": "oneoff",
       "lat": 51.5493,
       "lng": -9.265804,
+      "geo_precision": "place"
+    },
+    {
+      "name": "Stars of Irish Country Christmas Concert",
+      "start": "2026-12-08",
+      "end": "2026-12-08",
+      "location": "Celtic Ross Hotel, Rosscarbery",
+      "description": "Source:",
+      "url": "https://www.eventbrite.ie/e/stars-of-irish-country-christmas-concert-tickets-1996366096736",
+      "type": "oneoff",
+      "lat": 51.576019,
+      "lng": -9.028768,
       "geo_precision": "place"
     },
     {
