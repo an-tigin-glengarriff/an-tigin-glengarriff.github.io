@@ -318,6 +318,12 @@
     "matched": "The Fairfield, Bridge Street, Skibbereen",
     "precision": "place"
   },
+  "The Green Dot, Clonakilty, Co. Cork": {
+    "lat": 51.623216,
+    "lng": -8.891407,
+    "matched": "Clonakilty",
+    "precision": "town"
+  },
   "The Lansdowne, Kenmare": {
     "lat": 51.879053,
     "lng": -9.581521,
