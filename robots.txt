@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /index.php
+
+Sitemap: https://an-tigin.ie/sitemap.xml
