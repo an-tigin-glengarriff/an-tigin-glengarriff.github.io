@@ -90,6 +90,12 @@
     "matched": "Kinsale",
     "precision": "town"
   },
+  "Carnegie Arts Centre, Kenmare": {
+    "lat": 51.879086,
+    "lng": -9.580588,
+    "matched": "Carnegie Arts Centre, Kenmare",
+    "precision": "place"
+  },
   "Castletownbere, Beara": {
     "lat": 51.651416,
     "lng": -9.910493,
@@ -228,6 +234,12 @@
     "matched": "Market Square, Dunmanway",
     "precision": "place"
   },
+  "O'Donovan Rossa GAA Ground, Rossa Road, Skibbereen": {
+    "lat": 51.547823,
+    "lng": -9.266211,
+    "matched": "Skibbereen",
+    "precision": "town"
+  },
   "O'Donovan's Hotel, Clonakilty": {
     "lat": 51.623045,
     "lng": -8.889839,
@@ -293,6 +305,12 @@
     "lng": -9.265804,
     "matched": "Skibbereen Town Hall, Skibbereen, Co. Cork",
     "precision": "place"
+  },
+  "St Brendan's Church, Bantry": {
+    "lat": 51.67977,
+    "lng": -9.45236,
+    "matched": "Bantry",
+    "precision": "town"
   },
   "St Catherine's Cultural Centre, Kinsale, County Cork": {
     "lat": 51.705737,

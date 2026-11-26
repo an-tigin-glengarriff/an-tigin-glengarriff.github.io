@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26T02:53:56Z",
+  "updated": "2026-11-26T06:20:21Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
   "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
@@ -106,7 +106,7 @@
       "end": "2026-11-28",
       "location": "Westlodge Hotel & Pondlodge Cottages, Bantry, Co. Cork",
       "description": "Source:",
-      "url": "https://www.eventbrite.ie/e/gtg-aladdin-saturday-8pm-tickets-2003596627448",
+      "url": "https://www.eventbrite.ie/e/gtg-aladdin-saturday-2pm-tickets-2003598462938",
       "type": "oneoff",
       "lat": 51.67977,
       "lng": -9.45236,
@@ -118,7 +118,7 @@
       "end": "2026-11-28",
       "location": "Westlodge Hotel & Pondlodge Cottages, Bantry, Co. Cork",
       "description": "Source:",
-      "url": "https://www.eventbrite.ie/e/gtg-aladdin-saturday-2pm-tickets-2003598462938",
+      "url": "https://www.eventbrite.ie/e/gtg-aladdin-saturday-8pm-tickets-2003596627448",
       "type": "oneoff",
       "lat": 51.67977,
       "lng": -9.45236,
@@ -233,6 +233,18 @@
       "geo_precision": "town"
     },
     {
+      "name": "Remembering Patrick Gerard Murphy: NLN Fundraising Concert",
+      "start": "2026-12-06",
+      "end": "2026-12-06",
+      "location": "St Brendan's Church, Bantry",
+      "description": "West Cork Music fundraising concert in aid of the National Learning Network. Source:",
+      "url": "https://www.westcorkmusic.ie/concert-series/fundraiser-nln-westcorkmusic/",
+      "type": "oneoff",
+      "lat": 51.67977,
+      "lng": -9.45236,
+      "geo_precision": "town"
+    },
+    {
       "name": "Toormore (play)",
       "start": "2026-12-06",
       "end": "2026-12-06",
@@ -254,6 +266,30 @@
       "type": "oneoff",
       "lat": 51.576019,
       "lng": -9.028768,
+      "geo_precision": "place"
+    },
+    {
+      "name": "Christmas Panto: Santa's Sooty Christmas (10am)",
+      "start": "2026-12-10",
+      "end": "2026-12-10",
+      "location": "Carnegie Arts Centre, Kenmare",
+      "description": "Children's Christmas panto, €8. Source:",
+      "url": "https://www.carnegieartskenmare.ie/events/month/2026-12/",
+      "type": "oneoff",
+      "lat": 51.879086,
+      "lng": -9.580588,
+      "geo_precision": "place"
+    },
+    {
+      "name": "Christmas Panto: Santa's Sooty Christmas (12pm)",
+      "start": "2026-12-10",
+      "end": "2026-12-10",
+      "location": "Carnegie Arts Centre, Kenmare",
+      "description": "Children's Christmas panto, €8. Source:",
+      "url": "https://www.carnegieartskenmare.ie/events/month/2026-12/",
+      "type": "oneoff",
+      "lat": 51.879086,
+      "lng": -9.580588,
       "geo_precision": "place"
     },
     {
@@ -302,6 +338,18 @@
       "type": "oneoff",
       "lat": 51.705737,
       "lng": -8.522982,
+      "geo_precision": "town"
+    },
+    {
+      "name": "Skibbereen Christmas Market",
+      "start": "2026-12-16",
+      "end": "2026-12-17",
+      "location": "O'Donovan Rossa GAA Ground, Rossa Road, Skibbereen",
+      "description": "Indoor and outdoor winter market with food, car boot sale and local arts and crafts. Source:",
+      "url": "https://www.southernstar.ie/news/festive-fun-planned-for-skibbereen-christmas-market-on-december-16-4381621",
+      "type": "oneoff",
+      "lat": 51.547823,
+      "lng": -9.266211,
       "geo_precision": "town"
     },
     {
