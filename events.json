@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26T12:48:18Z",
+  "updated": "2026-11-27T05:06:46Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
   "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
@@ -26,18 +26,6 @@
       "type": "oneoff",
       "lat": 51.88962,
       "lng": -8.60588,
-      "geo_precision": "place"
-    },
-    {
-      "name": "Music at the Park: Ajeet",
-      "start": "2026-11-27",
-      "end": "2026-11-27",
-      "location": "Park Hotel Kenmare, Shelbourne Street, Kenmare, Co. Kerry",
-      "description": "Source:",
-      "url": "https://www.eventbrite.ie/e/music-at-the-park-ajeet-tickets-2003830937275",
-      "type": "oneoff",
-      "lat": 51.877817,
-      "lng": -9.58048,
       "geo_precision": "place"
     },
     {
@@ -1012,7 +1000,7 @@
       "name": "Dunmanway Farmers Market",
       "rule": "every Thursday",
       "times": "10am–2pm",
-      "next": "2026-11-26",
+      "next": "2026-12-03",
       "months": [
         1,
         2,
