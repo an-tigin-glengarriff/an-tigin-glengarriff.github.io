@@ -258,6 +258,12 @@
     "matched": "Paddy Mac's, Coachford",
     "precision": "place"
   },
+  "Park Hotel Kenmare, Shelbourne Street, Kenmare": {
+    "lat": 51.877817,
+    "lng": -9.58048,
+    "matched": "Park Hotel Kenmare, Shelbourne Street, Kenmare",
+    "precision": "place"
+  },
   "Park Hotel Kenmare, Shelbourne Street, Kenmare, Co. Kerry": {
     "lat": 51.877817,
     "lng": -9.58048,

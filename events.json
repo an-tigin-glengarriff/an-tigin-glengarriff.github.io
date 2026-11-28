@@ -1,57 +1,9 @@
 {
-  "updated": "2026-11-27T23:32:17Z",
+  "updated": "2026-11-28T07:59:18Z",
   "calendar_id": "9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd@group.calendar.google.com",
   "ics_url": "https://calendar.google.com/calendar/ical/9cb49e1630caef8f8303f21322d14298a531569715a575d55c7977d8789e07dd%40group.calendar.google.com/public/basic.ics",
   "note": "all-day events; end dates are exclusive. lat/lng geocoded from location (OpenStreetMap Nominatim, cached in data/geocode-cache.json; geo_precision place|town; missing = not mapped). type = oneoff|yearly|weekly|monthly (from the RRULE FREQ; daily counts as weekly). regular = daily/weekly/monthly recurring events (e.g. markets) listed once with a readable rule, times, next date and active months instead of being expanded. holidays = Republic of Ireland public holidays (actual dates, no substitute days)",
   "events": [
-    {
-      "name": "Biodiversity Workshop: Plan Your Garden for Spring 2027",
-      "start": "2026-11-27",
-      "end": "2026-11-28",
-      "location": "Clonakilty Library, Kent Street, Clonakilty, County Cork",
-      "description": "Friday 27 November 2026, 12:30pm, at Clonakilty Library. A biodiversity workshop with Eidin Griffin, planning a garden calendar for colour, food and biodiversity in spring 2027. Part of Cork County Council's free Make One Change library programme. End time is not stated.",
-      "url": "https://www.corkcoco.ie/en/events/make-one-change-2026",
-      "type": "oneoff",
-      "lat": 51.622479,
-      "lng": -8.889563,
-      "geo_precision": "place"
-    },
-    {
-      "name": "Cork International Choral Festival Christmas Concert",
-      "start": "2026-11-27",
-      "end": "2026-11-28",
-      "location": "Church of Christ Our Light, Ballincollig, Co. Cork",
-      "description": "Friday 27 November 2026, 7:30pm, at the Church of Christ Our Light, Ballincollig. Cork International Choral Festival Christmas concert, with soloists Siomha Marron and Andrew Lane and choirs from across Cork. Tickets €26. End time is not stated.",
-      "url": "https://www.corkchoral.ie/2026/10/our-christmas-concerts-are-back/",
-      "type": "oneoff",
-      "lat": 51.88962,
-      "lng": -8.60588,
-      "geo_precision": "place"
-    },
-    {
-      "name": "Pull Hard – Cornelius Patrick O’Sullivan",
-      "start": "2026-11-27",
-      "end": "2026-11-28",
-      "location": "St Catherine's Cultural Centre, Kinsale, County Cork",
-      "description": "Friday 27 November 2026, 8:00pm–10:00pm, at St Catherine's Cultural Centre, Kinsale. Stand-up comedy show Pull Hard by Cornelius Patrick O'Sullivan. Date and venue are also listed by Kinsale Chamber of Tourism & Business; start and end times are from the official Eventbrite listing organised by the venue. Ticket price is not clearly stated on the pages checked.",
-      "url": "https://www.eventbrite.com/e/cornelius-patrick-o-sullivan-pull-hard-tickets-1988711267937",
-      "type": "oneoff",
-      "lat": 51.705737,
-      "lng": -8.522982,
-      "geo_precision": "town"
-    },
-    {
-      "name": "Sharon Shannon",
-      "start": "2026-11-27",
-      "end": "2026-11-28",
-      "location": "Connolly's of Leap, Main Street, Kilmacabea, Leap, County Cork, P81 AK20",
-      "description": "Friday 27 November 2026 at Connolly's of Leap. An intimate album-launch performance for Sharon Shannon's album HOME, with Killian Shannon and Sean Lyons. Doors at 7:30pm. Tickets are €38.50 plus booking fee (€40 as listed on the venue page). The official venue page shows this date as sold out. Show start time after doors is not stated on the event page.",
-      "url": "https://connollysofleap.com/ticket/sharon-shannon-friday-27th-november-2026",
-      "type": "oneoff",
-      "lat": 51.581063,
-      "lng": -9.143339,
-      "geo_precision": "town"
-    },
     {
       "name": "Children's Workshop with Amanda Wright",
       "start": "2026-11-28",
@@ -65,18 +17,6 @@
       "geo_precision": "town"
     },
     {
-      "name": "Christmas Bauble Painting - Green Dot Cafe, Clonakilty",
-      "start": "2026-11-28",
-      "end": "2026-11-28",
-      "location": "The Green Dot, Clonakilty, Co. Cork",
-      "description": "Source:  (Eventbrite)",
-      "url": "https://www.eventbrite.ie/d/ireland--skibbereen/events/",
-      "type": "oneoff",
-      "lat": 51.623216,
-      "lng": -8.891407,
-      "geo_precision": "town"
-    },
-    {
       "name": "Christmas Craft Workshop with Laurie LeGrande",
       "start": "2026-11-28",
       "end": "2026-11-29",
@@ -87,42 +27,6 @@
       "lat": 51.746171,
       "lng": -8.73693,
       "geo_precision": "town"
-    },
-    {
-      "name": "GTG Aladdin (Glengarriff Theatre Group panto)",
-      "start": "2026-11-28",
-      "end": "2026-11-28",
-      "location": "Westlodge Hotel & Pondlodge Cottages, Bantry, Co. Cork",
-      "description": "Source:",
-      "url": "https://www.eventbrite.ie/e/gtg-aladdin-saturday-8pm-tickets-2003596627448",
-      "type": "oneoff",
-      "lat": 51.67977,
-      "lng": -9.45236,
-      "geo_precision": "town"
-    },
-    {
-      "name": "GTG Aladdin (Glengarriff Theatre Group panto)",
-      "start": "2026-11-28",
-      "end": "2026-11-28",
-      "location": "Westlodge Hotel & Pondlodge Cottages, Bantry, Co. Cork",
-      "description": "Source:",
-      "url": "https://www.eventbrite.ie/e/gtg-aladdin-saturday-2pm-tickets-2003598462938",
-      "type": "oneoff",
-      "lat": 51.67977,
-      "lng": -9.45236,
-      "geo_precision": "town"
-    },
-    {
-      "name": "The Pre-Christmas Wellness Retreat",
-      "start": "2026-11-28",
-      "end": "2026-11-28",
-      "location": "Park Hotel Kenmare, Shelbourne Street, Kenmare, Co. Kerry",
-      "description": "Source:",
-      "url": "https://www.eventbrite.ie/e/the-pre-christmas-wellness-retreat-tickets-2003567366929",
-      "type": "oneoff",
-      "lat": 51.877817,
-      "lng": -9.58048,
-      "geo_precision": "place"
     },
     {
       "name": "An Evening with Spirit: Rose O'Driscoll",
@@ -339,6 +243,18 @@
       "lat": 51.547823,
       "lng": -9.266211,
       "geo_precision": "town"
+    },
+    {
+      "name": "Music at the Park: Susan O'Neill",
+      "start": "2026-12-18",
+      "end": "2026-12-18",
+      "location": "Park Hotel Kenmare, Shelbourne Street, Kenmare",
+      "description": "Live music at Park Hotel Kenmare. Source:",
+      "url": "https://www.parkkenmare.com/whats-on/music-at-the-park-susan-oneill-18th-december-2026",
+      "type": "oneoff",
+      "lat": 51.877817,
+      "lng": -9.58048,
+      "geo_precision": "place"
     },
     {
       "name": "Clare Sands",
@@ -832,7 +748,7 @@
       "name": "Bantry Market",
       "rule": "every Friday",
       "times": "9:30am–3pm",
-      "next": "2026-11-27",
+      "next": "2026-12-04",
       "months": [
         1,
         2,
@@ -944,7 +860,7 @@
       "name": "Clonakilty Farmers Market",
       "rule": "every Friday",
       "times": "9am–2pm",
-      "next": "2026-11-27",
+      "next": "2026-12-04",
       "months": [
         1,
         2,
